@@ -52,6 +52,10 @@ try {
       break;
     }
 
+    // The dev toolbar is injected UI, not the page. It must never appear in a
+    // design screenshot or a generated asset.
+    await page.addStyleTag({ content: 'astro-dev-toolbar { display: none !important; }' });
+
     // Let webfonts settle so type is measured accurately, not in fallback.
     await page.evaluate(() => document.fonts?.ready);
 

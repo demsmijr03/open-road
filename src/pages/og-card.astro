@@ -1,0 +1,130 @@
+---
+/**
+ * The Open Graph card, rendered as a real page so it uses the real tokens and
+ * the real fonts rather than a hand-built image that drifts from the brand.
+ *
+ * `node scripts/make-assets.mjs` screenshots this at exactly 1200x630 and
+ * writes public/og-default.png. Regenerate whenever the palette or wordmark
+ * changes.
+ *
+ * noindex — it is an asset source, not a page.
+ */
+import '@fontsource-variable/newsreader';
+import '@fontsource-variable/archivo';
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>OG card</title>
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+  <body class="og-body">
+    <div class="card surface-asphalt">
+      <div class="card-top">
+        <div class="card-mark"><Logo variant="mark" decorative /></div>
+        <div class="card-words">
+          <span class="card-name">Open Road</span>
+          <span class="card-sub">Foundation</span>
+        </div>
+      </div>
+
+      <p class="card-line">Some roads are worth leaving home for.</p>
+
+      <div class="card-foot">
+        <span class="card-lane" aria-hidden="true"></span>
+        <span class="card-place">West Chester, Pennsylvania</span>
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  .og-body {
+    margin: 0;
+  }
+
+  .card {
+    inline-size: 1200px;
+    block-size: 630px;
+    padding: 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .card-mark {
+    inline-size: 108px;
+    flex: none;
+    color: var(--fg);
+  }
+
+  .card-words {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  .card-name {
+    font-family: var(--font-display);
+    font-size: 46px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .card-sub {
+    margin-block-start: 8px;
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-quiet);
+  }
+
+  .card-line {
+    margin: 0;
+    max-inline-size: 20ch;
+    font-family: var(--font-display);
+    font-size: 82px;
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+  }
+
+  .card-foot {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .card-lane {
+    inline-size: 220px;
+    block-size: 3px;
+    border-radius: 2px;
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--lane) 0 20px,
+      transparent 20px 34px
+    );
+  }
+
+  .card-place {
+    font-family: var(--font-body);
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-quiet);
+  }
+</style>

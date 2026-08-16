@@ -12,6 +12,7 @@
     "astro": "astro",
     "shot": "node scripts/screenshot.mjs",
     "audit:holes": "node scripts/audit-holes.mjs",
+    "assets": "node scripts/make-assets.mjs",
     "audit:a11y": "node scripts/audit-a11y.mjs"
   },
   "dependencies": {
