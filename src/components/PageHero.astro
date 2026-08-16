@@ -1,8 +1,7 @@
 ---
-import Lane from './Lane.astro';
 
 /**
- * Interior page hero. Lighter than the home page's, one band of asphalt at the
+ * Interior page hero. Lighter than the home page's, one band of the deep surface at the
  * top, then the page opens onto paper. Keeps the dark surface to two
  * appearances per page (here and the closing band) so it stays meaningful.
  *
@@ -19,10 +18,9 @@ const { heading, lede } = Astro.props;
 const hasAside = Astro.slots.has('aside');
 ---
 
-<section class="page-hero surface-asphalt">
+<section class="page-hero surface-deep">
   <div class:list={['wrap', hasAside && 'page-hero-grid']}>
     <div class="page-hero-copy">
-      <Lane mode="recede" class="page-hero-lane" />
       <h1>{heading}</h1>
       {lede && <p class="page-hero-lede">{lede}</p>}
     </div>
@@ -51,15 +49,6 @@ const hasAside = Astro.slots.has('aside');
     align-items: end;
   }
 
-  /* Reached through :global() on purpose. A class passed to a child component
-     lands on that child's root, which sits in the child's style scope, so a
-     plain `.page-hero-lane { }` here is stripped as unmatched and the lane
-     renders full width with no margin. The parent selector supplies the scope;
-     :global() crosses into the child. Same pattern wherever <Lane> is used. */
-  .page-hero :global(.page-hero-lane) {
-    margin-block-end: var(--space-m);
-    max-inline-size: 16rem;
-  }
 
   .page-hero h1 {
     margin: 0;

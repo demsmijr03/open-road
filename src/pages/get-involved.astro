@@ -7,6 +7,14 @@ import PageHero from '../components/PageHero.astro';
 import Faq from '../components/Faq.astro';
 import MilestoneRail from '../components/MilestoneRail.astro';
 import InterestForm from '../components/InterestForm.astro';
+import Icon from '../components/Icon.astro';
+
+const ways = [
+  { icon: 'give',    name: 'Give',                     note: 'One gift, once, straight to the award.', href: '#give' },
+  { icon: 'partner', name: 'Partner with us',          note: 'For businesses and community organisations.', href: '#partner' },
+  { icon: 'ask',     name: "Tell us you're interested", note: 'Student, parent, counselor, mentor, donor.', href: '#interest' },
+  { icon: 'tell',    name: 'Spread the word',          note: 'Send this to someone in West Chester.', href: '#newsletter' },
+] as const;
 
 const tiers = [
   {
@@ -68,7 +76,29 @@ const donorFaqs = [
     lede="We're raising $10,000 this year to fund our first student. Here's every way to help, including one that costs nothing but the time it takes to fill in a form."
   />
 
-  <section class="section surface-paper" id="give">
+  <!-- Four ways in, before any of the detail. This page used to open on eight
+       stacked prose sections with no map, so a visitor had to read it to find
+       out what they were being asked to do. Four blocks let them choose. -->
+  <section class="section surface-base">
+    <div class="wrap">
+      <h2 class="ways-title">Four ways to help</h2>
+      <ul class="ways">
+        {
+          ways.map((w) => (
+            <li class="way">
+              <a href={w.href}>
+                <span class="way-icon"><Icon name={w.icon} /></span>
+                <span class="way-name">{w.name}</span>
+                <span class="way-note">{w.note}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section surface-panel" id="give">
     <div class="wrap">
       <div class="split prose">
         <h2>Give</h2>
@@ -81,13 +111,14 @@ const donorFaqs = [
           organization, EIN <Placeholder note="EIN" as="inline" />, and you'll get a receipt for
           your records.
         </p>
-        <Placeholder note="donation link: Zeffy, Givebutter, or equivalent" />
-        <p><Button href="#interest">Support a student</Button></p>
+        <p>
+          <Button placeholder>Donate</Button>
+        </p>
       </div>
     </div>
   </section>
 
-  <section class="section surface-concrete" id="partner">
+  <section class="section surface-base" id="partner">
     <div class="wrap">
       <div class="split prose">
         <h2>Partner with us</h2>
@@ -100,14 +131,14 @@ const donorFaqs = [
       <!-- Tiers are named after road types and ascend in scale, so the naming
            does real work: the reader can order them without reading amounts.
 
-           The tiles express that ascent through surface rather than through a
-           coloured rule. Each step sits on a lighter ground and lifts further off
-           the page, and the top tier inverts to asphalt so it genuinely stands
-           apart. Reuses the .surface-* classes, so no new colour rules. -->
+           The tiles express that ascent through elevation rather than through a
+           coloured rule. Each step lifts further off the page, and the top tier
+           inverts to the deep surface so it genuinely stands apart. Reuses the
+           .surface-* classes, so no new colour rules. -->
       <ul class="tiers">
         {
           tiers.map((tier, i) => (
-            <li class={`tier tier--${i + 1} ${i === tiers.length - 1 ? 'surface-asphalt' : ''}`}>
+            <li class={`tier tier--${i + 1} ${i === tiers.length - 1 ? 'surface-deep' : ''}`}>
               <p class="tier-amount">{tier.amount}</p>
               <p class="tier-name">{tier.name}</p>
               <p class="tier-gets">{tier.gets}</p>
@@ -123,7 +154,7 @@ const donorFaqs = [
     </div>
   </section>
 
-  <section class="section surface-paper">
+  <section class="section surface-panel">
     <div class="wrap">
       <div class="split prose">
         <h2>Employer matching</h2>
@@ -137,7 +168,7 @@ const donorFaqs = [
     </div>
   </section>
 
-  <section class="section--major surface-concrete">
+  <section class="section--major surface-base">
     <div class="wrap">
       <div class="plan-grid">
         <div>
@@ -152,15 +183,21 @@ const donorFaqs = [
     </div>
   </section>
 
-  <section class="section surface-paper" id="money">
+  <section class="section surface-panel" id="money">
     <div class="wrap">
       <div class="split prose">
         <h2>Where the money goes</h2>
-        <p>
-          90 cents of every dollar goes to student awards. The other 10 cents covers what it costs
-          to run the foundation: fundraising, marketing, and the administrative work behind making
-          an award.
-        </p>
+        <div class="split-money">
+          <p class="money-fig">90<span>&cent;</span></p>
+          <p class="money-note">
+            of every dollar goes straight to student awards.
+          </p>
+          <p class="money-fig money-fig--small">10<span>&cent;</span></p>
+          <p class="money-note">
+            covers what it costs to run the foundation: fundraising, marketing, and the
+            administrative work behind making an award.
+          </p>
+        </div>
         <p>
           Hit the $10,000 goal and that is a $9,000 award to one student. Anything raised past the
           goal carries into next year's fund rather than sitting still.
@@ -169,7 +206,7 @@ const donorFaqs = [
     </div>
   </section>
 
-  <section class="section surface-concrete" id="newsletter">
+  <section class="section surface-base" id="newsletter">
     <div class="wrap">
       <div class="split prose">
         <h2>Newsletter</h2>
@@ -177,19 +214,19 @@ const donorFaqs = [
           One email when there's something real to report: the application opening, a student
           funded, the year's total. That's it, and we won't pass your address to anyone.
         </p>
-        <Placeholder note="newsletter signup embed" />
+        <p><Button placeholder>Join the newsletter</Button></p>
       </div>
     </div>
   </section>
 
-  <section class="section--major surface-paper" id="interest">
+  <section class="section--major surface-panel" id="interest">
     <div class="wrap">
       <h2 class="interest-title">Tell us you're interested</h2>
       <InterestForm />
     </div>
   </section>
 
-  <section class="section surface-concrete">
+  <section class="section surface-base">
     <div class="wrap">
       <div class="measure-wide">
         <h2 class="faq-title">Questions from donors</h2>
@@ -208,6 +245,117 @@ const donorFaqs = [
 </BaseLayout>
 
 <style>
+  /* --- ways to help ---------------------------------------------------- */
+
+  .ways-title {
+    margin: 0 0 var(--space-l);
+    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+  }
+
+  .ways {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-m);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 40rem) {
+    .ways {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .ways {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .way a {
+    display: flex;
+    flex-direction: column;
+    block-size: 100%;
+    gap: var(--space-2xs);
+    padding: var(--space-m);
+    border-radius: var(--radius-panel);
+    border: var(--border-hairline) solid var(--rule);
+    background-color: var(--bg);
+    text-decoration: none;
+    color: inherit;
+    transition:
+      transform var(--duration) var(--ease-spring),
+      border-color var(--duration) var(--ease-spring),
+      box-shadow var(--duration) var(--ease-spring);
+  }
+
+  .way a:hover {
+    transform: translateY(-2px);
+    border-color: var(--rule-strong);
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .way a:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+  }
+
+  .way-icon {
+    inline-size: 1.75rem;
+    color: var(--accent-text);
+    margin-block-end: var(--space-2xs);
+  }
+
+  .way-name {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+  }
+
+  .way-note {
+    font-size: var(--text-sm);
+    line-height: 1.55;
+    color: var(--fg-quiet);
+  }
+
+  /* --- where the money goes -------------------------------------------- */
+
+  .split-money {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-2xs) var(--space-m);
+    align-items: baseline;
+  }
+
+  .money-fig {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.75rem, 7vw, 4rem);
+    font-weight: 600;
+    line-height: 0.95;
+    letter-spacing: var(--tracking-display);
+    color: var(--fg);
+  }
+
+  /* The smaller figure is the smaller share. The sizes carry the ratio, so the
+     sentence does not have to do it alone. */
+  .money-fig--small {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    color: var(--fg-quiet);
+  }
+
+  .money-fig span {
+    font-size: 0.5em;
+    margin-inline-start: 0.05em;
+  }
+
+  .money-note {
+    margin: 0 0 var(--space-m);
+    line-height: var(--leading-body);
+    color: var(--fg-quiet);
+  }
+
   /* There are exactly four tiers and they are a sequence, so they belong on one
      line. auto-fit was deciding the column count from a 15rem minimum, which
      drops to three columns as soon as the reader's base font size is a little
@@ -244,11 +392,11 @@ const donorFaqs = [
   }
 
   /* Only the light tiles paint their own ground. The top tier carries
-     .surface-asphalt, which sets both background and foreground; setting a
+     .surface-deep, which sets both background and foreground; setting a
      paper background here as well would win on specificity and leave that tile
      rendering paper text on paper. */
-  .tier:not(.surface-asphalt) {
-    background-color: var(--color-paper);
+  .tier:not(.surface-deep) {
+    background-color: var(--color-surface);
   }
 
   /* The ascent, in four steps of elevation. */

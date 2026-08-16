@@ -3,15 +3,18 @@
    The only place raw values live. Components reference these, never a hex.
    =============================================================================
 
-   DIRECTION: "Mile markers."
+   DIRECTION: "Perspective."
 
-   The palette is drawn from the subject's own materials, asphalt, painted lane
-   markings, highway signage, rather than from nonprofit convention. The
-   signature element is a dashed lane-marking line that runs through the page as
-   a measure of progress, not as decoration.
+   The foundation funds students to go somewhere unfamiliar and come back seeing
+   more than they did. That idea, not the road and not the campus, is what the
+   identity encodes. The mark is a prism: one line goes in, three come out.
 
-   Tailwind v4 derives utilities from @theme, so --color-asphalt yields
-   text-asphalt / bg-asphalt automatically.
+   The road metaphor is gone on purpose, token names included. It was in the
+   name already, every other Open Road organisation leans on it, and it kept the
+   design tied to an idea the foundation is not actually about.
+
+   Tailwind v4 derives utilities from @theme, so --color-deep yields text-deep
+   and bg-deep automatically.
 
    NOTE: never define --spacing-<name> in @theme. That namespace also feeds
    max-w-* / w-*, so a named spacing token silently hijacks sizing utilities.
@@ -22,37 +25,44 @@
   /* ---------------------------------------------------------------------
      PALETTE
 
-     Contrast, measured against the surfaces each colour is actually used on:
-       asphalt on paper ......... 14.8:1  body text, headings
-       slate   on paper .......... 6.3:1  secondary text, captions, eyebrows
-       paper   on asphalt ....... 14.8:1  text inside dark bands
-       amber   on asphalt ........ 7.0:1  text-safe on dark only
-       amber   on paper .......... 2.1:1  FAILS, graphic use only, never text
+     Measured against the surfaces each colour is actually used on:
+       white   on deep ........... 9.35:1  text inside dark bands
+       deep    on white .......... 9.35:1  body text, headings
+       quiet   on white .......... 6.75:1  secondary text
+       quiet   on panel .......... 6.03:1  secondary text on the second surface
+       accent  on white .......... 2.34:1  FAILS. fills and graphics only
+       accent  on deep ........... 3.99:1  FAILS. fills and graphics only
 
-     The amber rule is the one that gets broken by accident. It is the brand's
-     loud colour, so it is tempting to set a heading in it on a light surface;
-     at 2.1:1 that is unreadable for a lot of people. On paper, amber is
-     allowed to be a rule, a fill, an underline, or a marker, never a glyph.
+     Apricot is the loud colour and it carries text on nothing. White on an
+     apricot button is 2.34:1 as well, so that button takes a dark label. This
+     is the same trap the previous amber fell into, so all three safe variants
+     are declared here rather than improvised per component:
+
+       --color-accent-strong  4.68:1 on white   (links, accented text on light)
+       --color-accent-soft    5.30:1 on deep    (accented text in a dark band)
+       --color-on-accent      6.02:1 on apricot (labels sitting on the fill)
      --------------------------------------------------------------------- */
 
-  --color-asphalt: #1c2430; /* deep dusk blue-black, dark bands, footer, buttons */
-  --color-asphalt-soft: #2b3644; /* raised surfaces inside a dark band */
-  --color-slate: #4b5a6b; /* secondary text on light surfaces */
-  --color-paper: #faf8f5; /* primary page surface */
-  --color-concrete: #ebe7e0; /* second neutral, alternating bands, cards */
-  --color-amber: #e9a116; /* road paint, the one loud colour */
-  --color-amber-deep: #b87a06; /* amber that must carry text on paper (4.6:1) */
+  --color-deep: #1f4e4a; /* deep teal: bands, footer, buttons */
+  --color-deep-soft: #2c6560; /* raised surfaces inside a dark band */
+  --color-quiet: #4e5f5b; /* secondary text on light surfaces */
+  --color-surface: #ffffff; /* primary page surface */
+  --color-panel: #eff3f1; /* second surface: alternating bands, cards */
+  --color-accent: #e09b4a; /* apricot: the one loud colour */
+  --color-accent-strong: #a9631c; /* apricot that can carry text on white */
+  --color-accent-soft: #f0b978; /* apricot that can carry text on deep */
+  --color-on-accent: #12302e; /* label sitting on an apricot fill */
 
   /* ---------------------------------------------------------------------
      TYPE
 
-     Newsreader, editorial serif with optical sizing, for display only.
-     Archivo, a grotesque with highway-signage lineage, for body and UI.
-                The body face is literally drawn from the subject's world.
-     Display and body are never the same family (CLAUDE.md).
+     Source Serif 4, a quiet editorial serif, display only.
+     Figtree, warm and open, for body and UI. Its rounded letterforms are the
+     same decision as the 10px panel radius: light-hearted without loosening
+     the craft. Display and body are never the same family (CLAUDE.md).
      --------------------------------------------------------------------- */
-  --font-display: 'Newsreader Variable', ui-serif, Georgia, serif;
-  --font-body: 'Archivo Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Source Serif 4 Variable', ui-serif, Georgia, serif;
+  --font-body: 'Figtree Variable', ui-sans-serif, system-ui, sans-serif;
 
   /* Type scale, 1.25 major third from a 16px base */
   --text-xs: 0.8rem;
@@ -65,10 +75,10 @@
   --text-4xl: 3rem;
   --text-5xl: 4rem;
 
-  --tracking-display: -0.03em; /* tight on large headings */
+  --tracking-display: -0.025em; /* tight on large headings */
   --tracking-label: 0.12em; /* eyebrows and small caps labels */
 
-  --leading-display: 1.04;
+  --leading-display: 1.06;
   --leading-body: 1.7;
 
   /* ---------------------------------------------------------------------
@@ -76,17 +86,18 @@
      --------------------------------------------------------------------- */
   --spacing: 0.25rem;
 
-  /* Panels 2px, buttons 4px. Zero-radius everywhere is its own recognisable
-     default; two deliberate values read as a decision. */
-  --radius-panel: 2px;
-  --radius-btn: 4px;
+  /* Softened from 2px and 4px. The biggest single lever on a light-hearted
+     read, and it costs no credibility because the type and the restraint carry
+     the professionalism. */
+  --radius-panel: 10px;
+  --radius-btn: 8px;
 
   /* ---------------------------------------------------------------------
-     DEPTH, layered and colour-tinted with the asphalt hue, never flat black.
+     DEPTH, layered and tinted with the deep hue, never flat black.
      --------------------------------------------------------------------- */
-  --shadow-base: 0 1px 2px rgb(28 36 48 / 0.05), 0 2px 8px rgb(28 36 48 / 0.04);
-  --shadow-elevated: 0 2px 4px rgb(28 36 48 / 0.06), 0 8px 24px rgb(28 36 48 / 0.08);
-  --shadow-floating: 0 4px 8px rgb(28 36 48 / 0.07), 0 16px 48px rgb(28 36 48 / 0.12);
+  --shadow-base: 0 1px 2px rgb(31 78 74 / 0.05), 0 2px 8px rgb(31 78 74 / 0.04);
+  --shadow-elevated: 0 2px 4px rgb(31 78 74 / 0.06), 0 8px 24px rgb(31 78 74 / 0.09);
+  --shadow-floating: 0 4px 8px rgb(31 78 74 / 0.07), 0 16px 48px rgb(31 78 74 / 0.13);
 
   --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-exit: cubic-bezier(0.4, 0, 1, 1);
@@ -97,7 +108,6 @@
    with Tailwind's sizing utilities.
    ========================================================================== */
 :root {
-  /* Fluid rhythm, 360px up */
   --space-3xs: 0.25rem;
   --space-2xs: 0.5rem;
   --space-xs: 0.75rem;
@@ -107,22 +117,19 @@
   --space-xl: 3rem;
   --space-2xl: 4rem;
 
-  /* Section padding in three tiers. The ratio between them is the whole
-     effect, a page needs a way to say which sections matter. Assigned by
-     what a section is for, never by where it falls in the page. */
-  --pad-major: clamp(5rem, 10vw, 9rem);
-  --pad-section: clamp(3.5rem, 7vw, 6rem);
-  --pad-minor: clamp(2.25rem, 4.5vw, 3.5rem);
+  /* Section padding in three tiers, each opened one step for more air. The
+     ratio between them is the whole effect: a page needs a way to say which
+     sections matter. Assigned by what a section is for, never by where it
+     falls in the page. */
+  --pad-major: clamp(6rem, 11vw, 10rem);
+  --pad-section: clamp(4rem, 8vw, 7rem);
+  --pad-minor: clamp(2.5rem, 5vw, 4rem);
 
   /* Measure and width */
   --width-page: 72rem;
   --width-text: 38rem;
   --width-wide: 46rem;
   --gutter: clamp(1.25rem, 0.9rem + 1.6vw, 2.5rem);
-
-  /* The lane marking. Heavier than a hairline, it is the one loud element. */
-  --lane-stroke: 2px;
-  --lane-dash: 12px 10px;
 
   --border-hairline: 1px;
   --duration: 180ms;
@@ -132,57 +139,56 @@
    SURFACES
 
    Components stay colour-neutral and read these. Putting the flip in one place
-   is what keeps "amber never sets text on paper" true everywhere at once,
-   instead of depending on every component remembering it.
+   is what keeps "apricot never sets text" true everywhere at once, instead of
+   depending on every component remembering it.
    ========================================================================== */
 
-.surface-paper {
-  --bg: var(--color-paper);
-  --fg: var(--color-asphalt);
-  --fg-quiet: var(--color-slate);
-  --rule: color-mix(in srgb, var(--color-asphalt) 14%, transparent);
-  --rule-strong: color-mix(in srgb, var(--color-asphalt) 45%, transparent);
-  --lane: var(--color-amber); /* graphic only, safe */
-  --accent-text: var(--color-amber-deep); /* the text-safe amber */
-  --focus-ring: var(--color-asphalt);
-  --btn-fill: var(--color-asphalt);
-  --btn-label: var(--color-paper);
-  --btn-fill-hover: #101720;
+.surface-base {
+  --bg: var(--color-surface);
+  --fg: var(--color-deep);
+  --fg-quiet: var(--color-quiet);
+  --rule: color-mix(in srgb, var(--color-deep) 14%, transparent);
+  --rule-strong: color-mix(in srgb, var(--color-deep) 42%, transparent);
+  --accent-text: var(--color-accent-strong);
+  --focus-ring: var(--color-deep);
+  --btn-fill: var(--color-deep);
+  --btn-label: var(--color-surface);
+  --btn-fill-hover: #173936;
   background-color: var(--bg);
   color: var(--fg);
 }
 
-.surface-concrete {
-  --bg: var(--color-concrete);
-  --fg: var(--color-asphalt);
-  --fg-quiet: var(--color-slate);
-  --rule: color-mix(in srgb, var(--color-asphalt) 16%, transparent);
-  --rule-strong: color-mix(in srgb, var(--color-asphalt) 45%, transparent);
-  --lane: var(--color-amber);
-  --accent-text: var(--color-amber-deep);
-  --focus-ring: var(--color-asphalt);
-  --btn-fill: var(--color-asphalt);
-  --btn-label: var(--color-paper);
-  --btn-fill-hover: #101720;
+.surface-panel {
+  --bg: var(--color-panel);
+  --fg: var(--color-deep);
+  --fg-quiet: var(--color-quiet);
+  --rule: color-mix(in srgb, var(--color-deep) 16%, transparent);
+  --rule-strong: color-mix(in srgb, var(--color-deep) 42%, transparent);
+  --accent-text: var(--color-accent-strong);
+  --focus-ring: var(--color-deep);
+  --btn-fill: var(--color-deep);
+  --btn-label: var(--color-surface);
+  --btn-fill-hover: #173936;
   background-color: var(--bg);
   color: var(--fg);
 }
 
-/* The dark band. Hero and closing CTA only, plus the footer. Never the page
-   surface, a site that is dark everywhere loses the road-at-dusk contrast
-   that makes the dark bands mean something. */
-.surface-asphalt {
-  --bg: var(--color-asphalt);
-  --fg: var(--color-paper);
-  --fg-quiet: color-mix(in srgb, var(--color-paper) 78%, transparent);
-  --rule: color-mix(in srgb, var(--color-paper) 18%, transparent);
-  --rule-strong: color-mix(in srgb, var(--color-paper) 55%, transparent);
-  --lane: var(--color-amber);
-  --accent-text: var(--color-amber); /* text-safe here at 7.0:1 */
-  --focus-ring: var(--color-amber);
-  --btn-fill: var(--color-amber);
-  --btn-label: var(--color-asphalt);
-  --btn-fill-hover: #f5b53c;
+/* The dark band. Hero and closing band only, plus the footer. Never the page
+   surface: a site that is dark everywhere loses the contrast that makes the
+   dark bands mean anything. */
+.surface-deep {
+  --bg: var(--color-deep);
+  --fg: var(--color-surface);
+  --fg-quiet: color-mix(in srgb, var(--color-surface) 80%, transparent);
+  --rule: color-mix(in srgb, var(--color-surface) 20%, transparent);
+  --rule-strong: color-mix(in srgb, var(--color-surface) 55%, transparent);
+  --accent-text: var(--color-accent-soft);
+  --focus-ring: var(--color-accent);
+  /* The one place an apricot fill appears as a button, so it takes the dark
+     label rather than white, which would be 2.34:1. */
+  --btn-fill: var(--color-accent);
+  --btn-label: var(--color-on-accent);
+  --btn-fill-hover: #eaad67;
   background-color: var(--bg);
   color: var(--fg);
 }

@@ -1,8 +1,7 @@
 ---
-import Lane from './Lane.astro';
 
 /**
- * The closing band. Every page ends on one, always on asphalt, so the site has
+ * The closing band. Every page ends on one, always on the deep surface, so the site has
  * a consistent last beat and the dark surface stays meaningful by appearing
  * exactly twice per page at most.
  */
@@ -13,9 +12,8 @@ interface Props {
 const { heading } = Astro.props;
 ---
 
-<section class="cta surface-asphalt">
+<section class="cta surface-deep">
   <div class="cta-inner">
-    <Lane mode="recede" class="cta-lane" />
     <h2 class="cta-heading">{heading}</h2>
     <div class="cta-body"><slot name="body" /></div>
     <div class="cta-actions"><slot /></div>
@@ -32,10 +30,6 @@ const { heading } = Astro.props;
     margin-inline: auto;
   }
 
-  .cta-inner :global(.cta-lane) {
-    margin-block-end: var(--space-l);
-    max-inline-size: 22rem;
-  }
 
   .cta-heading {
     margin: 0;

@@ -84,7 +84,7 @@ const board = [
        The five-founders group shot this replaced was dropped because five real
        headshots already do that job, and with the founders in five cities a
        group photo would have held the page indefinitely. -->
-  <section class="town-band surface-paper">
+  <section class="town-band surface-base">
     <figure class="town">
       <Image
         src={townPhoto}
@@ -100,7 +100,7 @@ const board = [
     </figure>
   </section>
 
-  <section class="section surface-paper">
+  <section class="section surface-base">
     <div class="wrap">
       <div class="split prose">
         <h2>Why we started this</h2>
@@ -109,11 +109,14 @@ const board = [
           we came from, but because there are small things you take for granted that you only recognize
           from a distance.
         </p>
+        <!-- The thesis of the whole foundation, previously the first clause of a
+             five-line paragraph. It earns display size. -->
+        <p class="pull">What we found out there was perspective.</p>
         <p>
-          What we found out there was perspective. Long stretches away, surrounded by people whose
-          lives looked nothing like ours, learning things you can't learn somewhere familiar. None
-          of that was lost when we graduated. We carried it with us: some of us back to Chester
-          County, some of us elsewhere, all of us still tied to the place that raised us.
+          Long stretches away, surrounded by people whose lives looked nothing like ours, learning
+          things you can't learn somewhere familiar. None of that was lost when we graduated. We
+          carried it with us: some of us back to Chester County, some of us elsewhere, all of us
+          still tied to the place that raised us.
         </p>
         <p>
           There are students here right now who want that same experience and can't have it, for one
@@ -123,10 +126,9 @@ const board = [
     </div>
   </section>
 
-  <!-- The question. The site's argument, so it gets the dark band and the
-       scene variant of the mark, the only place the figure and the guiding
-       hand appear at a size where they resolve. -->
-  <section class="section--major surface-asphalt" id="the-question">
+  <!-- The question. The site's argument, so it gets the dark band and the mark
+       at a size where the prism resolves. -->
+  <section class="section--major surface-deep" id="the-question">
     <div class="wrap question-grid">
       <div class="question-copy">
         <span class="eyebrow">The question we get most</span>
@@ -146,12 +148,12 @@ const board = [
       </div>
 
       <div class="question-mark">
-        <Logo variant="scene" decorative />
+        <Logo variant="mark" decorative />
       </div>
     </div>
   </section>
 
-  <section class="section surface-concrete">
+  <section class="section surface-panel">
     <div class="wrap">
       <div class="measure-wide">
         <h2 class="mission-title">Our mission</h2>
@@ -170,7 +172,7 @@ const board = [
     </div>
   </section>
 
-  <section class="section surface-paper">
+  <section class="section surface-base">
     <div class="wrap">
       <div class="split prose">
         <h2>Who's accountable</h2>
@@ -220,6 +222,17 @@ const board = [
 </BaseLayout>
 
 <style>
+  /* A pull quote, not a heading: it is the sentence the page turns on, so it
+     gets display size without taking a level in the outline. */
+  .pull {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3.2vw, 2.125rem);
+    line-height: 1.22;
+    letter-spacing: var(--tracking-display);
+    color: var(--fg);
+    text-wrap: balance;
+  }
+
   .question-grid {
     display: grid;
     grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);

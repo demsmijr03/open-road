@@ -8,7 +8,7 @@
  * and a small label saying what is still owed.
  *
  * No colour is used to mark it. An earlier version carried a roadwork-striped
- * amber edge, which drew the eye but read as decoration.
+ * accent edge, which drew the eye but read as decoration.
  *
  * Every one of these is a launch blocker. `npm run audit:holes` counts them.
  */
@@ -81,8 +81,8 @@ const { note, as = 'block' } = Astro.props;
   }
 
   /* Inside a dark band the tint goes the other way so it stays legible. */
-  :global(.surface-asphalt) .ph-block,
-  :global(.surface-asphalt) .ph-inline {
+  :global(.surface-deep) .ph-block,
+  :global(.surface-deep) .ph-inline {
     background-color: color-mix(in srgb, var(--fg) 7%, var(--bg));
   }
 </style>

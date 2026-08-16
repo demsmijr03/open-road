@@ -99,7 +99,7 @@ grep -rnP "\x{00B7}" src/     # middle dot
 ## Token rules (Tailwind v4)
 
 Tokens live in `src/styles/tokens.css`. Tailwind v4 derives utilities from the `@theme` block, so
-defining `--color-ink-500` there automatically yields `text-ink-500`, `bg-ink-500`, etc.
+defining `--color-deep` there automatically yields `text-deep`, `bg-deep`, etc.
 
 **Never define `--spacing-<name>` in `@theme`.** That namespace feeds *both* padding and sizing
 utilities, so a `--spacing-3xl` token silently makes `max-w-3xl` resolve to it instead of
@@ -150,7 +150,9 @@ Empty output means the selector was dropped, not that the style is working.
 
 ## Anti-Generic Guardrails
 
-- **Colors:** Never use the default Tailwind palette (indigo-500, blue-600, etc.). Derive from the brand color.
+- **Colors:** Only the tokens in `src/styles/tokens.css`. Never the default Tailwind palette.
+  **Apricot carries text on nothing** (2.34:1 on white, 3.99:1 on deep). Use
+  `--accent-text`, which each surface sets to the safe variant for its background.
 - **Shadows:** Never use flat `shadow-md`. Use layered, color-tinted shadows with low opacity.
 - **Typography:** Never use the same font for headings and body. Pair a display/serif with a clean sans.
   Tight tracking (`-0.03em`) on large headings, generous line-height (`1.7`) on body.
@@ -177,6 +179,7 @@ Empty output means the selector was dropped, not that the style is working.
 - Do not stop after one screenshot pass
 - Do not use `transition-all`
 - Do not use default Tailwind blue/indigo as primary color
+- Do not reintroduce a decorative motif. The lane was retired on purpose; see BRAND.md
 - Do not use emoji as icons, use SVG
 - Do not commit anything from `content_intake/` that lacks photo consent/rights
 

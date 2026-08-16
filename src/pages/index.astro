@@ -2,7 +2,6 @@
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
-import Lane from '../components/Lane.astro';
 import DistanceStat from '../components/DistanceStat.astro';
 import CtaBand from '../components/CtaBand.astro';
 import heroPhoto from '../assets/landingpage.png';
@@ -13,7 +12,7 @@ import heroPhoto from '../assets/landingpage.png';
   description="We help West Chester Area School District students afford the school that fits them best, wherever it takes them."
 >
   <!-- Hero ------------------------------------------------------------- -->
-  <section class="hero surface-asphalt">
+  <section class="hero surface-deep">
     <div class="hero-media">
       <Image
         src={heroPhoto}
@@ -41,11 +40,10 @@ import heroPhoto from '../assets/landingpage.png';
   </section>
 
   <!-- Three numbers ----------------------------------------------------- -->
-  <section class="section--major surface-paper">
+  <section class="section--major surface-base">
     <div class="wrap">
       <header class="numbers-head">
         <h2>Here's the problem, from three distances.</h2>
-        <Lane mode="recede" class="numbers-lane" />
       </header>
 
       <div class="numbers">
@@ -91,17 +89,20 @@ import heroPhoto from '../assets/landingpage.png';
     </div>
   </section>
 
-  <!-- What we do -------------------------------------------------------- -->
-  <section class="section surface-concrete">
+  <!-- One idea, at size. This was a flat prose block, which is the wrong
+       treatment for the single sentence the whole foundation rests on. -->
+  <section class="section--major surface-panel">
     <div class="wrap">
-      <div class="measure-wide prose">
-        <h2>What we do</h2>
-        <p>
+      <div class="statement">
+        <h2 class="statement-h">
+          Money is the only thing standing between a student here and the school that fits them.
+          So we're removing it.
+        </h2>
+        <p class="statement-p">
           We're a scholarship fund in West Chester. We raise money from people who live here and put
           it toward the cost of college for a student who has been accepted somewhere they can't
-          quite afford.
+          quite afford. <a href="/about/">Read the full mission</a>
         </p>
-        <p><a href="/about/">Read the full mission</a></p>
       </div>
     </div>
   </section>
@@ -114,6 +115,39 @@ import heroPhoto from '../assets/landingpage.png';
 </BaseLayout>
 
 <style>
+  .statement {
+    max-inline-size: var(--width-wide);
+  }
+
+  .statement-h {
+    margin: 0;
+    font-size: clamp(1.875rem, 4.4vw, 3rem);
+    line-height: 1.14;
+    letter-spacing: var(--tracking-display);
+    text-wrap: balance;
+  }
+
+  .statement-p {
+    margin: var(--space-l) 0 0;
+    max-inline-size: var(--width-text);
+    font-size: var(--text-lg);
+    line-height: var(--leading-body);
+    color: var(--fg-quiet);
+  }
+
+  .statement-p a {
+    color: var(--fg);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-color: var(--rule-strong);
+    white-space: nowrap;
+  }
+
+  .statement-p a:hover {
+    color: var(--accent-text);
+    text-decoration-color: var(--accent-text);
+  }
+
   .hero {
     position: relative;
     isolation: isolate;
@@ -147,7 +181,7 @@ import heroPhoto from '../assets/landingpage.png';
 
      This photograph is bright: the sky behind the centred text sits around
      1.7:1 against paper, which is unreadable. A light scrim was not close, so
-     these layers take the centre to roughly 85% asphalt, about 6:1.
+     these layers take the centre to roughly 85% of the deep teal, about 6:1.
 
      That is heavy, and deliberately so. The dark band was already the site's
      hero surface, and a deeply darkened photograph reads as that same band with
@@ -165,14 +199,14 @@ import heroPhoto from '../assets/landingpage.png';
     background:
       radial-gradient(
         ellipse 100% 85% at 50% 50%,
-        rgb(28 36 48 / 0.55),
-        rgb(28 36 48 / 0.35)
+        rgb(31 78 74 / 0.55),
+        rgb(31 78 74 / 0.35)
       ),
       linear-gradient(
         to bottom,
-        rgb(28 36 48 / 0.7),
-        rgb(28 36 48 / 0.62) 45%,
-        rgb(28 36 48 / 0.85)
+        rgb(31 78 74 / 0.7),
+        rgb(31 78 74 / 0.62) 45%,
+        rgb(31 78 74 / 0.85)
       );
   }
 
@@ -224,10 +258,6 @@ import heroPhoto from '../assets/landingpage.png';
     white-space: nowrap;
   }
 
-  .numbers-head :global(.numbers-lane) {
-    flex: 1;
-    min-inline-size: 3rem;
-  }
 
   /* The three sit in a column, not a row. A row would make them equal, and the
      whole point is that they are at different distances. The reader travels

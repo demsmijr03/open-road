@@ -64,17 +64,15 @@ const { distance, scope, figure, source } = Astro.props;
     white-space: nowrap;
   }
 
-  /* The lane marking again, weighted by distance. */
   .stat-rule {
     flex: 1;
     min-inline-size: 2rem;
-    block-size: 2px;
+    /* A solid rule that thickens as the fact gets closer to home. The dashed
+       lane marking that used to do this said "road"; the weight says the same
+       thing about distance without the metaphor. */
+    block-size: var(--rule-weight);
     border-radius: 2px;
-    background-image: repeating-linear-gradient(
-      to right,
-      var(--lane) 0 var(--dash),
-      transparent var(--dash) calc(var(--dash) * 2)
-    );
+    background-color: color-mix(in srgb, var(--fg) 32%, transparent);
   }
 
   .stat-figure {
@@ -110,7 +108,7 @@ const { distance, scope, figure, source } = Astro.props;
     --block: 44rem;
     --size: clamp(2.5rem, 6vw, 3.25rem);
     --body-size: var(--text-base);
-    --dash: 6px;
+    --rule-weight: 1px;
     --fig-color: var(--fg-quiet);
   }
 
@@ -118,7 +116,7 @@ const { distance, scope, figure, source } = Astro.props;
     --block: 56rem;
     --size: clamp(3.25rem, 8vw, 4.5rem);
     --body-size: var(--text-lg);
-    --dash: 10px;
+    --rule-weight: 2px;
     --fig-color: color-mix(in srgb, var(--fg) 80%, var(--fg-quiet));
   }
 
@@ -126,7 +124,7 @@ const { distance, scope, figure, source } = Astro.props;
     --block: 100%;
     --size: clamp(4rem, 11vw, 6.5rem);
     --body-size: var(--text-xl);
-    --dash: 15px;
+    --rule-weight: 3px;
     --fig-color: var(--fg);
   }
 

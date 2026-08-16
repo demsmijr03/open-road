@@ -17,8 +17,8 @@
     font-family: var(--font-body);
     font-size: var(--text-base);
     line-height: var(--leading-body);
-    color: var(--color-asphalt);
-    background-color: var(--color-paper);
+    color: var(--color-deep);
+    background-color: var(--color-surface);
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
@@ -40,7 +40,7 @@
 
   /* Visible focus on keyboard nav only. Never removed, per CLAUDE.md. */
   :focus-visible {
-    outline: 3px solid var(--focus-ring, var(--color-asphalt));
+    outline: 3px solid var(--focus-ring, var(--color-deep));
     outline-offset: 2px;
     border-radius: 2px;
   }
@@ -70,8 +70,8 @@
     z-index: 100;
     padding: var(--space-2xs) var(--space-s);
     border-radius: var(--radius-btn);
-    background-color: var(--color-asphalt);
-    color: var(--color-paper);
+    background-color: var(--color-deep);
+    color: var(--color-surface);
     box-shadow: var(--shadow-floating);
     transform: translateY(-150%);
     transition: transform 200ms var(--ease-spring);

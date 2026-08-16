@@ -4,127 +4,107 @@ Everything here was derived from `content_intake/content.md`. Where a decision
 could have gone either way, the reasoning is recorded so a later change is made
 deliberately rather than by drift.
 
-## The idea: mile markers
+## The idea: perspective
 
-Three things had to become one design: **a road**, **college**, and
-**perspective**.
+The foundation funds students to go somewhere unfamiliar and come back seeing
+more than they did. That is the subject, and the identity encodes it.
 
-They already were one thing in the content. The three numbers on the home page
-are introduced as *"Here's the problem, from three distances"*, national, then
-state, then local. And the founders' story says what they found by leaving was
-*"perspective."* Geometric perspective and earned perspective are the same word
-because they are the same idea: distance changes what you can see.
+The previous direction ("mile markers") is gone. It leaned on two things the
+brand should not lean on: **school**, through a mortarboard, and **road**, which
+the name already carries and which every other Open Road organisation uses. The
+road metaphor is out of the token names too, because leaving `asphalt` and
+`concrete` in place would have kept the old idea alive in every file long after
+the logo changed.
 
-So the whole system runs on one rule:
+One rule still governs the layout, and it comes from the content itself. The
+home page introduces its three numbers as *"the problem, from three distances"*:
 
 > **Things nearer to home render larger and louder. Things further away recede.**
 
-That rule governs the logo, the three numbers, the dividers, and the lane
-markings, which is what makes them feel like one design rather than a set of
-motifs.
+## The mark: Prism
+
+One line goes in, three come out. A single student, and the wider range of what
+they can see afterwards.
+
+Chosen from five candidates, all shown at 200 / 96 / 32 / 16px on light and dark
+before anything was committed. The bar is the one apricot element, which is
+consistent with apricot being graphic-only everywhere else.
+
+The favicon drops one of the three rays. Three diverging strokes turn to mud at
+16px; two still say "one in, more out".
 
 ## Palette
 
-Drawn from the subject's own materials, asphalt, painted lane markings,
-highway signage, rather than from nonprofit convention. Defined in
-`src/styles/tokens.css`.
-
 | Token | Value | Job |
 |---|---|---|
-| `--color-asphalt` | `#1c2430` | Dark bands, footer, primary button. Road at dusk. |
-| `--color-paper` | `#faf8f5` | The dominant page surface. |
-| `--color-concrete` | `#ebe7e0` | Second neutral, alternating bands, cards. |
-| `--color-slate` | `#4b5a6b` | Secondary text on light surfaces. |
-| `--color-amber` | `#e9a116` | Road paint. The one loud colour. |
-| `--color-amber-deep` | `#b87a06` | The text-safe amber, for links on paper. |
+| `--color-deep` | `#1f4e4a` | Deep teal. Bands, footer, buttons |
+| `--color-surface` | `#ffffff` | The page |
+| `--color-panel` | `#eff3f1` | Second surface, cards |
+| `--color-quiet` | `#4e5f5b` | Secondary text |
+| `--color-accent` | `#e09b4a` | Apricot. The one loud colour |
 
 ### The rule that gets broken by accident
 
-Amber is 2.1:1 on paper. It is the brand's loud colour, so there is a permanent
-temptation to set a heading in it on a light surface, and at 2.1:1 that is
-unreadable for a lot of people.
+**Apricot carries text on nothing.** 2.34:1 on white, 3.99:1 on the deep band,
+and white on an apricot button is 2.34:1 as well.
 
-**On paper, amber is a rule, a fill, an underline, or a marker. Never a glyph.**
-Where amber must carry text on a light surface, use `--color-amber-deep` (4.6:1).
-On asphalt, amber is text-safe at 7.0:1.
+This is the second palette where the loud colour could not carry text, so this
+time all three safe variants ship with it rather than being discovered later:
 
-This is enforced in one place, the `.surface-*` classes set `--accent-text` to
-the right amber for their background, so components never choose.
+- `--color-accent-strong` `#a9631c`, 4.68:1 on white, for links and accented text
+- `--color-accent-soft` `#f0b978`, 5.30:1 on deep, for accented text in a dark band
+- `--color-on-accent` `#12302e`, 6.02:1, for labels sitting on an apricot fill
+
+Enforced in one place: the `.surface-*` classes set `--accent-text` to the right
+variant for their background, so components never choose.
 
 ## Type
 
-- **Newsreader**, editorial serif, display only. Warm and characterful without
-  the high-contrast Playfair look that reads as a default.
-- **Archivo**, a grotesque with **highway signage lineage**, for body and UI.
-  The body face is literally drawn from the subject's world.
+- **Source Serif 4**, quiet editorial serif, display only.
+- **Figtree**, warm and open, for body and UI.
+
+Figtree's rounded letterforms are the same decision as the 10px panel radius:
+light-hearted without loosening the craft. Chosen against three alternatives
+shown in full at `/explore/`.
 
 Self-hosted via `@fontsource-variable`, not the Google CDN. The privacy page
 makes claims about who sees visitor data; a font CDN request would undercut them.
 
-## The signature: the lane marking
+## There is no motif, on purpose
 
-A road's centre line, used as a divider, a list marker, an active-nav indicator,
-and the FAQ's open/close sign. In `recede` mode the dashes shorten and fade
-left-to-right, perspective stated in one CSS rule.
+The dashed lane marking was retired with the old logo and **nothing replaced
+it**. It did four jobs, and each is now done by the plainest thing that works:
+a solid underline for the active nav item, a plain plus for the question toggle,
+a round bullet for list markers, a hairline for the timeline connector.
 
-Used sparingly. A divider between every block turns a signature into wallpaper.
-
-## The mark
-
-Brief: a road as the base, a small person guided by a hand, fused with college
-and perspective.
-
-A mortarboard seen at an angle and a road seen in perspective are the same
-trapezoid, that rhyme is the whole mark.
-
-**The first attempt failed and is worth recording.** It put the cap at the far
-end of a receding road. At any real size the cap sat wider than the road's
-vanishing point and read as a lamp on a tripod. The fix was to invert the
-composition: the cap is the fixed point at the top, and the road opens out from
-beneath it toward the viewer. The road now widens as it approaches and its lane
-markings grow with it, so the drawing is read from the horizon forward, the
-same move the three numbers make.
-
-The guiding hand is a cupped palm that stops short of the figure. It never
-touches. The figure walks on their own, which is the actual relationship a
-scholarship has to a student and the difference between guidance and rescue.
-
-Variants: `mark` (survives 16px), `full` (with wordmark), `scene` (adds the
-figure and hand; 120px and up only, because that detail turns to mud smaller).
+The site already has three signatures stronger than a dash: the perspective
+scale on the three numbers, the surface system, and the type pairing. Restraint
+is also the more expensive-looking choice. If a motif is wanted later it should
+come out of the mark, so it means something, rather than being added because
+removing the old one left a hole.
 
 ## Holes are visible on purpose
 
 `content.md` is explicit that `[PLACEHOLDER: …]` "should render visibly on the
 page rather than being quietly filled with something plausible."
 
-So `<Placeholder />` reads as an unfinished note rather than as content: a
-dashed outline, a quiet tint, and a small label saying what is still owed. It
-carries no colour. An earlier version used a roadwork-striped amber edge, which
-drew the eye but read as decoration rather than as an open question.
+`<Placeholder />` reads as an unfinished note: a dashed outline, a quiet tint, a
+small label. Where the missing thing is an **action** rather than a fact, the
+button renders in its real place, correctly sized, outlined rather than filled,
+disabled, and labelled `placeholder`. The page gets its true shape while staying
+honest that nothing is wired up.
 
-The companion `<Verify />` component is gone. Every `[VERIFY:]` fact was checked
-against a primary source on 16 August 2026, and one of them was wrong:
-Pennsylvania is not second in the country for in-state tuition. Vermont and New
-Hampshire are both above it. The stat now states the verified comparison, 29%
-above the national average.
-
-A hero that already looks finished without its photograph never gets the
-photograph commissioned. The photo slots therefore hold their real footprint
-rather than collapsing to a caption.
-
-Run `npm run audit:holes` for the current count. It exits non-zero while
-anything is outstanding.
+Run `npm run audit:holes` for the current count.
 
 ## What is deliberately not here
 
-- **No invented facts.** Legal name, EIN, addresses and application dates are
-  holes. Founder bios are written from what the founders supplied; their
-  headshots drop into `src/assets/founders/` and show a placeholder until they do.
+- **No invented facts.** Legal name, EIN, addresses and application dates are holes.
 - **No EIN in the structured data.** A wrong EIN in machine-readable markup is
-  worse than an absent one, so `NGO` schema omits it until it is known.
-- **No live form.** No provider is chosen, so the interest form has no `action`
-  and says so. A form that looks submittable and silently drops what a student
-  types is worse than one that admits it is not ready.
-- **No recurring giving.** content.md says one-time only at launch.
-- **No mentorship section.** It appears in the mission statement's own words and
-  nowhere else, per Appendix A item 4.
+  worse than an absent one.
+- **No live form or donation link.** No provider is chosen.
+- **No bento of facts.** The candidates are all still placeholders, and a grid of
+  six unknowns is worse than a paragraph.
+- **No student story.** There is no funded student yet and inventing one is out
+  of the question. Worth stating plainly: **an image, a caption and a quote from
+  the first recipient is the single highest-value addition this site will ever
+  get**, and it belongs on the home page the week that award is made.

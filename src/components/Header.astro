@@ -15,7 +15,7 @@ const isCurrent = (href: string) =>
   href === '/' ? pathname === '/' : pathname.startsWith(href);
 ---
 
-<header class="header surface-paper">
+<header class="header surface-base">
   <div class="header-inner">
     <a href="/" class="header-brand" aria-label="The Open Road Foundation, home">
       <Logo variant="full" />
@@ -98,7 +98,7 @@ const isCurrent = (href: string) =>
     position: relative;
   }
 
-  /* The lane marking, one dash long, as the active indicator. */
+  /* A solid underline as the active indicator. */
   .header-nav a[aria-current='page']::after,
   .header-nav a:hover::after {
     content: '';
@@ -107,7 +107,7 @@ const isCurrent = (href: string) =>
     inset-block-end: 0.35rem;
     block-size: 2px;
     border-radius: 2px;
-    background-color: var(--lane);
+    background-color: var(--fg);
   }
 
   .header-nav a:hover::after {

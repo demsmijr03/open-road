@@ -70,15 +70,15 @@ const { items } = Astro.props;
     color: var(--fg);
   }
 
-  /* A lane dash that gains a crossbar when closed, a plus that is still a
-     road marking. Rotation is a transform, so it is safe to animate. */
+  /* A plain plus that becomes a minus. Rotation is a transform, so it is safe
+     to animate. */
   .faq-sign {
     position: relative;
     flex: none;
     inline-size: 0.875rem;
     block-size: 2px;
     border-radius: 2px;
-    background-color: var(--lane);
+    background-color: var(--fg-quiet);
   }
 
   .faq-sign::after {
@@ -86,7 +86,7 @@ const { items } = Astro.props;
     position: absolute;
     inset: 0;
     border-radius: 2px;
-    background-color: var(--lane);
+    background-color: var(--fg-quiet);
     transform: rotate(90deg);
     transition: transform var(--duration) var(--ease-spring);
   }

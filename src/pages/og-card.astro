@@ -9,8 +9,8 @@
  *
  * noindex, it is an asset source, not a page.
  */
-import '@fontsource-variable/newsreader';
-import '@fontsource-variable/archivo';
+import '@fontsource-variable/source-serif-4';
+import '@fontsource-variable/figtree';
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
 ---
@@ -23,7 +23,7 @@ import Logo from '../components/Logo.astro';
     <meta name="robots" content="noindex, nofollow" />
   </head>
   <body class="og-body">
-    <div class="card surface-asphalt">
+    <div class="card surface-deep">
       <div class="card-top">
         <div class="card-mark"><Logo variant="mark" decorative /></div>
         <div class="card-words">
@@ -112,11 +112,7 @@ import Logo from '../components/Logo.astro';
     inline-size: 220px;
     block-size: 3px;
     border-radius: 2px;
-    background-image: repeating-linear-gradient(
-      to right,
-      var(--lane) 0 20px,
-      transparent 20px 34px
-    );
+    background-color: var(--color-accent);
   }
 
   .card-place {

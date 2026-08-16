@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Lane from '../components/Lane.astro';
 import Logo from '../components/Logo.astro';
 ---
 
@@ -9,12 +8,11 @@ import Logo from '../components/Logo.astro';
   description="That page doesn't exist."
   noindex
 >
-  <section class="notfound surface-asphalt">
+  <section class="notfound surface-deep">
     <div class="wrap notfound-grid">
       <div>
         <span class="eyebrow">404</span>
         <h1>Dead end.</h1>
-        <Lane mode="recede" class="notfound-lane" />
         <p class="notfound-body">
           That page doesn't exist, or it moved and we didn't put up a sign. Here's the way back.
         </p>
@@ -27,7 +25,7 @@ import Logo from '../components/Logo.astro';
       </div>
 
       <div class="notfound-mark">
-        <Logo variant="scene" decorative />
+        <Logo variant="mark" decorative />
       </div>
     </div>
   </section>
@@ -50,10 +48,6 @@ import Logo from '../components/Logo.astro';
     font-size: clamp(2.5rem, 7vw, 4rem);
   }
 
-  .notfound-grid :global(.notfound-lane) {
-    max-inline-size: 12rem;
-    margin-block-end: var(--space-m);
-  }
 
   .notfound-body {
     margin: 0;

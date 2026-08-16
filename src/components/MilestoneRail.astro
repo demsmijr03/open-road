@@ -55,18 +55,14 @@ const { items } = Astro.props;
     padding-block: var(--space-m);
   }
 
-  /* The road: a continuous line down the markers, dashed like a lane. */
+  /* A hairline connecting the markers. */
   .rail-item::before {
     content: '';
     position: absolute;
     inset-block: 0;
     inset-inline-start: 5px;
-    inline-size: 2px;
-    background-image: repeating-linear-gradient(
-      to bottom,
-      var(--lane) 0 8px,
-      transparent 8px 16px
-    );
+    inline-size: 1px;
+    background-color: var(--rule-strong);
   }
 
   .rail-item:first-child::before {

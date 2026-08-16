@@ -1,10 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
-import Lane from '../components/Lane.astro';
 import CtaBand from '../components/CtaBand.astro';
 import PageHero from '../components/PageHero.astro';
 import Faq from '../components/Faq.astro';
+
+const criteria = [
+  { title: 'You go to a WCASD high school', detail: "You're graduating from a West Chester Area School District high school." },
+  { title: 'A 3.25 GPA or above', detail: 'Measured on your school’s standard scale.' },
+  { title: 'You have financial need', detail: 'How this is assessed is confirmed before the application opens.' },
+  { title: 'You have an offer in hand', detail: "Accepted somewhere, or holding offers. No requirement about where you go or what kind of program it is." },
+];
 
 const faqs = [
   {
@@ -44,7 +50,6 @@ const faqs = [
          worse than no asterisk at all. -->
     <div slot="aside" class="award-figure">
       <p class="award-amount">$9,000<span class="award-star" aria-hidden="true">*</span></p>
-      <Lane mode="recede" class="award-lane" />
       <p class="award-caption">one award, one student, this year.</p>
       <p class="award-footnote">
         <span aria-hidden="true">*</span>
@@ -53,7 +58,7 @@ const faqs = [
     </div>
   </PageHero>
 
-  <section class="section surface-paper">
+  <section class="section surface-base">
     <div class="wrap">
       <div class="split prose">
         <h2>What we do</h2>
@@ -69,24 +74,27 @@ const faqs = [
     </div>
   </section>
 
-  <section class="section surface-concrete">
+  <section class="section surface-panel">
     <div class="wrap">
-      <div class="split prose">
-        <h2>Who qualifies</h2>
-        <ul class="checklist">
-          <li>You're graduating from a West Chester Area School District high school.</li>
-          <li>You have a 3.25 GPA or above.</li>
-          <li>You have financial need.</li>
-          <li>
-            You've been accepted somewhere, or you're holding offers. There's no requirement about
-            where you go or what kind of program it is.
-          </li>
-        </ul>
-      </div>
+      <h2 class="qual-title">Who qualifies</h2>
+      <!-- Four criteria, each independently checkable. A student scanning "do I
+           qualify" is served better by four cards than by a bullet list, because
+           each one either applies to them or does not. -->
+      <ul class="quals">
+        {
+          criteria.map((c, i) => (
+            <li class="qual">
+              <p class="qual-n">{String(i + 1).padStart(2, '0')}</p>
+              <p class="qual-t">{c.title}</p>
+              <p class="qual-d">{c.detail}</p>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </section>
 
-  <section class="section--major surface-paper">
+  <section class="section--major surface-base">
     <div class="wrap">
       <div class="split prose">
         <h2>What the award covers</h2>
@@ -115,7 +123,7 @@ const faqs = [
     </div>
   </section>
 
-  <section class="section surface-concrete">
+  <section class="section surface-panel">
     <div class="wrap">
       <div class="split prose">
         <h2>How we choose, and when</h2>
@@ -135,7 +143,7 @@ const faqs = [
     </div>
   </section>
 
-  <section class="section surface-paper" id="questions">
+  <section class="section surface-base" id="questions">
     <div class="wrap">
       <div class="measure-wide">
         <h2 class="faq-title">Questions</h2>
@@ -151,6 +159,63 @@ const faqs = [
 </BaseLayout>
 
 <style>
+  .qual-title {
+    margin: 0 0 var(--space-l);
+    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+  }
+
+  .quals {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-m);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 40rem) {
+    .quals { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 64rem) {
+    .quals { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+
+  .qual {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+    padding: var(--space-m);
+    border-radius: var(--radius-panel);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-base);
+  }
+
+  /* Numbered because eligibility is a checklist, not a ranking: the numerals
+     help a student keep their place across four cards. */
+  .qual-n {
+    margin: 0 0 var(--space-2xs);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--accent-text);
+  }
+
+  .qual-t {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .qual-d {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--fg-quiet);
+  }
+
   .checklist {
     margin: 0;
     padding: 0;
@@ -167,16 +232,17 @@ const faqs = [
     color: var(--fg-quiet);
   }
 
-  /* A lane dash as the marker, the road motif doing a list's work. */
+  /* A plain round marker. The lane dash that used to sit here was the road
+     motif doing a list's work, and a list does not need a motif. */
   .checklist li::before {
     content: '';
     position: absolute;
-    inset-inline-start: 0;
-    inset-block-start: 0.7em;
-    inline-size: 0.75rem;
-    block-size: 2px;
-    border-radius: 2px;
-    background-color: var(--lane);
+    inset-inline-start: 0.2rem;
+    inset-block-start: 0.72em;
+    inline-size: 0.3rem;
+    block-size: 0.3rem;
+    border-radius: 50%;
+    background-color: var(--fg-quiet);
   }
 
   /* The figure, now in the masthead. Sized a little under the old in-page
@@ -190,15 +256,11 @@ const faqs = [
     letter-spacing: var(--tracking-display);
   }
 
-  /* --accent-text resolves to the text-safe amber on asphalt (7:1). */
+  /* --accent-text resolves to the text-safe apricot on the deep surface (5.3:1). */
   .award-star {
     color: var(--accent-text);
   }
 
-  .award-figure :global(.award-lane) {
-    margin-block: var(--space-s);
-    max-inline-size: 12rem;
-  }
 
   .award-caption {
     margin: 0;

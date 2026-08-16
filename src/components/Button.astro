@@ -3,7 +3,7 @@
  * The site's one button.
  *
  * Fill and label come from the surface (see tokens.css), so a button never
- * picks its own colours and "amber never sets text on paper" stays true in one
+ * picks its own colours and "apricot never sets text" stays true in one
  * place rather than in every component.
  *
  * Every clickable element carries hover, focus-visible and active states. See
@@ -14,18 +14,36 @@ interface Props {
   variant?: 'primary' | 'secondary';
   type?: 'button' | 'submit';
   class?: string;
+  /**
+   * Renders the real button, in its real place, with the word "placeholder"
+   * on it and interaction disabled. The page gets its true shape while staying
+   * honest that nothing is wired up yet, which is the same rule the rest of the
+   * site follows: a hole stays visible rather than being quietly filled.
+   */
+  placeholder?: boolean;
 }
 
-const { href, variant = 'primary', type = 'button', class: className = '' } = Astro.props;
-const Tag = href ? 'a' : 'button';
+const {
+  href,
+  variant = 'primary',
+  type = 'button',
+  class: className = '',
+  placeholder = false,
+} = Astro.props;
+
+const Tag = placeholder ? 'button' : href ? 'a' : 'button';
 ---
 
 <Tag
-  class:list={['btn', `btn--${variant}`, className]}
-  href={href}
-  type={href ? undefined : type}
+  class:list={['btn', `btn--${variant}`, placeholder && 'btn--placeholder', className]}
+  href={placeholder ? undefined : href}
+  type={href && !placeholder ? undefined : type}
+  disabled={placeholder ? true : undefined}
+  aria-disabled={placeholder ? 'true' : undefined}
+  data-placeholder={placeholder ? '' : undefined}
 >
   <slot />
+  {placeholder && <span class="btn-tag">placeholder</span>}
 </Tag>
 
 <style>
@@ -80,6 +98,29 @@ const Tag = href ? 'a' : 'button';
   .btn:focus-visible {
     outline: 3px solid var(--focus-ring);
     outline-offset: 3px;
+  }
+
+  /* Outlined rather than filled, so it reads as a slot waiting for a provider
+     rather than as a live control. Never dimmed with opacity: that would drag
+     the label under the contrast floor. */
+  .btn--placeholder {
+    background-color: transparent;
+    color: var(--fg);
+    border: var(--border-hairline) dashed var(--rule-strong);
+    cursor: not-allowed;
+  }
+
+  .btn--placeholder:hover {
+    transform: none;
+    background-color: transparent;
+  }
+
+  .btn-tag {
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--fg-quiet);
   }
 
   @media (prefers-reduced-motion: reduce) {

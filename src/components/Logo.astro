@@ -1,34 +1,23 @@
 ---
 /**
- * The Open Road Foundation mark.
+ * The Open Road Foundation mark: Prism.
  *
- * Brief: a road as the base, a small person guided by a hand, fused with the
- * college idea and with perspective.
+ * One line goes in, three come out. A single student, and the wider range of
+ * what they can see afterwards. That is the whole idea, and it is why this
+ * replaced the previous drawing of a road running into a mortarboard: the name
+ * already carries the road, every other Open Road organisation leans on it, and
+ * the campus was never what the foundation is about.
  *
- * How it was developed:
- *  - A mortarboard seen at an angle and a road seen in perspective are the same
- *    trapezoid. The first attempt put a cap at the far end of a receding road,
- *    but at any real size the cap sat wider than the road's vanishing point and
- *    read as a lamp on a tripod. So the composition inverted: the cap is the
- *    fixed point at the top, and the road opens out from beneath it toward the
- *    viewer.
- *  - That inversion is what makes the perspective legible. The road widens as
- *    it approaches and its lane markings grow with it, so the drawing is read
- *    from the horizon forward, the same move the home page's three numbers
- *    make, and the same one the foundation's argument makes.
- *  - The tassel hangs in the lane-marking dash rhythm, tying the two halves
- *    into one drawing rather than a mashup.
- *  - In `scene`, the hand is an open arc beside the figure. It never touches.
- *    The figure walks on their own, the real relationship a scholarship has to
- *    a student, and the difference between guidance and rescue.
+ * The bar is the one apricot element. Apricot is graphic-only everywhere on the
+ * site (2.34:1 on white, 3.99:1 on the deep band), which is exactly what a
+ * stroke in a mark is.
  *
  * Variants:
- *   mark: cap, road, lane. Two shapes; survives 16px.
- *   full: mark plus wordmark lockup.
- *   scene: adds the figure and the guiding hand. 120px and up only.
+ *   mark — the prism alone. Survives 16px once the outer rays drop away.
+ *   full — mark plus the wordmark lockup.
  */
 interface Props {
-  variant?: 'full' | 'mark' | 'scene';
+  variant?: 'full' | 'mark';
   class?: string;
   decorative?: boolean;
 }
@@ -44,16 +33,12 @@ const a11y = decorative
   variant === 'full' ? (
     <span class={`logo-lockup ${className}`}>
       <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <path d="M21.8 22 L26.2 22 L40 45 L8 45 Z" fill="currentColor" opacity="0.18" />
-        <path d="M21.8 22 L8 45 M26.2 22 L40 45" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-        <g stroke="var(--lane, #e9a116)" stroke-linecap="round">
-          <line x1="24" y1="25" x2="24" y2="28.5" stroke-width="1.7" />
-          <line x1="24" y1="32" x2="24" y2="36.5" stroke-width="2.4" />
-          <line x1="24" y1="40" x2="24" y2="44" stroke-width="3.1" />
-        </g>
-        <path d="M24 5 L43 13 L24 21 L5 13 Z" fill="currentColor" />
-        <g stroke="var(--lane, #e9a116)" stroke-linecap="round" stroke-width="1.8">
-          <line x1="41.5" y1="15.4" x2="41.5" y2="19" />
+        <path d="M5 24 L16.4 24" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" />
+        <path d="M18.5 11 L18.5 37" stroke="var(--color-accent)" stroke-width="3.6" stroke-linecap="round" />
+        <g stroke="currentColor" stroke-linecap="round" stroke-width="2.5">
+          <path d="M21 24 L43 13.5" opacity="0.42" />
+          <path d="M21 24 L44 24" opacity="0.72" />
+          <path d="M21 24 L43 34.5" opacity="0.42" />
         </g>
       </svg>
       <span class="logo-words">
@@ -63,52 +48,17 @@ const a11y = decorative
     </span>
   ) : (
     <svg class={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" {...a11y}>
-      {/* Road surface, opening out from under the cap toward the viewer */}
-      <path d="M21.8 22 L26.2 22 L40 45 L8 45 Z" fill="currentColor" opacity="0.18" />
-      <path d="M21.8 22 L8 45 M26.2 22 L40 45" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-
-      {/* Lane markings, grow as they approach */}
-      <g stroke="var(--lane, #e9a116)" stroke-linecap="round">
-        <line x1="24" y1="25" x2="24" y2="28.5" stroke-width="1.7" />
-        <line x1="24" y1="32" x2="24" y2="36.5" stroke-width="2.4" />
-        <line x1="24" y1="40" x2="24" y2="44" stroke-width="3.1" />
+      {/* The line going in */}
+      <path d="M5 24 L16.4 24" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" />
+      {/* The prism itself */}
+      <path d="M18.5 11 L18.5 37" stroke="var(--color-accent)" stroke-width="3.6" stroke-linecap="round" />
+      {/* Three coming out. The outer two carry less weight so the mark reads as
+          one thing rather than as a starburst. */}
+      <g stroke="currentColor" stroke-linecap="round" stroke-width="2.5">
+        <path d="M21 24 L43 13.5" opacity="0.42" />
+        <path d="M21 24 L44 24" opacity="0.72" />
+        <path d="M21 24 L43 34.5" opacity="0.42" />
       </g>
-
-      {/* The mortarboard, the fixed point the road runs from */}
-      <path d="M24 5 L43 13 L24 21 L5 13 Z" fill="currentColor" />
-
-      {/* Tassel, hanging in the lane-marking rhythm */}
-      <g stroke="var(--lane, #e9a116)" stroke-linecap="round" stroke-width="1.8">
-        <line x1="41.5" y1="15.4" x2="41.5" y2="19" />
-      </g>
-
-      {variant === 'scene' && (
-        <>
-          {/* The guiding hand: a cupped palm behind the figure. A thin arc read
-              as a stray curve, so it carries weight and a thumb. It stops short
-              of the figure. Near, but never holding. */}
-          <path
-            d="M4.2 43.8 C2.2 36 4 29.4 9 25.8 L10.9 28.6 C7.2 31.3 5.9 36.4 7.5 42.8 Z"
-            fill="currentColor"
-            opacity="0.42"
-          />
-          <path
-            d="M9 25.8 C10 24.2 11.6 23.8 12.5 24.8"
-            stroke="currentColor"
-            stroke-width="1.8"
-            stroke-linecap="round"
-            opacity="0.42"
-          />
-          {/* The figure, walking away toward the cap */}
-          <circle cx="16.6" cy="32.6" r="2.1" fill="currentColor" />
-          <path
-            d="M16.6 35.4 L16.6 40.2 M16.6 37 L14.5 39.3 M16.6 37 L18.7 39.3"
-            stroke="currentColor"
-            stroke-width="1.8"
-            stroke-linecap="round"
-          />
-        </>
-      )}
     </svg>
   )
 }
@@ -147,7 +97,7 @@ const a11y = decorative
   .logo-sub {
     font-family: var(--font-body);
     font-size: 0.625rem;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: var(--tracking-label);
     text-transform: uppercase;
     color: var(--fg-quiet);

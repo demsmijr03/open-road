@@ -127,7 +127,7 @@ const typePairs = [
     <meta name="robots" content="noindex, nofollow" />
     <title>Identity exploration</title>
   </head>
-  <body class="surface-paper">
+  <body class="surface-base">
     <header class="x-head wrap">
       <p class="x-kicker">Identity exploration</p>
       <h1>Five marks, five palettes, four type pairings.</h1>
@@ -154,7 +154,7 @@ const typePairs = [
               <p>{m.note}</p>
             </div>
 
-            <div class="mark-sizes surface-paper">
+            <div class="mark-sizes surface-base">
               <div style="width:200px"><Marks name={m.name} /></div>
               <div style="width:96px"><Marks name={m.name} /></div>
               <div style="width:32px"><Marks name={m.name} /></div>
@@ -409,13 +409,13 @@ const typePairs = [
     gap: var(--space-m);
     padding: var(--space-m);
     border-radius: var(--radius-panel);
-    color: var(--color-asphalt);
-    --mark-accent: var(--color-amber);
+    color: var(--color-deep);
+    --mark-accent: var(--color-accent);
   }
 
   .mark-sizes--dark {
-    background-color: var(--color-asphalt);
-    color: var(--color-paper);
+    background-color: var(--color-deep);
+    color: var(--color-surface);
   }
 
   /* --- palettes ------------------------------------------------------ */
@@ -605,7 +605,7 @@ const typePairs = [
   .nav-old {
     background-image: repeating-linear-gradient(
       to right,
-      var(--color-amber) 0 6px,
+      var(--color-accent) 0 6px,
       transparent 6px 11px
     );
     background-size: 100% 2px;
@@ -614,7 +614,7 @@ const typePairs = [
   }
 
   .nav-new {
-    border-block-end: 2px solid var(--color-asphalt);
+    border-block-end: 2px solid var(--color-deep);
   }
 
   .faq-row {
@@ -628,7 +628,7 @@ const typePairs = [
     inline-size: 0.875rem;
     block-size: 2px;
     border-radius: 2px;
-    background-color: var(--color-amber);
+    background-color: var(--color-accent);
   }
 
   .sign-old::after {
@@ -636,7 +636,7 @@ const typePairs = [
     position: absolute;
     inset: 0;
     border-radius: 2px;
-    background-color: var(--color-amber);
+    background-color: var(--color-accent);
     transform: rotate(90deg);
   }
 
@@ -660,7 +660,7 @@ const typePairs = [
     inline-size: 0.75rem;
     block-size: 2px;
     border-radius: 2px;
-    background-color: var(--color-amber);
+    background-color: var(--color-accent);
   }
 
   .li-new::before {
@@ -678,7 +678,7 @@ const typePairs = [
     display: block;
     inline-size: min(100%, 26rem);
     block-size: 1px;
-    background-color: color-mix(in srgb, var(--color-asphalt) 22%, transparent);
+    background-color: color-mix(in srgb, var(--color-deep) 22%, transparent);
   }
 
   .lane-verdict {
@@ -754,7 +754,7 @@ const typePairs = [
   .rule-old {
     background-image: repeating-linear-gradient(
       to right,
-      var(--color-amber) 0 18px,
+      var(--color-accent) 0 18px,
       transparent 18px 30px
     );
   }
@@ -762,7 +762,7 @@ const typePairs = [
   /* Thickens as it approaches: the perspective logic without the highway. */
   .rule-new {
     block-size: 4px;
-    background-color: var(--color-asphalt);
+    background-color: var(--color-deep);
     clip-path: polygon(0 42%, 100% 0, 100% 100%, 0 58%);
   }
 
