@@ -24,36 +24,42 @@ const headshots = import.meta.glob<{ default: ImageMetadata }>(
 const photoFor = (slug: string) =>
   Object.entries(headshots).find(([path]) => path.includes(`/${slug}.`))?.[1].default;
 
+/**
+ * Bios run short on purpose: five of them sit side by side, so anything longer
+ * turns the row into a wall. Two or three sentences each, and the openings are
+ * varied deliberately. Four of the five left the same high school, and writing
+ * that fact the same way five times makes the row read as a template.
+ */
 const board = [
   {
     slug: 'joe-clark',
     name: 'Joe Clark',
     role: 'President',
-    bio: 'West Chester East, 2021, then Alabama for mathematics, finance, and economics. Joe is an associate at BCG. He was supported through his own education and wants the same for students here, so he works across every part of the foundation.',
+    bio: 'West Chester East, then Alabama for math, finance, and economics. Now an associate at BCG. He was helped through his own education and wants that for students here.',
   },
   {
     slug: 'riley-boutin',
     name: 'Riley Boutin',
     role: 'Treasurer',
-    bio: 'Connecticut, then West Chester, then Auburn for finance, chosen because it was completely unfamiliar. Riley works in wealth management, first in Dallas and now in Tampa. He keeps the books, and he is convinced the best growth comes from unfamiliar places.',
+    bio: 'Connecticut to West Chester to Auburn, for finance, picked because it was unfamiliar. Wealth management in Tampa. He keeps the books and believes growth starts somewhere new.',
   },
   {
     slug: 'niko-levin',
     name: 'Niko Levin',
     role: 'VP, Community Engagement',
-    bio: 'West Chester East, 2021, then the University of Miami. Niko is an analyst at Accenture and back in Philadelphia, close enough to be in the room. He handles the relationships that keep the foundation connected to the district it serves.',
+    bio: 'Miami by way of West Chester East, now back in Philadelphia as an analyst at Accenture. Close enough to be in the room, which is most of the job.',
   },
   {
     slug: 'jackson-kulp',
     name: 'Jackson Kulp',
     role: 'VP, Development',
-    bio: 'West Chester East, 2021, then Abilene Christian for kinesiology and biblical study. Jackson is finishing a doctorate in physical therapy at Pittsburgh in December 2027. As events coordinator he builds the places where West Chester meets this work, convinced that leaving your hometown grows you, temporarily or not.',
+    bio: 'Abilene Christian after West Chester East, and now a doctorate in physical therapy at Pittsburgh. He builds the events where West Chester meets this work.',
   },
   {
     slug: 'demetrius-smith',
     name: 'Demetrius Smith Jr.',
     role: 'VP, Marketing & Communications',
-    bio: 'West Chester East, 2021, then Ohio State, chosen to see places he had never been. Demetrius is an analyst at Accenture in New York City. He tells the foundation’s story, and he is in it to hand people an opportunity and make them smile.',
+    bio: 'Ohio State, chosen to see somewhere he had never been. An analyst at Accenture in New York. He tells the foundation’s story.',
   },
 ];
 ---
@@ -272,6 +278,16 @@ const board = [
     margin: var(--space-xl) 0 0;
     padding: 0;
     list-style: none;
+  }
+
+  /* There are exactly five founders. auto-fit lands on four columns at this
+     width and orphans the fifth on its own row, so the wide layout is pinned to
+     five and the gap tightened to make them fit. */
+  @media (min-width: 64rem) {
+    .board {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: var(--space-m);
+    }
   }
 
   .board-member {
