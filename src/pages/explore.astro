@@ -30,9 +30,8 @@ const marks = [
 
 const palettes = [
   {
-    id: 'meridian',
     label: 'A. Meridian',
-    note: 'Indigo ground, cool paper, brass signal. Trust with warmth. The coolest surfaces of the three, so the warm accent has somewhere to land.',
+    note: 'Indigo ground, cool paper, brass signal. Trust with warmth. The coolest surfaces of the set, so the warm accent has somewhere to land.',
     ground: '#16233a',
     surface: '#f4f6f8',
     second: '#e3e8ed',
@@ -41,33 +40,54 @@ const palettes = [
     accentText: '#8a5c12',
   },
   {
-    id: 'evergreen',
     label: 'B. Evergreen',
-    note: 'Forest ground, bone surface, muted gold. Rooted and institutional. Reads as the most established of the three.',
+    note: 'Forest ground, bone surface, muted gold. Rooted and institutional. Reads as the most established of the set.',
     ground: '#17332a',
     surface: '#f4f7f4',
     second: '#e0e7e0',
     quiet: '#485a50',
-    /* Lifted from #b8873a, which put forest-on-gold at 4.25:1, just under the
-       floor. This is the constraint being designed in rather than discovered
-       after launch, which is what happened with the current amber. */
+    // Lifted from #b8873a, which put forest-on-gold at 4.25:1, under the floor.
     accent: '#c08f42',
     accentText: '#7a5718',
   },
   {
-    id: 'graphite',
     label: 'C. Graphite',
-    note: 'Warm stone neutrals with one loud signal. Near-monochrome, most design-forward, and the accent can actually carry text.',
+    note: 'Warm stone neutrals with one loud signal. Near-monochrome and the most design-forward of the set.',
     ground: '#22252a',
     surface: '#f6f5f3',
     second: '#e8e6e2',
     quiet: '#55585e',
     accent: '#c4442e',
     accentText: '#a5341f',
-    /* Vermilion is dark enough that the ground on top of it is only 2.4:1.
-       This one takes a light label instead. The same trap the current amber
-       fell into, caught here rather than after launch. */
+    // Vermilion is dark: the ground on top of it is only 2.4:1, so it takes a
+    // light label instead.
     onAccent: '#f6f5f3',
+  },
+  {
+    label: 'D. Signal',
+    note: 'True white, near-black, one confident blue. The most contrast in the set and the cleanest. White makes it read as a gallery or a broadsheet rather than a brochure.',
+    ground: '#111418',
+    surface: '#ffffff',
+    second: '#f1f2f4',
+    quiet: '#585d64',
+    accent: '#2456c7',
+    accentText: '#1e49a8',
+    onAccent: '#ffffff',
+  },
+  {
+    label: 'E. Umber',
+    note: 'Warm brown ground, white surface, cool teal signal. The inverse of Meridian: warm ground, cool accent. Brown is unusual for a nonprofit and reads as grounded rather than corporate.',
+    ground: '#33261e',
+    surface: '#ffffff',
+    second: '#f2efec',
+    quiet: '#5d5249',
+    // Darkened from #39867c, which carried white at only 4.3:1. Third accent in
+    // this exploration to need adjusting for the same reason, which is the
+    // argument for choosing the accent and its label together rather than
+    // picking a colour and hoping.
+    accent: '#31786f',
+    accentText: '#2b6a61',
+    onAccent: '#ffffff',
   },
 ];
 
@@ -110,7 +130,7 @@ const typePairs = [
   <body class="surface-paper">
     <header class="x-head wrap">
       <p class="x-kicker">Identity exploration</p>
-      <h1>Five marks, three palettes, four type pairings.</h1>
+      <h1>Five marks, five palettes, four type pairings.</h1>
       <p class="x-lede">
         Everything here is a candidate. Nothing is applied to the site yet. The idea underneath all
         five marks is perspective: going somewhere unfamiliar changes what you can see. None of them
@@ -156,8 +176,9 @@ const typePairs = [
     <section class="wrap x-section">
       <h2>The palettes</h2>
       <p class="x-note">
-        Shown as working UI, not chips. None uses a cream ground. Each ships a darker variant of its
-        accent that can actually carry text, which the current amber cannot.
+        Shown as working UI, not chips. No cream grounds. D and E use pure white; every card also repeats its
+        body block on pure white so tinted and untinted can be compared directly. Each ships a darker
+        accent variant that can carry text, which the current amber cannot.
       </p>
 
       <div class="pal-grid">
@@ -197,6 +218,16 @@ const typePairs = [
                     <p class="pal-tile-name">Freeway Partner</p>
                   </div>
                 </div>
+
+                {/* The same block on pure white, so the tinted surface can be
+                    compared against the untinted one directly. */}
+                <div class="pal-body pal-body--white">
+                  <p class="pal-white-tag">Same, on pure white</p>
+                  <p class="pal-copy">
+                    About one in eight of the district's 12,042 students is economically
+                    disadvantaged. <a href="#0">See where every dollar goes.</a>
+                  </p>
+                </div>
               </div>
             </article>
           ))
@@ -235,19 +266,55 @@ const typePairs = [
       }
     </section>
 
-    <!-- SIGNATURE -------------------------------------------------------- -->
+    <!-- IS THE LANE NEEDED ----------------------------------------------- -->
     <section class="wrap x-section">
-      <h2>Replacing the lane</h2>
+      <h2>Is the lane needed at all?</h2>
       <p class="x-note">
-        The dashed lane marking retires with the logo. Its successor has to do the same structural
-        work: dividers, nav indicator, FAQ toggle, stat rules. A graduated rule keeps the perspective
-        logic (nearer reads heavier) without saying highway.
+        Short answer: no. It does four jobs, and in every one of them the plainest version is at
+        least as good. Judge the middle column against the right one; the motif is only earning its
+        place if you miss it.
       </p>
-      <div class="rule-demo">
-        <span class="rule-old" />
-        <p class="x-caption">Current: dashed lane marking.</p>
+
+      <div class="lane-table">
+        <p class="lane-h">Job</p>
+        <p class="lane-h">With the lane</p>
+        <p class="lane-h">Without</p>
+
+        <p class="lane-job">Active nav item</p>
+        <p class="lane-cell"><span class="nav-old">Get involved</span></p>
+        <p class="lane-cell"><span class="nav-new">Get involved</span></p>
+
+        <p class="lane-job">Question toggle</p>
+        <p class="lane-cell"><span class="faq-row">Can I give monthly? <span class="sign-old" /></span></p>
+        <p class="lane-cell"><span class="faq-row">Can I give monthly? <span class="sign-new">+</span></span></p>
+
+        <p class="lane-job">List marker</p>
+        <p class="lane-cell"><span class="li-old">You have a 3.25 GPA or above.</span></p>
+        <p class="lane-cell"><span class="li-new">You have a 3.25 GPA or above.</span></p>
+
+        <p class="lane-job">Section divider</p>
+        <p class="lane-cell"><span class="rule-old" /></p>
+        <p class="lane-cell"><span class="rule-plain" /></p>
+      </div>
+
+      <div class="lane-verdict">
+        <h3>Recommendation: drop it, and add nothing back.</h3>
+        <p>
+          The site already has three signatures stronger than a dash: the perspective scale on the
+          three numbers, where things nearer to home render larger; the surface system of paper,
+          concrete and dark bands; and the display-against-body type pairing. A decorative motif is
+          the weakest of the four and the only one that says "road".
+        </p>
+        <p>
+          Restraint is also the more expensive-looking choice. If a motif is wanted later, let it
+          come out of whichever mark you pick, so it means something, rather than being imposed on
+          the page because the old one left a hole.
+        </p>
+        <p class="x-caption">
+          Shown below for completeness: the graduated rule I proposed last round. It is a fine
+          object. I no longer think the page needs it.
+        </p>
         <span class="rule-new" />
-        <p class="x-caption">Proposed: graduated rule, thickening as it approaches.</p>
       </div>
     </section>
 
@@ -476,6 +543,159 @@ const typePairs = [
     letter-spacing: var(--tracking-label);
     text-transform: uppercase;
     color: var(--q);
+  }
+
+  .pal-body--white {
+    background-color: #fff;
+    border-block-start: var(--border-hairline) solid rgb(0 0 0 / 0.1);
+  }
+
+  .pal-white-tag {
+    margin: 0 0 var(--space-2xs);
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--q);
+  }
+
+  .pal-body--white .pal-copy {
+    margin-block-end: 0;
+  }
+
+  /* --- lane audit ------------------------------------------------------ */
+
+  .lane-table {
+    display: grid;
+    grid-template-columns: minmax(0, 0.6fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-s) var(--space-l);
+    align-items: center;
+    padding-block-end: var(--space-xl);
+  }
+
+  .lane-h {
+    margin: 0;
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--fg-quiet);
+    padding-block-end: var(--space-2xs);
+    border-block-end: var(--border-hairline) solid var(--rule);
+  }
+
+  .lane-job {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--fg-quiet);
+  }
+
+  .lane-cell {
+    margin: 0;
+    font-size: var(--text-sm);
+  }
+
+  .nav-old,
+  .nav-new {
+    display: inline-block;
+    padding-block-end: 0.4rem;
+    font-weight: 500;
+  }
+
+  .nav-old {
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--color-amber) 0 6px,
+      transparent 6px 11px
+    );
+    background-size: 100% 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+  }
+
+  .nav-new {
+    border-block-end: 2px solid var(--color-asphalt);
+  }
+
+  .faq-row {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-s);
+  }
+
+  .sign-old {
+    position: relative;
+    inline-size: 0.875rem;
+    block-size: 2px;
+    border-radius: 2px;
+    background-color: var(--color-amber);
+  }
+
+  .sign-old::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 2px;
+    background-color: var(--color-amber);
+    transform: rotate(90deg);
+  }
+
+  .sign-new {
+    font-size: 1rem;
+    color: var(--fg-quiet);
+  }
+
+  .li-old,
+  .li-new {
+    display: inline-block;
+    position: relative;
+    padding-inline-start: var(--space-m);
+  }
+
+  .li-old::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 0.62em;
+    inline-size: 0.75rem;
+    block-size: 2px;
+    border-radius: 2px;
+    background-color: var(--color-amber);
+  }
+
+  .li-new::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0.2rem;
+    inset-block-start: 0.62em;
+    inline-size: 0.3rem;
+    block-size: 0.3rem;
+    border-radius: 50%;
+    background-color: var(--fg-quiet);
+  }
+
+  .rule-plain {
+    display: block;
+    inline-size: min(100%, 26rem);
+    block-size: 1px;
+    background-color: color-mix(in srgb, var(--color-asphalt) 22%, transparent);
+  }
+
+  .lane-verdict {
+    max-inline-size: var(--width-text);
+    padding-block-start: var(--space-l);
+    border-block-start: var(--border-hairline) solid var(--rule);
+  }
+
+  .lane-verdict h3 {
+    margin: 0 0 var(--space-s);
+    font-size: var(--text-xl);
+  }
+
+  .lane-verdict p {
+    margin: 0 0 var(--space-s);
+    line-height: var(--leading-body);
+    color: var(--fg-quiet);
   }
 
   /* --- type ----------------------------------------------------------- */
