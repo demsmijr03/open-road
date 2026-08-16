@@ -56,6 +56,27 @@ try {
     // design screenshot or a generated asset.
     await page.addStyleTag({ content: 'astro-dev-toolbar { display: none !important; }' });
 
+    // A fullPage screenshot does not scroll, so loading="lazy" images below the
+    // fold are never fetched and photograph slots come back blank. Flipping them
+    // to eager loads the whole page without walking it, which is both faster and
+    // steadier than a scroll loop (that one tripped Puppeteer's protocol
+    // timeout). Then wait for them to finish.
+    await page.evaluate(async () => {
+      for (const img of document.images) img.loading = 'eager';
+
+      await Promise.all(
+        [...document.images]
+          .filter((img) => !img.complete)
+          .map(
+            (img) =>
+              new Promise((res) => {
+                img.addEventListener('load', res, { once: true });
+                img.addEventListener('error', res, { once: true });
+              })
+          )
+      );
+    });
+
     // Let webfonts settle so type is measured accurately, not in fallback.
     await page.evaluate(() => document.fonts?.ready);
 

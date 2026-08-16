@@ -1,10 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
 import Lane from '../components/Lane.astro';
-import Placeholder from '../components/Placeholder.astro';
 import DistanceStat from '../components/DistanceStat.astro';
 import CtaBand from '../components/CtaBand.astro';
+import heroPhoto from '../assets/landingpage.png';
 ---
 
 <BaseLayout
@@ -13,28 +14,28 @@ import CtaBand from '../components/CtaBand.astro';
 >
   <!-- Hero ------------------------------------------------------------- -->
   <section class="hero surface-asphalt">
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-        <span class="eyebrow">West Chester, Pennsylvania</span>
-        <h1>Some roads are worth leaving home for.</h1>
-        <p class="hero-lede">
-          The Open Road Foundation helps West Chester Area School District students afford the
-          school that fits them best, wherever it takes them.
-        </p>
-        <p class="hero-goal">This year we're raising $10,000 and making our first award.</p>
-        <div class="hero-actions">
-          <Button href="/get-involved/#give">Support a student</Button>
-          <Button href="/about/" variant="secondary">Read our story</Button>
-        </div>
-      </div>
+    <div class="hero-media">
+      <Image
+        src={heroPhoto}
+        alt="A hatchback packed with boxes, a lamp and a potted plant, parked in a driveway before the drive to school."
+        widths={[800, 1200, 1600, 2000]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
 
-      <!-- The photograph is a known hole, so it holds its real footprint rather
-           than collapsing to a caption. A hero that already looks finished
-           without its image never gets the image commissioned. -->
-      <div class="hero-media">
-        <Placeholder
-          note="hero photograph: a road leaving town, shot locally. Real, not stock. See the photo rights note in the appendix."
-        />
+    <div class="wrap hero-content">
+      <span class="eyebrow">West Chester, Pennsylvania</span>
+      <h1>Some roads are worth leaving home for.</h1>
+      <p class="hero-lede">
+        The Open Road Foundation helps West Chester Area School District students afford the school
+        that fits them best, wherever it takes them.
+      </p>
+      <p class="hero-goal">This year we're raising $10,000 and making our first award.</p>
+      <div class="hero-actions">
+        <Button href="/get-involved/#give">Support a student</Button>
+        <Button href="/about/" variant="secondary">Read our story</Button>
       </div>
     </div>
   </section>
@@ -114,24 +115,82 @@ import CtaBand from '../components/CtaBand.astro';
 
 <style>
   .hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    min-block-size: min(86vh, 44rem);
     padding-block: var(--pad-major);
+    text-align: center;
   }
 
-  .hero-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-    gap: var(--space-xl);
+  .hero-media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .hero-media :global(img) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    /* The subject sits low in the frame, so the crop favours the lower half
+       and the sky is what gets cut on short viewports. */
+    object-position: 50% 62%;
+    /* Pulled off full saturation so the scrim reads as dusk rather than as a
+       blue filter laid over a bright summer photograph. */
+    filter: saturate(0.85);
+  }
+
+  /* The treatment.
+
+     This photograph is bright: the sky behind the centred text sits around
+     1.7:1 against paper, which is unreadable. A light scrim was not close, so
+     these layers take the centre to roughly 85% asphalt, about 6:1.
+
+     That is heavy, and deliberately so. The dark band was already the site's
+     hero surface, and a deeply darkened photograph reads as that same band with
+     a place inside it. The car, the porch and the tree line stay legible as
+     shapes; the photograph is atmosphere, not a picture you study. */
+  .hero-media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* Positive, not negative. .hero-media carries a negative z-index and so
+       forms a stacking context; inside one, a negative-z child paints before
+       the element's in-flow content, which put this scrim underneath the
+       photograph and made it look like no treatment was applied at all. */
+    z-index: 1;
+    background:
+      radial-gradient(
+        ellipse 100% 85% at 50% 50%,
+        rgb(28 36 48 / 0.55),
+        rgb(28 36 48 / 0.35)
+      ),
+      linear-gradient(
+        to bottom,
+        rgb(28 36 48 / 0.7),
+        rgb(28 36 48 / 0.62) 45%,
+        rgb(28 36 48 / 0.85)
+      );
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
     align-items: center;
   }
 
   .hero h1 {
     margin: var(--space-s) 0 0;
+    max-inline-size: 18ch;
     font-size: clamp(2.5rem, 7vw, 4.5rem);
   }
 
   .hero-lede {
     margin: var(--space-m) 0 0;
-    max-inline-size: 32rem;
+    max-inline-size: 34rem;
     font-size: var(--text-lg);
     line-height: var(--leading-body);
     color: var(--fg-quiet);
@@ -139,7 +198,7 @@ import CtaBand from '../components/CtaBand.astro';
 
   .hero-goal {
     margin: var(--space-s) 0 0;
-    max-inline-size: 32rem;
+    max-inline-size: 34rem;
     font-size: var(--text-lg);
     line-height: var(--leading-body);
   }
@@ -147,20 +206,9 @@ import CtaBand from '../components/CtaBand.astro';
   .hero-actions {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--space-s);
     margin-block-start: var(--space-l);
-  }
-
-  /* The photo slot keeps a 4:5 portrait footprint, the shape a road-leaving-
-     town shot actually wants, so the layout is already correct when the
-     photograph lands. */
-  .hero-media {
-    display: grid;
-    align-content: center;
-    aspect-ratio: 4 / 5;
-    padding: var(--space-m);
-    border: var(--border-hairline) dashed var(--rule-strong);
-    border-radius: var(--radius-panel);
   }
 
   .numbers-head {
@@ -191,11 +239,6 @@ import CtaBand from '../components/CtaBand.astro';
   }
 
   @media (max-width: 60rem) {
-    .hero-grid {
-      grid-template-columns: 1fr;
-      gap: var(--space-l);
-    }
-
     .numbers-head {
       flex-direction: column;
       align-items: stretch;

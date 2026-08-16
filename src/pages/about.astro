@@ -7,6 +7,7 @@ import Placeholder from '../components/Placeholder.astro';
 import CtaBand from '../components/CtaBand.astro';
 import PageHero from '../components/PageHero.astro';
 import Logo from '../components/Logo.astro';
+import townPhoto from '../assets/westchester.jpg';
 
 /**
  * Founder photographs.
@@ -126,15 +127,20 @@ const board = [
 
   <!-- The five-founders group shot was dropped: five real headshots already do
        that job, and with the founders spread across five cities a group photo is
-       a scheduling problem that would hold the page indefinitely. What belongs
-       here instead is the one image the whole brand rests on. -->
+       a scheduling problem that would hold the page indefinitely. The town
+       itself is the better picture here, and it is the place the whole argument
+       is about. -->
   <section class="section surface-paper">
     <div class="wrap">
-      <div class="founders-media">
-        <Placeholder
-          note="photograph of West Chester itself: the road out of town, shot locally. Wide crop. This is the image the hero line promises, and any one of the founders can take it on a phone."
+      <figure class="town">
+        <Image
+          src={townPhoto}
+          alt="West Chester, Pennsylvania at sunset, looking across the rooftops of High Street toward the courthouse clock tower."
+          widths={[800, 1200, 1600]}
+          sizes="(max-width: 60rem) 100vw, 72rem"
         />
-      </div>
+        <figcaption>West Chester, Pennsylvania. The place all five of us left, and came back to.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -238,13 +244,20 @@ const board = [
     color: var(--fg);
   }
 
-  .founders-media {
-    aspect-ratio: 16 / 9;
-    display: grid;
-    align-content: center;
-    padding: var(--space-m);
-    border: var(--border-hairline) dashed var(--rule-strong);
+  .town {
+    margin: 0;
+  }
+
+  .town :global(img) {
+    inline-size: 100%;
+    block-size: auto;
     border-radius: var(--radius-panel);
+  }
+
+  .town figcaption {
+    margin-block-start: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--fg-quiet);
   }
 
   .mission-title {
@@ -298,24 +311,30 @@ const board = [
 
   .board-portrait {
     aspect-ratio: 1;
-    display: grid;
-    align-content: center;
     margin-block-end: var(--space-2xs);
     border-radius: var(--radius-panel);
     overflow: hidden;
   }
 
-  /* Only the empty state carries the dashed outline. Once a real photograph
-     lands the frame gets out of its way. */
-  .board-portrait:has(.ph-block) {
-    padding: var(--space-2xs);
-    border: var(--border-hairline) dashed var(--rule-strong);
-  }
-
+  /* Deliberately not `align-content: center` here. That sizes the grid row to
+     its content, which leaves the image's block-size: 100% resolving against an
+     indefinite height, collapsing it to zero and rendering an empty square.
+     Centring belongs to the empty state only, below. */
   .board-portrait :global(img) {
     inline-size: 100%;
     block-size: 100%;
     object-fit: cover;
+    object-position: 50% 25%;
+  }
+
+  /* Only the empty state carries the dashed outline. Once a real photograph
+     lands the frame gets out of its way. */
+  .board-portrait:has(.ph-block) {
+    display: grid;
+    align-content: center;
+    padding: var(--space-2xs);
+    border: var(--border-hairline) dashed var(--rule-strong);
+    overflow: visible;
   }
 
   .board-bio {
