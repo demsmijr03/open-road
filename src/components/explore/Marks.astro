@@ -1,0 +1,150 @@
+---
+/**
+ * Five candidate marks for the identity exploration.
+ *
+ * All five encode perspective: going somewhere unfamiliar changes what you can
+ * see. None contains a road, a mortarboard or a figure, which is what made the
+ * current mark read as childish and interchangeable with every other Open Road
+ * organisation.
+ *
+ * The five silhouettes are deliberately unlike each other: a ring, two rotated
+ * squares, a splitting line, four open corners, and an arch. A first pass had
+ * three variations on "two arcs", which is not five options.
+ *
+ * Drawn on a 48 unit grid with currentColor and one accent element each, so
+ * they inherit the surface the way Logo.astro does. Each must survive 16px.
+ */
+interface Props {
+  name: 'aperture' | 'shift' | 'prism' | 'frame' | 'vista';
+  class?: string;
+}
+
+const { name, class: className = '' } = Astro.props;
+const accent = 'var(--mark-accent, #c98a2e)';
+---
+
+<svg
+  class={className}
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+  focusable="false"
+>
+  {
+    /* APERTURE. An opening iris. Vision widening. Collapses to a ring and a
+       core at 16px, which is why it survives where the others struggled. */
+    name === 'aperture' && (
+      <>
+        <circle cx="24" cy="24" r="14" stroke="currentColor" stroke-width="2.2" opacity="0.22" />
+        <g stroke="currentColor" stroke-width="3.2" stroke-linecap="round">
+          <path d="M24 11.5 A12.5 12.5 0 0 1 34.8 17.75" />
+          <path d="M34.8 30.25 A12.5 12.5 0 0 1 24 36.5" />
+          <path d="M13.2 17.75 A12.5 12.5 0 0 0 13.2 30.25" />
+        </g>
+        <circle cx="24" cy="24" r="4.6" fill={accent} />
+      </>
+    )
+  }
+
+  {
+    /* SHIFT. One square, drawn twice, the second turned. The same subject seen
+       from a different angle: the plainest possible statement of perspective,
+       and the only one of the five that reads instantly at any size. */
+    name === 'shift' && (
+      <>
+        <rect
+          x="13"
+          y="13"
+          width="22"
+          height="22"
+          rx="2.5"
+          stroke="currentColor"
+          stroke-width="2.6"
+          opacity="0.32"
+        />
+        <rect
+          x="13"
+          y="13"
+          width="22"
+          height="22"
+          rx="2.5"
+          stroke="currentColor"
+          stroke-width="2.6"
+          transform="rotate(21 24 24)"
+        />
+        <circle cx="24" cy="24" r="2.8" fill={accent} />
+      </>
+    )
+  }
+
+  {
+    /* PRISM. One line goes in, three come out. A single student, and the wider
+       range of what they can see afterwards. */
+    name === 'prism' && (
+      <>
+        <path d="M5 24 L17 24" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" />
+        <path d="M18.5 11 L18.5 37" stroke={accent} stroke-width="3.4" stroke-linecap="round" />
+        <g stroke="currentColor" stroke-linecap="round">
+          <path d="M21 24 L43 13.5" stroke-width="2.4" opacity="0.45" />
+          <path d="M21 24 L44 24" stroke-width="2.4" opacity="0.72" />
+          <path d="M21 24 L43 34.5" stroke-width="2.4" opacity="0.45" />
+        </g>
+      </>
+    )
+  }
+
+  {
+    /* FRAME. Four corners, then four more further out. Broadening what you can
+       take in, said in the language of a crop mark rather than a landscape. */
+    name === 'frame' && (
+      <>
+        <g stroke="currentColor" stroke-width="2.6" stroke-linecap="round" opacity="0.32">
+          <path d="M4 14 L4 4 L14 4" />
+          <path d="M34 4 L44 4 L44 14" />
+          <path d="M44 34 L44 44 L34 44" />
+          <path d="M14 44 L4 44 L4 34" />
+        </g>
+        <g stroke="currentColor" stroke-width="3" stroke-linecap="round">
+          <path d="M15 22 L15 15 L22 15" />
+          <path d="M26 15 L33 15 L33 22" />
+          <path d="M33 26 L33 33 L26 33" />
+          <path d="M22 33 L15 33 L15 26" />
+        </g>
+        <circle cx="24" cy="24" r="2.8" fill={accent} />
+      </>
+    )
+  }
+
+  {
+    /* VISTA. An arch, and a second arch behind it. A way through with depth on
+       the other side. Architectural rather than scenic, so it stays away from a
+       literal horizon. */
+    name === 'vista' && (
+      <>
+        <path
+          d="M7 41 L7 24 A17 17 0 0 1 41 24 L41 41"
+          stroke="currentColor"
+          stroke-width="3"
+          stroke-linecap="round"
+        />
+        <path
+          d="M16 41 L16 26 A8 8 0 0 1 32 26 L32 41"
+          stroke="currentColor"
+          stroke-width="2.6"
+          stroke-linecap="round"
+          opacity="0.35"
+        />
+        <path d="M24 41 L24 31" stroke={accent} stroke-width="3.2" stroke-linecap="round" />
+      </>
+    )
+  }
+</svg>
+
+<style>
+  svg {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+  }
+</style>

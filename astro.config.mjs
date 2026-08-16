@@ -9,8 +9,11 @@ export default defineConfig({
   // @astrojs/sitemap needs an absolute `site` to emit valid URLs.
   site: 'https://openroad.example.org',
 
-  // /og-card is an asset source for scripts/make-assets.mjs, not a page.
-  integrations: [sitemap({ filter: (page) => !page.includes('/og-card') })],
+  // /og-card is an asset source for scripts/make-assets.mjs and /explore is a
+  // temporary design comparison. Neither is a page of the site.
+  integrations: [
+    sitemap({ filter: (page) => !page.includes('/og-card') && !page.includes('/explore') }),
+  ],
 
   vite: {
     plugins: [tailwindcss()],
