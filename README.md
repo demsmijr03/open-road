@@ -61,4 +61,4 @@ Everything `npm run audit:holes` lists, plus:
 - Set the real domain in `astro.config.mjs` (`site`), then re-run `npm run assets`
 - Founder headshots into `src/assets/founders/`, plus the hero and West Chester
   photographs, with rights cleared
-- Confirm the $6,000 award figure, which the asterisk still marks as provisional
+- Confirm the $9,000 award figure, which the asterisk still marks as provisional
