@@ -3,7 +3,7 @@
  * Questions and answers.
  *
  * Native <details>/<summary>: keyboard operable, screen-reader announced, and
- * findable by in-page search when open — none of which a hand-rolled accordion
+ * findable by in-page search when open, none of which a hand-rolled accordion
  * gets without work. No JS.
  */
 interface Props {
@@ -70,7 +70,7 @@ const { items } = Astro.props;
     color: var(--fg);
   }
 
-  /* A lane dash that gains a crossbar when closed — a plus that is still a
+  /* A lane dash that gains a crossbar when closed, a plus that is still a
      road marking. Rotation is a transform, so it is safe to animate. */
   .faq-sign {
     position: relative;

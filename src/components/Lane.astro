@@ -1,6 +1,6 @@
 ---
 /**
- * The lane marking — the site's signature element.
+ * The lane marking, the site's signature element.
  *
  * A road's centre line, used as a divider. In `recede` mode the dashes shorten
  * and fade from left to right, which is the same device the eye reads as
@@ -10,7 +10,7 @@
  * wallpaper.
  */
 interface Props {
-  /** `flat` — even dashes. `recede` — dashes shorten and fade into the distance. */
+  /** `flat` gives even dashes. `recede` shortens and fades them into the distance. */
   mode?: 'flat' | 'recede';
   class?: string;
 }

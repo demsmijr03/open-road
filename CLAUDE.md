@@ -1,4 +1,4 @@
-# Open Road — Project Rules
+# Open Road, Project Rules
 
 Nonprofit website. Astro + Tailwind, Git-based CMS, deployed on Vercel.
 Ported from `frontend.md`, with mechanics corrected for this stack and machine.
@@ -27,7 +27,7 @@ plain `python` will work and these paths can be shortened.
 
 ## Local Server
 
-- **Always serve on localhost** — never screenshot a `file:///` URL.
+- **Always serve on localhost**, never screenshot a `file:///` URL.
 - Start: `npm run dev` → **http://localhost:4321** (Astro's port, not 3000)
 - Background mode: `astro dev --background`, managed with `astro dev stop|status|logs`
 - If the server is already running, do not start a second instance.
@@ -37,11 +37,11 @@ plain `python` will work and these paths can be shortened.
 ```bash
 npm run build          # must pass before any commit
 npm run audit:a11y     # WCAG 2.2 AA, every page, mobile + desktop. Must be zero.
-npm run audit:holes    # counts [PLACEHOLDER] and [VERIFY]. Non-zero until launch-ready.
+npm run audit:holes    # counts [PLACEHOLDER]. Non-zero until launch-ready.
 npm run shot -- http://localhost:4321/award/ award
 ```
 
-`audit:a11y` needs the dev server running. It is the gate — a page is not done
+`audit:a11y` needs the dev server running. It is the gate, a page is not done
 until it passes at both 390px and 1440px.
 
 ## Content rules
@@ -54,9 +54,26 @@ Do not use the old `Documents/open-road-foundation` repo for anything.
   "impact" as a verb, no "journey", no "passionate about".
 - `[PLACEHOLDER: …]` → `<Placeholder note="…" />`. **Never** fill one with
   something plausible. It must render visibly.
-- `[VERIFY: …]` → `<Verify>` around the claim, `<VerifyNote note="…" />` after
-  the paragraph. Never inside it — that cuts the sentence in half.
+- All `[VERIFY: …]` facts were checked against primary sources and the markers
+  removed. If a new unconfirmed claim appears, check it before it ships rather
+  than shipping it with a badge.
 - See `BRAND.md` for the design direction and the amber contrast rule.
+
+## House style
+
+Two characters give the game away as machine-written, so neither appears anywhere
+in this repo, including code comments:
+
+- **No em dashes.** Recast the sentence with a comma, colon, or full stop. Never
+  substitute a hyphen; that just looks like a typo.
+- **No middle dots** (`·`) as separators. Page titles use `|`.
+
+Both of these must come back empty:
+
+```bash
+grep -rnP "\x{2014}" src/     # em dash
+grep -rnP "\x{00B7}" src/     # middle dot
+```
 
 ## Screenshot Workflow
 
@@ -72,9 +89,9 @@ Do not use the old `Documents/open-road-foundation` repo for anything.
 
 ## Output Defaults
 
-- **`.astro` components with scoped styles** — never a single monolithic `index.html`.
+- **`.astro` components with scoped styles**, never a single monolithic `index.html`.
 - **Tailwind via the Astro integration**, purged at build. **Never the CDN script** (no purge,
-  ~3MB payload, FOUC — it would sink the Lighthouse scores this project is judged on).
+  ~3MB payload, FOUC, it would sink the Lighthouse scores this project is judged on).
 - Every color and spacing value comes from `src/styles/tokens.css`. **No raw hex in components.**
 - Images via `<Image />` from `astro:assets` (auto WebP/AVIF, correct width/height, no layout shift).
 - Mobile-first responsive.
@@ -86,7 +103,7 @@ defining `--color-ink-500` there automatically yields `text-ink-500`, `bg-ink-50
 
 **Never define `--spacing-<name>` in `@theme`.** That namespace feeds *both* padding and sizing
 utilities, so a `--spacing-3xl` token silently makes `max-w-3xl` resolve to it instead of
-`--container-3xl` — which collapsed the page container from 768px to 96px during setup. Named rhythm
+`--container-3xl`, which collapsed the page container from 768px to 96px during setup. Named rhythm
 tokens therefore live in the `:root` block as `--space-*`, which Tailwind ignores.
 
 - Utilities in markup: Tailwind's numeric scale (`px-6`, `py-24`, `gap-4`)
@@ -105,7 +122,7 @@ tokens therefore live in the `:root` block as `--space-*`, which Tailwind ignore
 
 - Always check `brand_assets/` before designing. It holds the logo, favicons, and `palette.json`.
 - If assets exist there, use them. Do not use placeholders where real assets are available.
-- If a color palette is defined, use those exact values — do not invent brand colors.
+- If a color palette is defined, use those exact values, do not invent brand colors.
 
 ## Anti-Generic Guardrails
 
@@ -118,13 +135,13 @@ tokens therefore live in the `:root` block as `--space-*`, which Tailwind ignore
 - **Interactive states:** Every clickable element needs hover, focus-visible, and active states. No exceptions.
 - **Images:** Add a gradient overlay (`bg-gradient-to-t from-black/60`) and a color treatment layer
   with `mix-blend-multiply`.
-- **Spacing:** Use intentional, consistent spacing tokens — not random Tailwind steps.
+- **Spacing:** Use intentional, consistent spacing tokens, not random Tailwind steps.
 - **Depth:** Surfaces need a layering system (base → elevated → floating), not all on one z-plane.
 
-## Quality Floor (non-negotiable — WCAG 2.2 AA)
+## Quality Floor (non-negotiable, WCAG 2.2 AA)
 
 - Contrast 4.5:1 normal text, 3:1 large text
-- Visible focus rings — **never** remove them
+- Visible focus rings, **never** remove them
 - Touch targets ≥ 44×44px, 8px+ spacing
 - Sequential heading hierarchy, no level skips
 - Skip-to-content link, descriptive alt text
@@ -136,7 +153,7 @@ tokens therefore live in the `:root` block as `--space-*`, which Tailwind ignore
 - Do not stop after one screenshot pass
 - Do not use `transition-all`
 - Do not use default Tailwind blue/indigo as primary color
-- Do not use emoji as icons — use SVG
+- Do not use emoji as icons, use SVG
 - Do not commit anything from `content_intake/` that lacks photo consent/rights
 
 ## Documentation

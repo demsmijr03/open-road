@@ -5,7 +5,7 @@ import Placeholder from './Placeholder.astro';
 /**
  * The interest form.
  *
- * Explicitly NOT the scholarship application — content.md says so in bold, and
+ * Explicitly NOT the scholarship application, content.md says so in bold, and
  * that disclaimer sits above the fields rather than below them, because a
  * warning underneath a form is read after the mistake.
  *
@@ -13,7 +13,7 @@ import Placeholder from './Placeholder.astro';
  * inert on purpose and says so, rather than looking submittable and silently
  * dropping what a student types.
  *
- * Labels are visible, not placeholders — a placeholder disappears the moment
+ * Labels are visible, not placeholders, a placeholder disappears the moment
  * someone starts typing, taking the field's name with it.
  */
 ---
@@ -21,10 +21,10 @@ import Placeholder from './Placeholder.astro';
 <form class="form" novalidate aria-describedby="form-status">
   <p class="form-notice" id="form-status">
     <strong>This is not the scholarship application.</strong> Student, parent, counselor, mentor,
-    donor, business, or organization — tell us which and we'll get back to you.
+    donor, business, or organization. Tell us which and we'll get back to you.
   </p>
 
-  <Placeholder note="form provider not yet chosen — this form does not submit anywhere yet" />
+  <Placeholder note="form provider not yet chosen, so this form does not submit anywhere yet" />
 
   <div class="form-grid">
     <p class="field">
@@ -57,7 +57,7 @@ import Placeholder from './Placeholder.astro';
 
     <p class="field field--full field--check">
       <input id="news" name="news" type="checkbox" />
-      <label for="news">Email me when there's news — the application opening, a student funded</label>
+      <label for="news">Email me when there's news: the application opening, a student funded</label>
     </p>
   </div>
 

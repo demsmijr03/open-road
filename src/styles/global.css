@@ -2,7 +2,7 @@
 @import './tokens.css';
 
 /* =============================================================================
-   BASE — the accessibility floor from CLAUDE.md, applied globally so no
+   BASE: the accessibility floor from CLAUDE.md, applied globally so no
    individual component can forget it.
    ========================================================================== */
 
@@ -111,8 +111,8 @@
      stacks in a wider right column. Keeps the measure readable without leaving
      half the page empty, and gives every text section the same spine.
 
-     Deliberately built on ONE wrapper rather than two nested ones — the h2 is
-     pulled into column 1 and every sibling flows into column 2 — so the markup
+     Deliberately built on ONE wrapper rather than two nested ones, the h2 is
+     pulled into column 1 and every sibling flows into column 2, so the markup
      stays as shallow as the single-column version it replaced. */
   .split {
     display: grid;

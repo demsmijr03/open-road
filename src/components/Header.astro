@@ -7,7 +7,7 @@ const { pathname } = Astro.url;
 const links = [
   { href: '/', label: 'Home' },
   { href: '/award/', label: 'The award' },
-  { href: '/who-we-are/', label: 'Who we are' },
+  { href: '/about/', label: 'About us' },
   { href: '/get-involved/', label: 'Get involved' },
 ];
 
@@ -35,7 +35,13 @@ const isCurrent = (href: string) =>
       </ul>
     </nav>
 
-    <Button href="/get-involved/#give" class="header-cta">Support a student</Button>
+    <!-- Wrapped rather than styling the Button directly: a class passed to a
+         child component lands on that child's root, which sits in the child's
+         style scope, so Header's scoped `order` never reached it and the CTA
+         fell back to order 0 and jumped above the logo. -->
+    <div class="header-cta">
+      <Button href="/get-involved/#give">Support a student</Button>
+    </div>
   </div>
 </header>
 
@@ -66,6 +72,10 @@ const isCurrent = (href: string) =>
 
   .header-nav {
     margin-inline-start: auto;
+  }
+
+  .header-cta {
+    display: flex;
   }
 
   .header-nav ul {
@@ -114,28 +124,39 @@ const isCurrent = (href: string) =>
     border-radius: var(--radius-btn);
   }
 
-  /* Small screens: the nav wraps under the brand, and the CTA stays reachable.
-     No hamburger — four links fit, and a disclosure widget for four items is
+  /* Narrow screens: the brand takes the first row on its own, and the nav and
+     the CTA share the second, with the CTA at the right end.
+
+     The earlier rule moved only the nav to row two and left the CTA sitting
+     beside the logo, which put the button before the links it should follow.
+     Ordering both explicitly keeps "Support a student" to the right of the four
+     tabs at every width.
+
+     No hamburger: four links fit, and a disclosure widget for four items is
      more machinery than the content needs. */
-  @media (max-width: 56rem) {
+  @media (max-width: 62rem) {
     .header-inner {
       flex-wrap: wrap;
-      gap: var(--space-xs);
+      gap: var(--space-xs) var(--space-m);
+    }
+
+    .header-brand {
+      order: 1;
+      inline-size: 100%;
     }
 
     .header-nav {
-      order: 3;
-      inline-size: 100%;
+      order: 2;
       margin-inline-start: 0;
-      border-block-start: var(--border-hairline) solid var(--rule);
     }
 
     .header-nav ul {
-      gap: var(--space-s);
+      gap: var(--space-m);
       flex-wrap: wrap;
     }
 
     .header-cta {
+      order: 3;
       margin-inline-start: auto;
     }
   }

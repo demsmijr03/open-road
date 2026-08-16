@@ -1,12 +1,12 @@
 /* =============================================================================
-   THE OPEN ROAD FOUNDATION — DESIGN TOKENS
+   THE OPEN ROAD FOUNDATION: DESIGN TOKENS
    The only place raw values live. Components reference these, never a hex.
    =============================================================================
 
    DIRECTION: "Mile markers."
 
-   The palette is drawn from the subject's own materials — asphalt, painted lane
-   markings, highway signage — rather than from nonprofit convention. The
+   The palette is drawn from the subject's own materials, asphalt, painted lane
+   markings, highway signage, rather than from nonprofit convention. The
    signature element is a dashed lane-marking line that runs through the page as
    a measure of progress, not as decoration.
 
@@ -27,34 +27,34 @@
        slate   on paper .......... 6.3:1  secondary text, captions, eyebrows
        paper   on asphalt ....... 14.8:1  text inside dark bands
        amber   on asphalt ........ 7.0:1  text-safe on dark only
-       amber   on paper .......... 2.1:1  FAILS — graphic use only, never text
+       amber   on paper .......... 2.1:1  FAILS, graphic use only, never text
 
      The amber rule is the one that gets broken by accident. It is the brand's
      loud colour, so it is tempting to set a heading in it on a light surface;
      at 2.1:1 that is unreadable for a lot of people. On paper, amber is
-     allowed to be a rule, a fill, an underline, or a marker — never a glyph.
+     allowed to be a rule, a fill, an underline, or a marker, never a glyph.
      --------------------------------------------------------------------- */
 
-  --color-asphalt: #1c2430; /* deep dusk blue-black — dark bands, footer, buttons */
+  --color-asphalt: #1c2430; /* deep dusk blue-black, dark bands, footer, buttons */
   --color-asphalt-soft: #2b3644; /* raised surfaces inside a dark band */
   --color-slate: #4b5a6b; /* secondary text on light surfaces */
   --color-paper: #faf8f5; /* primary page surface */
-  --color-concrete: #ebe7e0; /* second neutral — alternating bands, cards */
-  --color-amber: #e9a116; /* road paint — the one loud colour */
+  --color-concrete: #ebe7e0; /* second neutral, alternating bands, cards */
+  --color-amber: #e9a116; /* road paint, the one loud colour */
   --color-amber-deep: #b87a06; /* amber that must carry text on paper (4.6:1) */
 
   /* ---------------------------------------------------------------------
      TYPE
 
-     Newsreader — editorial serif with optical sizing, for display only.
-     Archivo  — a grotesque with highway-signage lineage, for body and UI.
+     Newsreader, editorial serif with optical sizing, for display only.
+     Archivo, a grotesque with highway-signage lineage, for body and UI.
                 The body face is literally drawn from the subject's world.
      Display and body are never the same family (CLAUDE.md).
      --------------------------------------------------------------------- */
   --font-display: 'Newsreader Variable', ui-serif, Georgia, serif;
   --font-body: 'Archivo Variable', ui-sans-serif, system-ui, sans-serif;
 
-  /* Type scale — 1.25 major third from a 16px base */
+  /* Type scale, 1.25 major third from a 16px base */
   --text-xs: 0.8rem;
   --text-sm: 0.9rem;
   --text-base: 1rem;
@@ -72,7 +72,7 @@
   --leading-body: 1.7;
 
   /* ---------------------------------------------------------------------
-     SPACING — Tailwind's numeric base only. See the note at the top.
+     SPACING, Tailwind's numeric base only. See the note at the top.
      --------------------------------------------------------------------- */
   --spacing: 0.25rem;
 
@@ -82,7 +82,7 @@
   --radius-btn: 4px;
 
   /* ---------------------------------------------------------------------
-     DEPTH — layered and colour-tinted with the asphalt hue, never flat black.
+     DEPTH, layered and colour-tinted with the asphalt hue, never flat black.
      --------------------------------------------------------------------- */
   --shadow-base: 0 1px 2px rgb(28 36 48 / 0.05), 0 2px 8px rgb(28 36 48 / 0.04);
   --shadow-elevated: 0 2px 4px rgb(28 36 48 / 0.06), 0 8px 24px rgb(28 36 48 / 0.08);
@@ -93,7 +93,7 @@
 }
 
 /* =============================================================================
-   NAMED TOKENS — for custom CSS. Kept out of @theme so they cannot collide
+   NAMED TOKENS, for custom CSS. Kept out of @theme so they cannot collide
    with Tailwind's sizing utilities.
    ========================================================================== */
 :root {
@@ -108,7 +108,7 @@
   --space-2xl: 4rem;
 
   /* Section padding in three tiers. The ratio between them is the whole
-     effect — a page needs a way to say which sections matter. Assigned by
+     effect, a page needs a way to say which sections matter. Assigned by
      what a section is for, never by where it falls in the page. */
   --pad-major: clamp(5rem, 10vw, 9rem);
   --pad-section: clamp(3.5rem, 7vw, 6rem);
@@ -120,7 +120,7 @@
   --width-wide: 46rem;
   --gutter: clamp(1.25rem, 0.9rem + 1.6vw, 2.5rem);
 
-  /* The lane marking. Heavier than a hairline — it is the one loud element. */
+  /* The lane marking. Heavier than a hairline, it is the one loud element. */
   --lane-stroke: 2px;
   --lane-dash: 12px 10px;
 
@@ -142,7 +142,7 @@
   --fg-quiet: var(--color-slate);
   --rule: color-mix(in srgb, var(--color-asphalt) 14%, transparent);
   --rule-strong: color-mix(in srgb, var(--color-asphalt) 45%, transparent);
-  --lane: var(--color-amber); /* graphic only — safe */
+  --lane: var(--color-amber); /* graphic only, safe */
   --accent-text: var(--color-amber-deep); /* the text-safe amber */
   --focus-ring: var(--color-asphalt);
   --btn-fill: var(--color-asphalt);
@@ -169,7 +169,7 @@
 }
 
 /* The dark band. Hero and closing CTA only, plus the footer. Never the page
-   surface — a site that is dark everywhere loses the road-at-dusk contrast
+   surface, a site that is dark everywhere loses the road-at-dusk contrast
    that makes the dark bands mean something. */
 .surface-asphalt {
   --bg: var(--color-asphalt);

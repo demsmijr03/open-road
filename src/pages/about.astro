@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
 import Placeholder from '../components/Placeholder.astro';
@@ -6,21 +8,62 @@ import CtaBand from '../components/CtaBand.astro';
 import PageHero from '../components/PageHero.astro';
 import Logo from '../components/Logo.astro';
 
+/**
+ * Founder photographs.
+ *
+ * Astro's <Image /> needs a real import, and a missing file is a build error
+ * rather than a broken image, so each headshot is imported through a glob and
+ * looked up by slug. A founder with no file on disk keeps the visible
+ * placeholder instead, which is the same rule the rest of the site follows.
+ */
+const headshots = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/founders/*.{jpg,jpeg,png,webp}',
+  { eager: true }
+);
+
+const photoFor = (slug: string) =>
+  Object.entries(headshots).find(([path]) => path.includes(`/${slug}.`))?.[1].default;
+
 const board = [
-  { name: 'Joe Clark', role: 'President' },
-  { name: 'Riley Boutin', role: 'Treasurer' },
-  { name: 'Niko Levin', role: 'VP, Community Engagement' },
-  { name: 'Jackson Kulp', role: 'VP, Development' },
-  { name: 'Demetrius Smith Jr.', role: 'VP, Marketing & Communications' },
+  {
+    slug: 'joe-clark',
+    name: 'Joe Clark',
+    role: 'President',
+    bio: 'West Chester East, 2021, then Alabama for mathematics, finance, and economics. Joe is an associate at BCG. He was supported through his own education and wants the same for students here, so he works across every part of the foundation.',
+  },
+  {
+    slug: 'riley-boutin',
+    name: 'Riley Boutin',
+    role: 'Treasurer',
+    bio: 'Connecticut, then West Chester, then Auburn for finance, chosen because it was completely unfamiliar. Riley works in wealth management, first in Dallas and now in Tampa. He keeps the books, and he is convinced the best growth comes from unfamiliar places.',
+  },
+  {
+    slug: 'niko-levin',
+    name: 'Niko Levin',
+    role: 'VP, Community Engagement',
+    bio: 'West Chester East, 2021, then the University of Miami. Niko is an analyst at Accenture and back in Philadelphia, close enough to be in the room. He handles the relationships that keep the foundation connected to the district it serves.',
+  },
+  {
+    slug: 'jackson-kulp',
+    name: 'Jackson Kulp',
+    role: 'Events Coordinator',
+    bio: 'West Chester East, 2021, then Abilene Christian for kinesiology and biblical study. Jackson is finishing a doctorate in physical therapy at Pittsburgh in December 2027. He builds the events where West Chester meets this work, temporary distance included.',
+  },
+  {
+    slug: 'demetrius-smith',
+    name: 'Demetrius Smith Jr.',
+    role: 'VP, Marketing & Communications',
+    bio: 'West Chester East, 2021, then Ohio State, chosen to see places he had never been. Demetrius is an analyst at Accenture in New York City. He tells the foundation’s story, and he is in it to hand people an opportunity and make them smile.',
+  },
 ];
 ---
 
 <BaseLayout
-  title="Who we are · The Open Road Foundation"
+  title="About us | The Open Road Foundation"
   description="Five people who grew up in West Chester and left for school. Why we started The Open Road Foundation, and who is accountable for it."
 >
   <PageHero
-    heading="Who we are"
+    heading="About us"
     lede="Five people who grew up in West Chester and left for school. Some of us came back. All of us are still here in the ways that count."
   />
 
@@ -30,13 +73,13 @@ const board = [
         <h2>Why we started this</h2>
         <p>
           The five of us grew up here, and we all left for school. Not because we didn't love where
-          we came from — because there are small things you take for granted that you only recognize
+          we came from, but because there are small things you take for granted that you only recognize
           from a distance.
         </p>
         <p>
           What we found out there was perspective. Long stretches away, surrounded by people whose
           lives looked nothing like ours, learning things you can't learn somewhere familiar. None
-          of that was lost when we graduated. We carried it with us — some of us back to Chester
+          of that was lost when we graduated. We carried it with us: some of us back to Chester
           County, some of us elsewhere, all of us still tied to the place that raised us.
         </p>
         <p>
@@ -48,7 +91,7 @@ const board = [
   </section>
 
   <!-- The question. The site's argument, so it gets the dark band and the
-       scene variant of the mark — the only place the figure and the guiding
+       scene variant of the mark, the only place the figure and the guiding
        hand appear at a size where they resolve. -->
   <section class="section--major surface-asphalt" id="the-question">
     <div class="wrap question-grid">
@@ -61,7 +104,7 @@ const board = [
             left with.
           </p>
           <p>
-            And when they don't come back — some won't — what they build still traces to here. We're
+            And when they don't come back, and some won't, what they build still traces to here. We're
             not funding students to leave West Chester. We're funding them to go where the right
             education is.
           </p>
@@ -75,10 +118,16 @@ const board = [
     </div>
   </section>
 
+  <!-- The five-founders group shot was dropped: five real headshots already do
+       that job, and with the founders spread across five cities a group photo is
+       a scheduling problem that would hold the page indefinitely. What belongs
+       here instead is the one image the whole brand rests on. -->
   <section class="section surface-paper">
     <div class="wrap">
       <div class="founders-media">
-        <Placeholder note="photograph — the five founders, taken here, not stock" />
+        <Placeholder
+          note="photograph of West Chester itself: the road out of town, shot locally. Wide crop. This is the image the hero line promises, and any one of the founders can take it on a phone."
+        />
       </div>
     </div>
   </section>
@@ -108,22 +157,36 @@ const board = [
         <h2>Who's accountable</h2>
         <p>
           Five people, named, with our roles. If something on this site is wrong, one of us answers
-          for it — and you can write to any of us directly.
+          for it, and you can write to any of us directly.
         </p>
       </div>
 
       <ul class="board">
         {
-          board.map((person) => (
-            <li class="board-member">
-              <div class="board-portrait">
-                <Placeholder note="headshot" />
-              </div>
-              <p class="board-name">{person.name}</p>
-              <p class="board-role">{person.role}</p>
-              <Placeholder note="one-line bio" />
-            </li>
-          ))
+          board.map((person) => {
+            const photo = photoFor(person.slug);
+            return (
+              <li class="board-member">
+                <div class="board-portrait">
+                  {photo ? (
+                    <Image
+                      src={photo}
+                      alt={`${person.name}, ${person.role}`}
+                      width={480}
+                      height={480}
+                      widths={[240, 480]}
+                      sizes="(max-width: 60rem) 45vw, 15rem"
+                    />
+                  ) : (
+                    <Placeholder note={`headshot for ${person.name}`} />
+                  )}
+                </div>
+                <p class="board-name">{person.name}</p>
+                <p class="board-role">{person.role}</p>
+                <p class="board-bio">{person.bio}</p>
+              </li>
+            );
+          })
         }
       </ul>
     </div>
@@ -183,14 +246,17 @@ const board = [
     font-size: clamp(1.75rem, 3.5vw, 2.25rem);
   }
 
+  /* Set large and given room, with no rule down the side. The size and the
+     display face are enough to mark it as the quoted mission. */
   .mission {
     margin: 0;
-    padding-inline-start: var(--space-m);
-    border-inline-start: var(--lane-stroke) solid var(--lane);
+    padding: 0;
+    max-inline-size: 34rem;
     font-family: var(--font-display);
-    font-size: clamp(1.25rem, 2.5vw, 1.625rem);
-    line-height: 1.45;
-    letter-spacing: -0.015em;
+    font-size: clamp(1.375rem, 3vw, 1.875rem);
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+    text-wrap: pretty;
   }
 
   .mission-note {
@@ -219,9 +285,28 @@ const board = [
     display: grid;
     align-content: center;
     margin-block-end: var(--space-2xs);
+    border-radius: var(--radius-panel);
+    overflow: hidden;
+  }
+
+  /* Only the empty state carries the dashed outline. Once a real photograph
+     lands the frame gets out of its way. */
+  .board-portrait:has(.ph-block) {
     padding: var(--space-2xs);
     border: var(--border-hairline) dashed var(--rule-strong);
-    border-radius: var(--radius-panel);
+  }
+
+  .board-portrait :global(img) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .board-bio {
+    margin: var(--space-2xs) 0 0;
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--fg-quiet);
   }
 
   .board-name {

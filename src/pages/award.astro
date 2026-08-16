@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
 import Lane from '../components/Lane.astro';
-import Placeholder from '../components/Placeholder.astro';
 import CtaBand from '../components/CtaBand.astro';
 import PageHero from '../components/PageHero.astro';
 import Faq from '../components/Faq.astro';
@@ -14,7 +13,7 @@ const faqs = [
   },
   {
     q: 'How much is the award, and what can I spend it on?',
-    a: '$10,000*, once, to one student. Put it toward tuition, books, a laptop, or travel — whatever it takes to support your time there. The figure is provisional until the application opens.',
+    a: '$6,000*, once, to one student. Put it toward tuition, books, a laptop, or travel, whatever it takes to support your time there. The figure is provisional until the application opens.',
   },
   {
     q: 'Can I use it at an out-of-state school?',
@@ -32,7 +31,7 @@ const faqs = [
 ---
 
 <BaseLayout
-  title="The award · The Open Road Foundation"
+  title="The award | The Open Road Foundation"
   description="Who can apply, what it covers, and how we choose. One award, for a West Chester Area School District student."
 >
   <PageHero
@@ -69,9 +68,6 @@ const faqs = [
             where you go or what kind of program it is.
           </li>
         </ul>
-        <Placeholder
-          note="how financial need is measured — income threshold, FAFSA SAI, or committee judgement"
-        />
       </div>
     </div>
   </section>
@@ -82,7 +78,7 @@ const faqs = [
 
       <div class="covers">
         <div class="covers-figure">
-          <p class="covers-amount">$10,000<span class="covers-star" aria-hidden="true">*</span></p>
+          <p class="covers-amount">$6,000<span class="covers-star" aria-hidden="true">*</span></p>
           <Lane mode="recede" class="covers-lane" />
           <p class="covers-caption">one award, one student, this year.</p>
         </div>
@@ -92,13 +88,15 @@ const faqs = [
             It's yours to put toward the real cost of going: tuition, books, a laptop, the travel to
             get there. Anything that supports your time at the school you chose.
           </p>
+          <p>
+            We'll confirm how the money reaches you, whether that's paid to your school or to you
+            directly, before the application opens.
+            <a href="/get-involved/#money">See where every dollar goes.</a>
+          </p>
           <p class="covers-footnote">
             <span aria-hidden="true">*</span>
             <em>Year-one figure. We'll confirm the final amount before the application opens.</em>
           </p>
-          <Placeholder
-            note="how funds are disbursed — paid to the school directly, or to the student"
-          />
         </div>
       </div>
 
@@ -110,7 +108,7 @@ const faqs = [
         </p>
         <p>
           We don't require you to stay in Pennsylvania, and we don't require you to come back.
-          <a href="/who-we-are/#the-question">That's the whole point.</a>
+          <a href="/about/#the-question">That's the whole point.</a>
         </p>
       </div>
     </div>
@@ -119,28 +117,19 @@ const faqs = [
   <section class="section surface-concrete">
     <div class="wrap">
       <div class="split prose">
-        <h2>How we choose</h2>
+        <h2>How we choose, and when</h2>
         <p>
           Two groups read applications together: the West Chester Area School District's scholarship
           committee and the founders of Open Road. Neither picks alone.
         </p>
         <p>
-          We're looking for students who work hard and who want something specific — and who would
-          be held back from it by money alone.
+          We're looking for students who work hard and who want something specific, and who would be
+          held back from it by money alone.
         </p>
-        <Placeholder note="the rubric or criteria the committee scores against" />
-        <Placeholder note="whether there is an interview round in year one" />
-      </div>
-    </div>
-  </section>
-
-  <section class="section surface-paper">
-    <div class="wrap">
-      <div class="split prose">
-        <h2>When</h2>
-        <p>Fundraising opens September 1. The first award is made by April 1.</p>
-        <Placeholder note="application opens / application closes / notification date" />
-        <p>We'll email you the dates the moment they're set.</p>
+        <p>
+          Fundraising opens September 1. The first award is made by April 1. We'll email you the
+          application dates the moment they're set.
+        </p>
       </div>
     </div>
   </section>
@@ -177,7 +166,7 @@ const faqs = [
     color: var(--fg-quiet);
   }
 
-  /* A lane dash as the marker — the road motif doing a list's work. */
+  /* A lane dash as the marker, the road motif doing a list's work. */
   .checklist li::before {
     content: '';
     position: absolute;

@@ -18,7 +18,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = new URL(ogImage, Astro.site);
 
 /* Structured data. Legal name and EIN are still placeholders in content.md, so
-   they are deliberately omitted rather than guessed — a wrong EIN in
+   they are deliberately omitted rather than guessed. A wrong EIN in
    machine-readable markup is worse than an absent one. */
 const orgSchema = {
   '@context': 'https://schema.org',

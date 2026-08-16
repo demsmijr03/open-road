@@ -33,9 +33,9 @@ const tiers = [
 
 const milestones = [
   { when: 'September 1', what: 'Fundraising begins' },
-  { when: '', whenPlaceholder: 'date', what: 'WCASD high school reunions fundraiser' },
-  { when: '', whenPlaceholder: 'date', what: 'WCASD essay contest' },
-  { when: '', whenPlaceholder: 'date', what: 'Fundraising day with Twin Valley Coffee' },
+  { when: 'November', what: 'High school reunions fundraiser' },
+  { when: 'January', what: 'WCASD essay contest' },
+  { when: 'March', what: 'Fundraising day with Twin Valley Coffee' },
   { when: 'April 1', what: 'First round of scholarships' },
 ];
 
@@ -54,18 +54,18 @@ const donorFaqs = [
   },
   {
     q: 'Who runs this?',
-    a: 'Five people from West Chester, named with our roles on Who we are.',
+    a: 'Five people from West Chester, named with our roles on the About us page.',
   },
 ];
 ---
 
 <BaseLayout
-  title="Get involved · The Open Road Foundation"
+  title="Get involved | The Open Road Foundation"
   description="Give, partner, or tell us you're interested. We're raising $10,000 this year to fund a West Chester Area School District student."
 >
   <PageHero
     heading="Get involved"
-    lede="We're raising $10,000 this year to fund our first student. Here's every way to help — including one that costs nothing but the time it takes to fill in a form."
+    lede="We're raising $10,000 this year to fund our first student. Here's every way to help, including one that costs nothing but the time it takes to fill in a form."
   />
 
   <section class="section surface-paper" id="give">
@@ -73,7 +73,7 @@ const donorFaqs = [
       <div class="split prose">
         <h2>Give</h2>
         <p>
-          One gift, one student, this year. There's no recurring giving at launch — when you give,
+          One gift, one student, this year. There's no recurring giving at launch. When you give,
           it's once, and it goes toward the award.
         </p>
         <p>
@@ -81,7 +81,7 @@ const donorFaqs = [
           organization, EIN <Placeholder note="EIN" as="inline" />, and you'll get a receipt for
           your records.
         </p>
-        <Placeholder note="donation link — Zeffy, Givebutter, or equivalent" />
+        <Placeholder note="donation link: Zeffy, Givebutter, or equivalent" />
         <p><Button href="#interest">Support a student</Button></p>
       </div>
     </div>
@@ -98,13 +98,18 @@ const donorFaqs = [
       </div>
 
       <!-- Tiers are named after road types and ascend in scale, so the naming
-           does real work: the reader can order them without reading amounts. -->
+           does real work: the reader can order them without reading amounts.
+
+           The tiles express that ascent through surface rather than through a
+           coloured rule. Each step sits on a lighter ground and lifts further off
+           the page, and the top tier inverts to asphalt so it genuinely stands
+           apart. Reuses the .surface-* classes, so no new colour rules. -->
       <ul class="tiers">
         {
-          tiers.map((tier) => (
-            <li class="tier">
-              <p class="tier-name">{tier.name}</p>
+          tiers.map((tier, i) => (
+            <li class={`tier tier--${i + 1} ${i === tiers.length - 1 ? 'surface-asphalt' : ''}`}>
               <p class="tier-amount">{tier.amount}</p>
+              <p class="tier-name">{tier.name}</p>
               <p class="tier-gets">{tier.gets}</p>
             </li>
           ))
@@ -147,13 +152,19 @@ const donorFaqs = [
     </div>
   </section>
 
-  <section class="section surface-paper">
+  <section class="section surface-paper" id="money">
     <div class="wrap">
       <div class="split prose">
         <h2>Where the money goes</h2>
-        <Placeholder
-          note="FOR RILEY — the breakdown of where each dollar goes. If an 'every dollar goes to the award' claim is going to be made, it belongs here, and only once it's literally true."
-        />
+        <p>
+          90 cents of every dollar goes to student awards. The other 10 cents covers what it costs
+          to run the foundation: fundraising, marketing, and the administrative work behind making
+          an award.
+        </p>
+        <p>
+          This year that means a $6,000 award to one student, with the balance seeding next year's
+          fund so the second award doesn't start from zero.
+        </p>
       </div>
     </div>
   </section>
@@ -163,7 +174,7 @@ const donorFaqs = [
       <div class="split prose">
         <h2>Newsletter</h2>
         <p>
-          One email when there's something real to report — the application opening, a student
+          One email when there's something real to report: the application opening, a student
           funded, the year's total. That's it, and we won't pass your address to anyone.
         </p>
         <Placeholder note="newsletter signup embed" />
@@ -183,10 +194,6 @@ const donorFaqs = [
       <div class="measure-wide">
         <h2 class="faq-title">Questions from donors</h2>
         <Faq items={donorFaqs} />
-        <p class="faq-extra">
-          <strong>Where does my money actually go?</strong> Toward the cost of college for a WCASD student.
-        </p>
-        <Placeholder note="Riley's breakdown" />
       </div>
     </div>
   </section>
@@ -215,26 +222,53 @@ const donorFaqs = [
     flex-direction: column;
     gap: var(--space-3xs);
     padding: var(--space-m);
-    background-color: var(--color-paper);
     border-radius: var(--radius-panel);
-    border-block-start: var(--lane-stroke) solid var(--lane);
+  }
+
+  /* Only the light tiles paint their own ground. The top tier carries
+     .surface-asphalt, which sets both background and foreground; setting a
+     paper background here as well would win on specificity and leave that tile
+     rendering paper text on paper. */
+  .tier:not(.surface-asphalt) {
+    background-color: var(--color-paper);
+  }
+
+  /* The ascent, in four steps of elevation. */
+  .tier--1 {
+    box-shadow: none;
+    border: var(--border-hairline) solid var(--rule);
+  }
+
+  .tier--2 {
     box-shadow: var(--shadow-base);
   }
 
-  .tier-name {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: var(--text-lg);
-    font-weight: 600;
+  .tier--3 {
+    box-shadow: var(--shadow-elevated);
   }
 
-  .tier-amount {
+  .tier--4 {
+    box-shadow: var(--shadow-floating);
+  }
+
+  .tier-name {
     margin: 0 0 var(--space-2xs);
     font-size: var(--text-sm);
     font-weight: 600;
     letter-spacing: var(--tracking-label);
     text-transform: uppercase;
     color: var(--fg-quiet);
+  }
+
+  /* The amount carries the hierarchy now that no coloured rule does. */
+  .tier-amount {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--fg);
   }
 
   .tier-gets {

@@ -3,14 +3,14 @@
  * A hole we know about.
  *
  * content.md is explicit: `[PLACEHOLDER: …]` "should render visibly on the page
- * rather than being quietly filled with something plausible." So this is
- * deliberately loud. Roadwork striping is the honest metaphor and happens to be
- * the brand's own material world — this section of road is not finished yet.
+ * rather than being quietly filled with something plausible." So this reads as
+ * an unfinished note rather than as content: a dashed outline, a quiet tint,
+ * and a small label saying what is still owed.
+ *
+ * No colour is used to mark it. An earlier version carried a roadwork-striped
+ * amber edge, which drew the eye but read as decoration.
  *
  * Every one of these is a launch blocker. `npm run audit:holes` counts them.
- *
- * Note: amber is 2.1:1 on paper, so it never sets the text here. It is the
- * stripe only; the label is asphalt and the body is slate.
  */
 interface Props {
   /** What is missing. Taken verbatim from content.md. */
@@ -37,22 +37,17 @@ const { note, as = 'block' } = Astro.props;
 }
 
 <style>
+  /* A quiet inset panel. An earlier version carried a roadwork-striped leading
+     edge, which was legible but read as decoration rather than as an unfinished
+     note. The dashed outline says the same thing without a coloured rule. */
   .ph-block {
-    --stripe: color-mix(in srgb, var(--color-amber) 55%, transparent);
     display: flex;
     flex-direction: column;
     gap: var(--space-2xs);
     padding: var(--space-s) var(--space-m);
     border-radius: var(--radius-panel);
-    background-color: color-mix(in srgb, var(--color-amber) 9%, var(--bg));
-    /* Roadwork striping down the leading edge */
-    border-inline-start: 4px solid transparent;
-    border-image: repeating-linear-gradient(
-        45deg,
-        var(--color-amber) 0 6px,
-        var(--color-asphalt) 6px 12px
-      )
-      1;
+    border: var(--border-hairline) dashed var(--rule-strong);
+    background-color: color-mix(in srgb, var(--fg) 3%, var(--bg));
   }
 
   .ph-tag {
@@ -61,7 +56,7 @@ const { note, as = 'block' } = Astro.props;
     font-weight: 600;
     letter-spacing: var(--tracking-label);
     text-transform: uppercase;
-    color: var(--color-asphalt);
+    color: var(--fg-quiet);
   }
 
   .ph-note {
@@ -73,10 +68,11 @@ const { note, as = 'block' } = Astro.props;
 
   .ph-inline {
     display: inline;
-    padding: 0.1em 0.4em;
+    padding: 0.1em 0.45em;
     border-radius: var(--radius-btn);
-    background-color: color-mix(in srgb, var(--color-amber) 22%, var(--bg));
-    color: var(--fg);
+    border: var(--border-hairline) dashed var(--rule-strong);
+    background-color: color-mix(in srgb, var(--fg) 5%, var(--bg));
+    color: var(--fg-quiet);
     font-size: 0.9em;
   }
 
@@ -84,12 +80,9 @@ const { note, as = 'block' } = Astro.props;
     margin-inline-end: 0.4em;
   }
 
-  /* Inside a dark band the mix goes the other way so it stays legible. */
-  :global(.surface-asphalt) .ph-block {
-    background-color: color-mix(in srgb, var(--color-amber) 14%, var(--bg));
-  }
-
-  :global(.surface-asphalt) .ph-tag {
-    color: var(--color-amber);
+  /* Inside a dark band the tint goes the other way so it stays legible. */
+  :global(.surface-asphalt) .ph-block,
+  :global(.surface-asphalt) .ph-inline {
+    background-color: color-mix(in srgb, var(--fg) 7%, var(--bg));
   }
 </style>

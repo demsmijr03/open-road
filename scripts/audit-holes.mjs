@@ -1,12 +1,13 @@
 /**
  * Counts every unfinished thing in the built site.
  *
- * content.md marks two kinds of hole:
- *   [PLACEHOLDER: …]  a gap we know about, rendered visibly by <Placeholder />
- *   [VERIFY: …]       a sourced-but-unconfirmed fact, marked by <Verify />
+ * content.md marks a known gap as [PLACEHOLDER: …], which renders visibly via
+ * <Placeholder />. Each one is a launch blocker, so this reads dist/ after a
+ * build and reports what is still open, per page. Run it before any deploy that
+ * claims to be finished.
  *
- * Both are launch blockers, so this reads dist/ after a build and reports what
- * is still open, per page. Run it before any deploy that claims to be finished.
+ * The [VERIFY: …] facts were all resolved against primary sources, so the
+ * companion component and its column here are gone.
  *
  *   node scripts/audit-holes.mjs
  *
@@ -39,29 +40,26 @@ try {
 }
 
 let placeholders = 0;
-let verifies = 0;
 const rows = [];
 
 for (const file of files.sort()) {
   const html = await readFile(file, 'utf8');
-  const p = countOf(html, 'data-placeholder');
-  const v = countOf(html, 'data-verify-note');
-  if (p || v) rows.push({ file: path.relative(DIST, file), p, v });
-  placeholders += p;
-  verifies += v;
+  const count = countOf(html, 'data-placeholder');
+  if (count) rows.push({ file: path.relative(DIST, file), count });
+  placeholders += count;
 }
 
 const pad = (s, n) => String(s).padEnd(n);
 console.log('\nOutstanding before launch\n');
-console.log(`${pad('Page', 34)}${pad('Placeholders', 14)}To verify`);
-console.log('-'.repeat(60));
+console.log(`${pad('Page', 34)}Placeholders`);
+console.log('-'.repeat(48));
 for (const row of rows) {
-  console.log(`${pad(row.file, 34)}${pad(row.p || '·', 14)}${row.v || '·'}`);
+  console.log(`${pad(row.file, 34)}${row.count}`);
 }
-console.log('-'.repeat(60));
-console.log(`${pad('Total', 34)}${pad(placeholders, 14)}${verifies}\n`);
+console.log('-'.repeat(48));
+console.log(`${pad('Total', 34)}${placeholders}\n`);
 
-if (placeholders || verifies) {
+if (placeholders) {
   console.log('Not ready to launch. Every row above is a decision someone still owes.\n');
   process.exit(1);
 }
