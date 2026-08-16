@@ -1,0 +1,146 @@
+---
+import Logo from './Logo.astro';
+import Placeholder from './Placeholder.astro';
+---
+
+<footer class="footer surface-asphalt">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <Logo variant="full" />
+      <p class="footer-mission">
+        We fund West Chester Area School District students to attend the school that fits them best.
+      </p>
+    </div>
+
+    <div class="footer-cols">
+      <section class="footer-col">
+        <h2>Contact</h2>
+        <Placeholder note="hello@ email address" />
+        <Placeholder note="registered mailing address" />
+      </section>
+
+      <section class="footer-col">
+        <h2>Follow</h2>
+        <Placeholder note="Instagram URL" />
+        <Placeholder note="LinkedIn URL" />
+      </section>
+
+      <section class="footer-col footer-col--wide">
+        <h2>Legal</h2>
+        <p>
+          The Open Road Foundation is a registered 501(c)(3) nonprofit organization. Donations are
+          tax-deductible to the extent allowed by law.
+        </p>
+        <p class="footer-ein">
+          EIN <Placeholder note="EIN" as="inline" />
+        </p>
+        <p><a href="/privacy/">Privacy</a></p>
+      </section>
+    </div>
+
+    <div class="footer-base">
+      <p>© 2026 The Open Road Foundation.</p>
+      <Placeholder note="legal name, if different from the trading name" />
+      <Placeholder
+        note="required disclaimers — Pennsylvania charitable solicitation registration statement and any state-specific language"
+      />
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: var(--pad-section);
+  }
+
+  .footer-inner {
+    inline-size: min(100% - (var(--gutter) * 2), var(--width-page));
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .footer-mission {
+    margin: var(--space-s) 0 0;
+    max-inline-size: 26rem;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+
+  .footer-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: var(--space-l);
+    padding-block-start: var(--space-l);
+    border-block-start: var(--border-hairline) solid var(--rule);
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .footer-col--wide {
+    grid-column: span 1;
+  }
+
+  .footer-col h2 {
+    margin: 0 0 var(--space-2xs);
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--fg-quiet);
+  }
+
+  .footer-col p {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--fg-quiet);
+  }
+
+  .footer-ein {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-base {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding-block-start: var(--space-l);
+    border-block-start: var(--border-hairline) solid var(--rule);
+    font-size: var(--text-sm);
+    color: var(--fg-quiet);
+  }
+
+  .footer-base p {
+    margin: 0;
+  }
+
+  .footer a {
+    color: var(--fg);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-color: var(--rule-strong);
+  }
+
+  .footer a:hover {
+    text-decoration-color: var(--accent-text);
+    color: var(--accent-text);
+  }
+
+  .footer a:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+</style>

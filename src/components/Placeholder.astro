@@ -1,0 +1,95 @@
+---
+/**
+ * A hole we know about.
+ *
+ * content.md is explicit: `[PLACEHOLDER: …]` "should render visibly on the page
+ * rather than being quietly filled with something plausible." So this is
+ * deliberately loud. Roadwork striping is the honest metaphor and happens to be
+ * the brand's own material world — this section of road is not finished yet.
+ *
+ * Every one of these is a launch blocker. `npm run audit:holes` counts them.
+ *
+ * Note: amber is 2.1:1 on paper, so it never sets the text here. It is the
+ * stripe only; the label is asphalt and the body is slate.
+ */
+interface Props {
+  /** What is missing. Taken verbatim from content.md. */
+  note: string;
+  /** `block` for a standalone gap, `inline` for a hole inside a sentence. */
+  as?: 'block' | 'inline';
+}
+
+const { note, as = 'block' } = Astro.props;
+---
+
+{
+  as === 'inline' ? (
+    <mark class="ph-inline" data-placeholder>
+      <span class="ph-tag">To come</span>
+      {note}
+    </mark>
+  ) : (
+    <div class="ph-block" role="note" aria-label={`Placeholder: ${note}`} data-placeholder>
+      <span class="ph-tag">To come</span>
+      <p class="ph-note">{note}</p>
+    </div>
+  )
+}
+
+<style>
+  .ph-block {
+    --stripe: color-mix(in srgb, var(--color-amber) 55%, transparent);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    padding: var(--space-s) var(--space-m);
+    border-radius: var(--radius-panel);
+    background-color: color-mix(in srgb, var(--color-amber) 9%, var(--bg));
+    /* Roadwork striping down the leading edge */
+    border-inline-start: 4px solid transparent;
+    border-image: repeating-linear-gradient(
+        45deg,
+        var(--color-amber) 0 6px,
+        var(--color-asphalt) 6px 12px
+      )
+      1;
+  }
+
+  .ph-tag {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-asphalt);
+  }
+
+  .ph-note {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: 1.55;
+    color: var(--fg-quiet);
+  }
+
+  .ph-inline {
+    display: inline;
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius-btn);
+    background-color: color-mix(in srgb, var(--color-amber) 22%, var(--bg));
+    color: var(--fg);
+    font-size: 0.9em;
+  }
+
+  .ph-inline .ph-tag {
+    margin-inline-end: 0.4em;
+  }
+
+  /* Inside a dark band the mix goes the other way so it stays legible. */
+  :global(.surface-asphalt) .ph-block {
+    background-color: color-mix(in srgb, var(--color-amber) 14%, var(--bg));
+  }
+
+  :global(.surface-asphalt) .ph-tag {
+    color: var(--color-amber);
+  }
+</style>

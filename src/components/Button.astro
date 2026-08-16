@@ -1,0 +1,91 @@
+---
+/**
+ * The site's one button.
+ *
+ * Fill and label come from the surface (see tokens.css), so a button never
+ * picks its own colours and "amber never sets text on paper" stays true in one
+ * place rather than in every component.
+ *
+ * Every clickable element carries hover, focus-visible and active states —
+ * CLAUDE.md, no exceptions. Only transform and opacity are animated.
+ */
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary';
+  type?: 'button' | 'submit';
+  class?: string;
+}
+
+const { href, variant = 'primary', type = 'button', class: className = '' } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  class:list={['btn', `btn--${variant}`, className]}
+  href={href}
+  type={href ? undefined : type}
+>
+  <slot />
+</Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    /* 44px minimum touch target */
+    min-block-size: 2.75rem;
+    padding: 0.6rem 1.35rem;
+    border-radius: var(--radius-btn);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    border: var(--border-hairline) solid transparent;
+    transition:
+      transform var(--duration) var(--ease-spring),
+      opacity var(--duration) var(--ease-spring),
+      background-color var(--duration) var(--ease-spring),
+      border-color var(--duration) var(--ease-spring);
+  }
+
+  .btn--primary {
+    background-color: var(--btn-fill);
+    color: var(--btn-label);
+  }
+
+  .btn--primary:hover {
+    background-color: var(--btn-fill-hover);
+    transform: translateY(-1px);
+  }
+
+  .btn--secondary {
+    background-color: transparent;
+    color: var(--fg);
+    border-color: var(--rule-strong);
+  }
+
+  .btn--secondary:hover {
+    border-color: var(--fg);
+    transform: translateY(-1px);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+  }
+
+  .btn:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn:hover,
+    .btn:active {
+      transform: none;
+    }
+  }
+</style>

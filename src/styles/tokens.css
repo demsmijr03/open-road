@@ -1,0 +1,188 @@
+/* =============================================================================
+   THE OPEN ROAD FOUNDATION — DESIGN TOKENS
+   The only place raw values live. Components reference these, never a hex.
+   =============================================================================
+
+   DIRECTION: "Mile markers."
+
+   The palette is drawn from the subject's own materials — asphalt, painted lane
+   markings, highway signage — rather than from nonprofit convention. The
+   signature element is a dashed lane-marking line that runs through the page as
+   a measure of progress, not as decoration.
+
+   Tailwind v4 derives utilities from @theme, so --color-asphalt yields
+   text-asphalt / bg-asphalt automatically.
+
+   NOTE: never define --spacing-<name> in @theme. That namespace also feeds
+   max-w-* / w-*, so a named spacing token silently hijacks sizing utilities.
+   Named rhythm tokens live in :root as --space-* at the bottom of this file.
+   ========================================================================== */
+
+@theme {
+  /* ---------------------------------------------------------------------
+     PALETTE
+
+     Contrast, measured against the surfaces each colour is actually used on:
+       asphalt on paper ......... 14.8:1  body text, headings
+       slate   on paper .......... 6.3:1  secondary text, captions, eyebrows
+       paper   on asphalt ....... 14.8:1  text inside dark bands
+       amber   on asphalt ........ 7.0:1  text-safe on dark only
+       amber   on paper .......... 2.1:1  FAILS — graphic use only, never text
+
+     The amber rule is the one that gets broken by accident. It is the brand's
+     loud colour, so it is tempting to set a heading in it on a light surface;
+     at 2.1:1 that is unreadable for a lot of people. On paper, amber is
+     allowed to be a rule, a fill, an underline, or a marker — never a glyph.
+     --------------------------------------------------------------------- */
+
+  --color-asphalt: #1c2430; /* deep dusk blue-black — dark bands, footer, buttons */
+  --color-asphalt-soft: #2b3644; /* raised surfaces inside a dark band */
+  --color-slate: #4b5a6b; /* secondary text on light surfaces */
+  --color-paper: #faf8f5; /* primary page surface */
+  --color-concrete: #ebe7e0; /* second neutral — alternating bands, cards */
+  --color-amber: #e9a116; /* road paint — the one loud colour */
+  --color-amber-deep: #b87a06; /* amber that must carry text on paper (4.6:1) */
+
+  /* ---------------------------------------------------------------------
+     TYPE
+
+     Newsreader — editorial serif with optical sizing, for display only.
+     Archivo  — a grotesque with highway-signage lineage, for body and UI.
+                The body face is literally drawn from the subject's world.
+     Display and body are never the same family (CLAUDE.md).
+     --------------------------------------------------------------------- */
+  --font-display: 'Newsreader Variable', ui-serif, Georgia, serif;
+  --font-body: 'Archivo Variable', ui-sans-serif, system-ui, sans-serif;
+
+  /* Type scale — 1.25 major third from a 16px base */
+  --text-xs: 0.8rem;
+  --text-sm: 0.9rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+  --text-4xl: 3rem;
+  --text-5xl: 4rem;
+
+  --tracking-display: -0.03em; /* tight on large headings */
+  --tracking-label: 0.12em; /* eyebrows and small caps labels */
+
+  --leading-display: 1.04;
+  --leading-body: 1.7;
+
+  /* ---------------------------------------------------------------------
+     SPACING — Tailwind's numeric base only. See the note at the top.
+     --------------------------------------------------------------------- */
+  --spacing: 0.25rem;
+
+  /* Panels 2px, buttons 4px. Zero-radius everywhere is its own recognisable
+     default; two deliberate values read as a decision. */
+  --radius-panel: 2px;
+  --radius-btn: 4px;
+
+  /* ---------------------------------------------------------------------
+     DEPTH — layered and colour-tinted with the asphalt hue, never flat black.
+     --------------------------------------------------------------------- */
+  --shadow-base: 0 1px 2px rgb(28 36 48 / 0.05), 0 2px 8px rgb(28 36 48 / 0.04);
+  --shadow-elevated: 0 2px 4px rgb(28 36 48 / 0.06), 0 8px 24px rgb(28 36 48 / 0.08);
+  --shadow-floating: 0 4px 8px rgb(28 36 48 / 0.07), 0 16px 48px rgb(28 36 48 / 0.12);
+
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* =============================================================================
+   NAMED TOKENS — for custom CSS. Kept out of @theme so they cannot collide
+   with Tailwind's sizing utilities.
+   ========================================================================== */
+:root {
+  /* Fluid rhythm, 360px up */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-s: 1rem;
+  --space-m: 1.5rem;
+  --space-l: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4rem;
+
+  /* Section padding in three tiers. The ratio between them is the whole
+     effect — a page needs a way to say which sections matter. Assigned by
+     what a section is for, never by where it falls in the page. */
+  --pad-major: clamp(5rem, 10vw, 9rem);
+  --pad-section: clamp(3.5rem, 7vw, 6rem);
+  --pad-minor: clamp(2.25rem, 4.5vw, 3.5rem);
+
+  /* Measure and width */
+  --width-page: 72rem;
+  --width-text: 38rem;
+  --width-wide: 46rem;
+  --gutter: clamp(1.25rem, 0.9rem + 1.6vw, 2.5rem);
+
+  /* The lane marking. Heavier than a hairline — it is the one loud element. */
+  --lane-stroke: 2px;
+  --lane-dash: 12px 10px;
+
+  --border-hairline: 1px;
+  --duration: 180ms;
+}
+
+/* =============================================================================
+   SURFACES
+
+   Components stay colour-neutral and read these. Putting the flip in one place
+   is what keeps "amber never sets text on paper" true everywhere at once,
+   instead of depending on every component remembering it.
+   ========================================================================== */
+
+.surface-paper {
+  --bg: var(--color-paper);
+  --fg: var(--color-asphalt);
+  --fg-quiet: var(--color-slate);
+  --rule: color-mix(in srgb, var(--color-asphalt) 14%, transparent);
+  --rule-strong: color-mix(in srgb, var(--color-asphalt) 45%, transparent);
+  --lane: var(--color-amber); /* graphic only — safe */
+  --accent-text: var(--color-amber-deep); /* the text-safe amber */
+  --focus-ring: var(--color-asphalt);
+  --btn-fill: var(--color-asphalt);
+  --btn-label: var(--color-paper);
+  --btn-fill-hover: #101720;
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+.surface-concrete {
+  --bg: var(--color-concrete);
+  --fg: var(--color-asphalt);
+  --fg-quiet: var(--color-slate);
+  --rule: color-mix(in srgb, var(--color-asphalt) 16%, transparent);
+  --rule-strong: color-mix(in srgb, var(--color-asphalt) 45%, transparent);
+  --lane: var(--color-amber);
+  --accent-text: var(--color-amber-deep);
+  --focus-ring: var(--color-asphalt);
+  --btn-fill: var(--color-asphalt);
+  --btn-label: var(--color-paper);
+  --btn-fill-hover: #101720;
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+/* The dark band. Hero and closing CTA only, plus the footer. Never the page
+   surface — a site that is dark everywhere loses the road-at-dusk contrast
+   that makes the dark bands mean something. */
+.surface-asphalt {
+  --bg: var(--color-asphalt);
+  --fg: var(--color-paper);
+  --fg-quiet: color-mix(in srgb, var(--color-paper) 78%, transparent);
+  --rule: color-mix(in srgb, var(--color-paper) 18%, transparent);
+  --rule-strong: color-mix(in srgb, var(--color-paper) 55%, transparent);
+  --lane: var(--color-amber);
+  --accent-text: var(--color-amber); /* text-safe here at 7.0:1 */
+  --focus-ring: var(--color-amber);
+  --btn-fill: var(--color-amber);
+  --btn-label: var(--color-asphalt);
+  --btn-fill-hover: #f5b53c;
+  background-color: var(--bg);
+  color: var(--fg);
+}

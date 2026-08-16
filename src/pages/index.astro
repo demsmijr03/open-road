@@ -1,0 +1,221 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Lane from '../components/Lane.astro';
+import Placeholder from '../components/Placeholder.astro';
+import Verify from '../components/Verify.astro';
+import VerifyNote from '../components/VerifyNote.astro';
+import DistanceStat from '../components/DistanceStat.astro';
+import CtaBand from '../components/CtaBand.astro';
+---
+
+<BaseLayout
+  title="Some roads are worth leaving home for · The Open Road Foundation"
+  description="We help West Chester Area School District students afford the school that fits them best — wherever it takes them."
+>
+  <!-- Hero ------------------------------------------------------------- -->
+  <section class="hero surface-asphalt">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">West Chester, Pennsylvania</span>
+        <h1>Some roads are worth leaving home for.</h1>
+        <p class="hero-lede">
+          The Open Road Foundation helps West Chester Area School District students afford the
+          school that fits them best — wherever it takes them.
+        </p>
+        <p class="hero-goal">This year we're raising $10,000 and making our first award.</p>
+        <div class="hero-actions">
+          <Button href="/get-involved/#give">Support a student</Button>
+          <Button href="/who-we-are/" variant="secondary">Read our story</Button>
+        </div>
+      </div>
+
+      <!-- The photograph is a known hole, so it holds its real footprint rather
+           than collapsing to a caption. A hero that already looks finished
+           without its image never gets the image commissioned. -->
+      <div class="hero-media">
+        <Placeholder
+          note="hero photograph — a road leaving town, shot locally. Real, not stock. See the photo rights note in the appendix."
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Three numbers ----------------------------------------------------- -->
+  <section class="section--major surface-paper">
+    <div class="wrap">
+      <header class="numbers-head">
+        <h2>Here's the problem, from three distances.</h2>
+        <Lane mode="recede" class="numbers-lane" />
+      </header>
+
+      <div class="numbers">
+        <DistanceStat
+          distance={1}
+          scope="Nationally"
+          figure="35%"
+          source="National College Attainment Network, September 2025."
+        >
+          <p>
+            Only about a third of public four-year colleges are affordable to a student from a
+            low-income family. For families in the lowest income quarter, the price after aid eats
+            close to 90% of what they earn in a year.
+          </p>
+        </DistanceStat>
+
+        <DistanceStat
+          distance={2}
+          scope="In Pennsylvania"
+          figure="2nd"
+          source="Education Data Initiative, 2025–26."
+        >
+          <p>
+            <Verify>
+              Pennsylvania has the second-highest in-state tuition at public four-year universities
+              in the country.
+            </Verify>{' '}
+            Staying close to home is not the discount people assume it is.
+          </p>
+          <VerifyNote
+            note="exact figure and rank — two reads of this source returned $17,909 / second-highest and $16,954 / fifth-highest. Confirm on the page before publish. The '29% above the national average' figure was consistent across both reads and is the safer claim if the rank can't be pinned down."
+          />
+        </DistanceStat>
+
+        <DistanceStat
+          distance={3}
+          scope="Here, in this district"
+          figure="1 in 8"
+          source="U.S. Census ACS 2024; NCES Common Core of Data, 2024–25."
+        >
+          <p>
+            Median household income in the West Chester Area School District is $137,133. That is
+            exactly why the need here goes unseen.{' '}
+            <Verify>
+              About one in eight of the district's 12,042 students is economically disadvantaged.
+            </Verify>
+          </p>
+          <VerifyNote
+            note="the one-in-eight share came from U.S. News rather than a primary source. Confirm against the PA Future Ready Index district page. The income, poverty, and enrollment figures are primary and solid."
+          />
+        </DistanceStat>
+      </div>
+    </div>
+  </section>
+
+  <!-- What we do -------------------------------------------------------- -->
+  <section class="section surface-concrete">
+    <div class="wrap">
+      <div class="measure-wide prose">
+        <h2>What we do</h2>
+        <p>
+          We're a scholarship fund in West Chester. We raise money from people who live here and put
+          it toward the cost of college for a student who has been accepted somewhere they can't
+          quite afford.
+        </p>
+        <p><a href="/who-we-are/">Read the full mission</a></p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand heading="Open the road, and see what comes back.">
+    <p slot="body">One student, this year. That's the whole goal, and it's reachable.</p>
+    <Button href="/get-involved/#give">Support a student</Button>
+    <a href="/get-involved/#newsletter">Or just get the newsletter</a>
+  </CtaBand>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-block: var(--pad-major);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  .hero h1 {
+    margin: var(--space-s) 0 0;
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+  }
+
+  .hero-lede {
+    margin: var(--space-m) 0 0;
+    max-inline-size: 32rem;
+    font-size: var(--text-lg);
+    line-height: var(--leading-body);
+    color: var(--fg-quiet);
+  }
+
+  .hero-goal {
+    margin: var(--space-s) 0 0;
+    max-inline-size: 32rem;
+    font-size: var(--text-lg);
+    line-height: var(--leading-body);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+    margin-block-start: var(--space-l);
+  }
+
+  /* The photo slot keeps a 4:5 portrait footprint — the shape a road-leaving-
+     town shot actually wants — so the layout is already correct when the
+     photograph lands. */
+  .hero-media {
+    display: grid;
+    align-content: center;
+    aspect-ratio: 4 / 5;
+    padding: var(--space-m);
+    border: var(--border-hairline) dashed var(--rule-strong);
+    border-radius: var(--radius-panel);
+  }
+
+  .numbers-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-m);
+    margin-block-end: var(--space-xl);
+  }
+
+  .numbers-head h2 {
+    margin: 0;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    white-space: nowrap;
+  }
+
+  .numbers-lane {
+    flex: 1;
+    min-inline-size: 3rem;
+  }
+
+  /* The three sit in a column, not a row. A row would make them equal, and the
+     whole point is that they are at different distances — the reader travels
+     from the national horizon down to their own district. */
+  .numbers {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pad-minor);
+  }
+
+  @media (max-width: 60rem) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-l);
+    }
+
+    .numbers-head {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-s);
+    }
+
+    .numbers-head h2 {
+      white-space: normal;
+    }
+  }
+</style>

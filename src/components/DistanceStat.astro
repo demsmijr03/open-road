@@ -1,0 +1,157 @@
+---
+/**
+ * One of the three numbers on the home page.
+ *
+ * content.md introduces this section as "Here's the problem, from three
+ * distances" — national, then state, then local. That is perspective used as
+ * information design, so the component renders it that way: the further from
+ * West Chester a fact is, the narrower and quieter it sits; the nearer it gets,
+ * the wider and larger it becomes, until the local number fills the page.
+ *
+ * The reader walks in from the national horizon and arrives at their own
+ * district at full size. The scale is the argument.
+ *
+ * Recession is carried by width, figure size, colour and dash weight — never
+ * by opacity. Fading text is the easy way to suggest distance and it drags
+ * body copy under the 4.5:1 contrast floor, which is not a trade worth making.
+ */
+interface Props {
+  /** 1 = furthest (national), 3 = nearest (local, here). */
+  distance: 1 | 2 | 3;
+  scope: string;
+  figure: string;
+  source: string;
+}
+
+const { distance, scope, figure, source } = Astro.props;
+---
+
+<article class="stat" data-distance={distance}>
+  <div class="stat-lead">
+    <div class="stat-head">
+      <span class="stat-scope">{scope}</span>
+      <span class="stat-rule" aria-hidden="true"></span>
+    </div>
+    <p class="stat-figure">{figure}</p>
+  </div>
+
+  <div class="stat-detail">
+    <div class="stat-body"><slot /></div>
+    <p class="stat-source">{source}</p>
+  </div>
+</article>
+
+<style>
+  .stat {
+    display: grid;
+    gap: var(--space-s);
+    max-inline-size: var(--block);
+  }
+
+  .stat-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-block-end: var(--space-2xs);
+  }
+
+  .stat-scope {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--fg-quiet);
+    white-space: nowrap;
+  }
+
+  /* The lane marking again, weighted by distance. */
+  .stat-rule {
+    flex: 1;
+    min-inline-size: 2rem;
+    block-size: 2px;
+    border-radius: 2px;
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--lane) 0 var(--dash),
+      transparent var(--dash) calc(var(--dash) * 2)
+    );
+  }
+
+  .stat-figure {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 0.9;
+    letter-spacing: var(--tracking-display);
+    color: var(--fig-color);
+    font-size: var(--size);
+  }
+
+  .stat-body {
+    color: var(--fg-quiet);
+    line-height: var(--leading-body);
+    font-size: var(--body-size);
+  }
+
+  .stat-body :global(p) {
+    margin: 0;
+  }
+
+  .stat-source {
+    margin: var(--space-xs) 0 0;
+    font-size: var(--text-xs);
+    font-style: italic;
+    color: var(--fg-quiet);
+  }
+
+  /* --- Perspective ---------------------------------------------------- */
+
+  .stat[data-distance='1'] {
+    --block: 44rem;
+    --size: clamp(2.5rem, 6vw, 3.25rem);
+    --body-size: var(--text-base);
+    --dash: 6px;
+    --fig-color: var(--fg-quiet);
+  }
+
+  .stat[data-distance='2'] {
+    --block: 56rem;
+    --size: clamp(3.25rem, 8vw, 4.5rem);
+    --body-size: var(--text-lg);
+    --dash: 10px;
+    --fig-color: color-mix(in srgb, var(--fg) 80%, var(--fg-quiet));
+  }
+
+  .stat[data-distance='3'] {
+    --block: 100%;
+    --size: clamp(4rem, 11vw, 6.5rem);
+    --body-size: var(--text-xl);
+    --dash: 15px;
+    --fig-color: var(--fg);
+  }
+
+  @media (min-width: 60rem) {
+    .stat {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      column-gap: var(--space-xl);
+      align-items: center;
+    }
+  }
+
+  /* Narrow screens: the width gradient does the work on its own, and a 6.5rem
+     figure beside a 2.5rem one at 390px reads as a bug rather than a gradient,
+     so the sizes pull closer together. */
+  @media (max-width: 60rem) {
+    .stat[data-distance='1'] {
+      --size: 2.75rem;
+      --block: 100%;
+    }
+    .stat[data-distance='2'] {
+      --size: 3.5rem;
+      --block: 100%;
+    }
+    .stat[data-distance='3'] {
+      --size: 4.5rem;
+    }
+  }
+</style>

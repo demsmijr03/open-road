@@ -1,0 +1,114 @@
+---
+import Placeholder from './Placeholder.astro';
+
+/**
+ * The year-one plan, drawn as a road.
+ *
+ * The content is a sequence with real dates, so numbered/ordered treatment is
+ * earned here rather than decorative — this is the one place on the site where
+ * order carries information the reader needs.
+ *
+ * Milestones without a date yet keep their slot and show the hole, so the shape
+ * of the year is honest about what is still unscheduled.
+ */
+interface Props {
+  items: { when: string; whenPlaceholder?: string; what: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<ol class="rail">
+  {
+    items.map((item) => (
+      <li class="rail-item">
+        <div class="rail-marker" aria-hidden="true" />
+        <div class="rail-content">
+          <div class="rail-when">
+            {item.whenPlaceholder ? (
+              <Placeholder note={item.whenPlaceholder} as="inline" />
+            ) : (
+              <span class="rail-date">{item.when}</span>
+            )}
+          </div>
+          <p class="rail-what">{item.what}</p>
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .rail {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .rail-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-m);
+    padding-block: var(--space-m);
+  }
+
+  /* The road: a continuous line down the markers, dashed like a lane. */
+  .rail-item::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 5px;
+    inline-size: 2px;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      var(--lane) 0 8px,
+      transparent 8px 16px
+    );
+  }
+
+  .rail-item:first-child::before {
+    inset-block-start: 50%;
+  }
+
+  .rail-item:last-child::before {
+    inset-block-end: 50%;
+  }
+
+  .rail-marker {
+    position: relative;
+    z-index: 1;
+    inline-size: 12px;
+    block-size: 12px;
+    margin-block-start: 0.45rem;
+    border-radius: 50%;
+    background-color: var(--bg);
+    box-shadow: inset 0 0 0 3px var(--fg);
+  }
+
+  .rail-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+  }
+
+  .rail-date {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--fg-quiet);
+  }
+
+  .rail-what {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    color: var(--fg);
+  }
+</style>

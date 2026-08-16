@@ -1,0 +1,87 @@
+---
+import Lane from './Lane.astro';
+
+/**
+ * The closing band. Every page ends on one, always on asphalt, so the site has
+ * a consistent last beat and the dark surface stays meaningful by appearing
+ * exactly twice per page at most.
+ */
+interface Props {
+  heading: string;
+}
+
+const { heading } = Astro.props;
+---
+
+<section class="cta surface-asphalt">
+  <div class="cta-inner">
+    <Lane mode="recede" class="cta-lane" />
+    <h2 class="cta-heading">{heading}</h2>
+    <div class="cta-body"><slot name="body" /></div>
+    <div class="cta-actions"><slot /></div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    padding-block: var(--pad-major);
+  }
+
+  .cta-inner {
+    inline-size: min(100% - (var(--gutter) * 2), var(--width-page));
+    margin-inline: auto;
+  }
+
+  .cta-lane {
+    margin-block-end: var(--space-l);
+    max-inline-size: 22rem;
+  }
+
+  .cta-heading {
+    margin: 0;
+    max-inline-size: var(--width-wide);
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 600;
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
+  }
+
+  .cta-body {
+    margin-block-start: var(--space-m);
+    max-inline-size: var(--width-text);
+    font-size: var(--text-lg);
+    line-height: var(--leading-body);
+    color: var(--fg-quiet);
+  }
+
+  .cta-body :global(p) {
+    margin: 0;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-m);
+    margin-block-start: var(--space-l);
+  }
+
+  .cta-actions :global(a:not(.btn)) {
+    color: var(--fg);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-color: var(--rule-strong);
+  }
+
+  .cta-actions :global(a:not(.btn):hover) {
+    color: var(--accent-text);
+    text-decoration-color: var(--accent-text);
+  }
+
+  .cta-actions :global(a:not(.btn):focus-visible) {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+</style>

@@ -1,0 +1,53 @@
+---
+/**
+ * The lane marking — the site's signature element.
+ *
+ * A road's centre line, used as a divider. In `recede` mode the dashes shorten
+ * and fade from left to right, which is the same device the eye reads as
+ * distance on a real road. That is the perspective idea stated in one rule.
+ *
+ * Used sparingly. A divider between every block turns the signature into
+ * wallpaper.
+ */
+interface Props {
+  /** `flat` — even dashes. `recede` — dashes shorten and fade into the distance. */
+  mode?: 'flat' | 'recede';
+  class?: string;
+}
+
+const { mode = 'flat', class: className = '' } = Astro.props;
+---
+
+<div class={`lane lane--${mode} ${className}`} aria-hidden="true"></div>
+
+<style>
+  .lane {
+    block-size: var(--lane-stroke);
+    inline-size: 100%;
+    border-radius: 2px;
+  }
+
+  .lane--flat {
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--lane) 0 12px,
+      transparent 12px 22px
+    );
+  }
+
+  /* Dashes shorten left-to-right, and the whole line fades out as it recedes. */
+  .lane--recede {
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--lane) 0 18px,
+      transparent 18px 30px
+    );
+    mask-image: linear-gradient(
+      to right,
+      #000 0%,
+      #000 45%,
+      color-mix(in srgb, #000 45%, transparent) 78%,
+      transparent 100%
+    );
+  }
+</style>

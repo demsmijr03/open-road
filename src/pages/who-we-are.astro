@@ -1,0 +1,250 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Placeholder from '../components/Placeholder.astro';
+import CtaBand from '../components/CtaBand.astro';
+import PageHero from '../components/PageHero.astro';
+import Logo from '../components/Logo.astro';
+
+const board = [
+  { name: 'Joe Clark', role: 'President' },
+  { name: 'Riley Boutin', role: 'Treasurer' },
+  { name: 'Niko Levin', role: 'VP, Community Engagement' },
+  { name: 'Jackson Kulp', role: 'VP, Development' },
+  { name: 'Demetrius Smith Jr.', role: 'VP, Marketing & Communications' },
+];
+---
+
+<BaseLayout
+  title="Who we are · The Open Road Foundation"
+  description="Five people who grew up in West Chester and left for school. Why we started The Open Road Foundation, and who is accountable for it."
+>
+  <PageHero
+    heading="Who we are"
+    lede="Five people who grew up in West Chester and left for school. Some of us came back. All of us are still here in the ways that count."
+  />
+
+  <section class="section surface-paper">
+    <div class="wrap">
+      <div class="split prose">
+        <h2>Why we started this</h2>
+        <p>
+          The five of us grew up here, and we all left for school. Not because we didn't love where
+          we came from — because there are small things you take for granted that you only recognize
+          from a distance.
+        </p>
+        <p>
+          What we found out there was perspective. Long stretches away, surrounded by people whose
+          lives looked nothing like ours, learning things you can't learn somewhere familiar. None
+          of that was lost when we graduated. We carried it with us — some of us back to Chester
+          County, some of us elsewhere, all of us still tied to the place that raised us.
+        </p>
+        <p>
+          There are students here right now who want that same experience and can't have it, for one
+          reason: money. That's the only thing standing between them and it. So we're removing it.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- The question. The site's argument, so it gets the dark band and the
+       scene variant of the mark — the only place the figure and the guiding
+       hand appear at a size where they resolve. -->
+  <section class="section--major surface-asphalt" id="the-question">
+    <div class="wrap question-grid">
+      <div class="question-copy">
+        <span class="eyebrow">The question we get most</span>
+        <h2>Why fund a student to leave, when they might not come back?</h2>
+        <div class="prose question-prose">
+          <p>
+            It's the first thing people ask. Here's our answer: they come back with more than they
+            left with.
+          </p>
+          <p>
+            And when they don't come back — some won't — what they build still traces to here. We're
+            not funding students to leave West Chester. We're funding them to go where the right
+            education is.
+          </p>
+        </div>
+        <p class="question-line">Open the road, and see what comes back.</p>
+      </div>
+
+      <div class="question-mark">
+        <Logo variant="scene" decorative />
+      </div>
+    </div>
+  </section>
+
+  <section class="section surface-paper">
+    <div class="wrap">
+      <div class="founders-media">
+        <Placeholder note="photograph — the five founders, taken here, not stock" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section surface-concrete">
+    <div class="wrap">
+      <div class="measure-wide">
+        <h2 class="mission-title">Our mission</h2>
+        <blockquote class="mission">
+          The Open Road Foundation exists to uplift Philadelphia Area students pursuing a college
+          degree through financial support and mentorship, offering greater educational
+          opportunities and a chance to explore their passions in the settings that will help them
+          flourish.
+        </blockquote>
+        <p class="mission-note">
+          One note on that, in plainer words: <strong
+            >every award we make today goes to a West Chester Area School District student.</strong
+          > "Philadelphia Area" is where we're going, not where we are.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section surface-paper">
+    <div class="wrap">
+      <div class="split prose">
+        <h2>Who's accountable</h2>
+        <p>
+          Five people, named, with our roles. If something on this site is wrong, one of us answers
+          for it — and you can write to any of us directly.
+        </p>
+      </div>
+
+      <ul class="board">
+        {
+          board.map((person) => (
+            <li class="board-member">
+              <div class="board-portrait">
+                <Placeholder note="headshot" />
+              </div>
+              <p class="board-name">{person.name}</p>
+              <p class="board-role">{person.role}</p>
+              <Placeholder note="one-line bio" />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand heading="Open the road, and see what comes back.">
+    <p slot="body">
+      We're raising the first award now. It goes to one WCASD student by the end of the school year.
+    </p>
+    <Button href="/get-involved/#give">Support a student</Button>
+  </CtaBand>
+</BaseLayout>
+
+<style>
+  .question-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  .question-grid h2 {
+    margin: var(--space-s) 0 var(--space-m);
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+  }
+
+  .question-prose p {
+    color: var(--fg-quiet);
+  }
+
+  .question-line {
+    margin: var(--space-l) 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.2;
+    letter-spacing: var(--tracking-display);
+    color: var(--fg);
+  }
+
+  .question-mark {
+    inline-size: min(100%, 16rem);
+    margin-inline: auto;
+    color: var(--fg);
+  }
+
+  .founders-media {
+    aspect-ratio: 16 / 9;
+    display: grid;
+    align-content: center;
+    padding: var(--space-m);
+    border: var(--border-hairline) dashed var(--rule-strong);
+    border-radius: var(--radius-panel);
+  }
+
+  .mission-title {
+    margin: 0 0 var(--space-m);
+    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+  }
+
+  .mission {
+    margin: 0;
+    padding-inline-start: var(--space-m);
+    border-inline-start: var(--lane-stroke) solid var(--lane);
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+    line-height: 1.45;
+    letter-spacing: -0.015em;
+  }
+
+  .mission-note {
+    margin: var(--space-m) 0 0;
+    line-height: var(--leading-body);
+    color: var(--fg-quiet);
+  }
+
+  .board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: var(--space-l);
+    margin: var(--space-xl) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .board-member {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+  }
+
+  .board-portrait {
+    aspect-ratio: 1;
+    display: grid;
+    align-content: center;
+    margin-block-end: var(--space-2xs);
+    padding: var(--space-2xs);
+    border: var(--border-hairline) dashed var(--rule-strong);
+    border-radius: var(--radius-panel);
+  }
+
+  .board-name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+  }
+
+  .board-role {
+    margin: 0 0 var(--space-2xs);
+    font-size: var(--text-sm);
+    color: var(--fg-quiet);
+  }
+
+  @media (max-width: 60rem) {
+    .question-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .question-mark {
+      inline-size: min(100%, 12rem);
+      margin-inline: 0;
+    }
+  }
+</style>

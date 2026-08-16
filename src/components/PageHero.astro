@@ -1,0 +1,48 @@
+---
+import Lane from './Lane.astro';
+
+/**
+ * Interior page hero. Lighter than the home page's — one band of asphalt at the
+ * top, then the page opens onto paper. Keeps the dark surface to two
+ * appearances per page (here and the closing band) so it stays meaningful.
+ */
+interface Props {
+  heading: string;
+  lede?: string;
+}
+
+const { heading, lede } = Astro.props;
+---
+
+<section class="page-hero surface-asphalt">
+  <div class="wrap">
+    <Lane mode="recede" class="page-hero-lane" />
+    <h1>{heading}</h1>
+    {lede && <p class="page-hero-lede">{lede}</p>}
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    padding-block: var(--pad-section);
+  }
+
+  .page-hero-lane {
+    margin-block-end: var(--space-m);
+    max-inline-size: 16rem;
+  }
+
+  .page-hero h1 {
+    margin: 0;
+    max-inline-size: var(--width-wide);
+    font-size: clamp(2.25rem, 6vw, 3.75rem);
+  }
+
+  .page-hero-lede {
+    margin: var(--space-m) 0 0;
+    max-inline-size: var(--width-text);
+    font-size: var(--text-lg);
+    line-height: var(--leading-body);
+    color: var(--fg-quiet);
+  }
+</style>

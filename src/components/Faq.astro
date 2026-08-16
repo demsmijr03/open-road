@@ -1,0 +1,111 @@
+---
+/**
+ * Questions and answers.
+ *
+ * Native <details>/<summary>: keyboard operable, screen-reader announced, and
+ * findable by in-page search when open — none of which a hand-rolled accordion
+ * gets without work. No JS.
+ */
+interface Props {
+  items: { q: string; a: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="faq">
+  {
+    items.map((item) => (
+      <details class="faq-item">
+        <summary>
+          <span class="faq-q">{item.q}</span>
+          <span class="faq-sign" aria-hidden="true" />
+        </summary>
+        <p class="faq-a">{item.a}</p>
+      </details>
+    ))
+  }
+</div>
+
+<style>
+  .faq {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faq-item {
+    border-block-start: var(--border-hairline) solid var(--rule);
+  }
+
+  .faq-item:last-child {
+    border-block-end: var(--border-hairline) solid var(--rule);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-m);
+    /* 44px target */
+    min-block-size: 2.75rem;
+    padding-block: var(--space-s);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: -3px;
+    border-radius: 2px;
+  }
+
+  .faq-q {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--fg);
+  }
+
+  /* A lane dash that gains a crossbar when closed — a plus that is still a
+     road marking. Rotation is a transform, so it is safe to animate. */
+  .faq-sign {
+    position: relative;
+    flex: none;
+    inline-size: 0.875rem;
+    block-size: 2px;
+    border-radius: 2px;
+    background-color: var(--lane);
+  }
+
+  .faq-sign::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 2px;
+    background-color: var(--lane);
+    transform: rotate(90deg);
+    transition: transform var(--duration) var(--ease-spring);
+  }
+
+  .faq-item[open] .faq-sign::after {
+    transform: rotate(0deg);
+  }
+
+  .faq-a {
+    margin: 0;
+    padding-block-end: var(--space-m);
+    max-inline-size: var(--width-text);
+    line-height: var(--leading-body);
+    color: var(--fg-quiet);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-sign::after {
+      transition: none;
+    }
+  }
+</style>

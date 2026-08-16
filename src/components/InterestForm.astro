@@ -1,0 +1,201 @@
+---
+import Button from './Button.astro';
+import Placeholder from './Placeholder.astro';
+
+/**
+ * The interest form.
+ *
+ * Explicitly NOT the scholarship application — content.md says so in bold, and
+ * that disclaimer sits above the fields rather than below them, because a
+ * warning underneath a form is read after the mistake.
+ *
+ * No provider is chosen yet, so there is no action attribute. The form is
+ * inert on purpose and says so, rather than looking submittable and silently
+ * dropping what a student types.
+ *
+ * Labels are visible, not placeholders — a placeholder disappears the moment
+ * someone starts typing, taking the field's name with it.
+ */
+---
+
+<form class="form" novalidate aria-describedby="form-status">
+  <p class="form-notice" id="form-status">
+    <strong>This is not the scholarship application.</strong> Student, parent, counselor, mentor,
+    donor, business, or organization — tell us which and we'll get back to you.
+  </p>
+
+  <Placeholder note="form provider not yet chosen — this form does not submit anywhere yet" />
+
+  <div class="form-grid">
+    <p class="field">
+      <label for="name">Your name</label>
+      <input id="name" name="name" type="text" autocomplete="name" required />
+    </p>
+
+    <p class="field">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required />
+    </p>
+
+    <p class="field field--full">
+      <label for="role">I'm interested as a…</label>
+      <select id="role" name="role">
+        <option value="">Choose one</option>
+        <option>Student</option>
+        <option>Parent or counselor</option>
+        <option>Mentor</option>
+        <option>Donor</option>
+        <option>Business or organization</option>
+        <option>Other</option>
+      </select>
+    </p>
+
+    <p class="field field--full">
+      <label for="message">Anything you want to tell us <span class="opt">(optional)</span></label>
+      <textarea id="message" name="message" rows="4"></textarea>
+    </p>
+
+    <p class="field field--full field--check">
+      <input id="news" name="news" type="checkbox" />
+      <label for="news">Email me when there's news — the application opening, a student funded</label>
+    </p>
+  </div>
+
+  <Button type="submit">Send</Button>
+
+  <p class="form-privacy">
+    We use what you send here to reply to you. Nothing else.
+    <a href="/privacy/">See our privacy policy.</a>
+  </p>
+</form>
+
+<style>
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+    align-items: start;
+  }
+
+  .form-notice {
+    margin: 0;
+    max-inline-size: var(--width-text);
+    line-height: var(--leading-body);
+    color: var(--fg-quiet);
+  }
+
+  .form-notice strong {
+    color: var(--fg);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+    inline-size: 100%;
+    max-inline-size: var(--width-wide);
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin: 0;
+  }
+
+  .field--full {
+    grid-column: 1 / -1;
+  }
+
+  .field--check {
+    flex-direction: row;
+    align-items: start;
+    gap: 0.6rem;
+  }
+
+  label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--fg);
+  }
+
+  .opt {
+    font-weight: 400;
+    color: var(--fg-quiet);
+  }
+
+  input[type='text'],
+  input[type='email'],
+  select,
+  textarea {
+    /* 44px target */
+    min-block-size: 2.75rem;
+    padding: 0.6rem 0.75rem;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--fg);
+    background-color: var(--bg);
+    border: var(--border-hairline) solid var(--rule-strong);
+    border-radius: var(--radius-btn);
+    transition: border-color var(--duration) var(--ease-spring);
+  }
+
+  textarea {
+    resize: vertical;
+    line-height: 1.6;
+  }
+
+  input:hover,
+  select:hover,
+  textarea:hover {
+    border-color: var(--fg);
+  }
+
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+    border-color: var(--fg);
+  }
+
+  .field--check input {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+    min-block-size: 0;
+    margin-block-start: 0.15rem;
+    accent-color: var(--color-asphalt);
+    flex: none;
+  }
+
+  .field--check label {
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--fg-quiet);
+  }
+
+  .form-privacy {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--fg-quiet);
+  }
+
+  /* Underlined, not just recoloured: asphalt against slate is 2.21:1, well
+     under the 3:1 a colour-only link needs. */
+  .form-privacy a {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--rule-strong);
+    text-underline-offset: 0.2em;
+  }
+
+  .form-privacy a:hover {
+    text-decoration-color: var(--fg);
+  }
+
+  @media (max-width: 40rem) {
+    .form-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

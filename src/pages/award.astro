@@ -1,0 +1,249 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Lane from '../components/Lane.astro';
+import Placeholder from '../components/Placeholder.astro';
+import CtaBand from '../components/CtaBand.astro';
+import PageHero from '../components/PageHero.astro';
+import Faq from '../components/Faq.astro';
+
+const faqs = [
+  {
+    q: 'Who can apply?',
+    a: 'Any student graduating from a West Chester Area School District high school with a 3.25 GPA or above, financial need, and an offer or acceptance in hand.',
+  },
+  {
+    q: 'How much is the award, and what can I spend it on?',
+    a: '$10,000*, once, to one student. Put it toward tuition, books, a laptop, or travel — whatever it takes to support your time there. The figure is provisional until the application opens.',
+  },
+  {
+    q: 'Can I use it at an out-of-state school?',
+    a: 'Yes. In state, out of state, public, private, four-year, two-year, or a trade program. The award goes where you go.',
+  },
+  {
+    q: 'When can I apply?',
+    a: "The application isn't open yet and the dates aren't set. Leave your email and we'll tell you the moment they are.",
+  },
+  {
+    q: 'Who decides?',
+    a: 'The district’s scholarship committee and the Open Road founders, reading together. Neither side picks alone.',
+  },
+];
+---
+
+<BaseLayout
+  title="The award · The Open Road Foundation"
+  description="Who can apply, what it covers, and how we choose. One award, for a West Chester Area School District student."
+>
+  <PageHero
+    heading="The award"
+    lede="One award, paid toward the cost of college, for a student graduating from the West Chester Area School District. Here's who can apply, what it covers, and how we choose."
+  />
+
+  <section class="section surface-paper">
+    <div class="wrap">
+      <div class="split prose">
+        <h2>What we do</h2>
+        <p>
+          We raise money from people who live here and put it toward the cost of college for a
+          student who has been accepted somewhere they can't quite afford.
+        </p>
+        <p>
+          In year one we're raising $10,000 and making one award. We'd rather do that properly than
+          do more of it badly.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section surface-concrete">
+    <div class="wrap">
+      <div class="split prose">
+        <h2>Who qualifies</h2>
+        <ul class="checklist">
+          <li>You're graduating from a West Chester Area School District high school.</li>
+          <li>You have a 3.25 GPA or above.</li>
+          <li>You have financial need.</li>
+          <li>
+            You've been accepted somewhere, or you're holding offers. There's no requirement about
+            where you go or what kind of program it is.
+          </li>
+        </ul>
+        <Placeholder
+          note="how financial need is measured — income threshold, FAFSA SAI, or committee judgement"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section--major surface-paper">
+    <div class="wrap">
+      <h2 class="covers-title">What the award covers</h2>
+
+      <div class="covers">
+        <div class="covers-figure">
+          <p class="covers-amount">$10,000<span class="covers-star" aria-hidden="true">*</span></p>
+          <Lane mode="recede" class="covers-lane" />
+          <p class="covers-caption">one award, one student, this year.</p>
+        </div>
+
+        <div class="covers-detail prose">
+          <p>
+            It's yours to put toward the real cost of going: tuition, books, a laptop, the travel to
+            get there. Anything that supports your time at the school you chose.
+          </p>
+          <p class="covers-footnote">
+            <span aria-hidden="true">*</span>
+            <em>Year-one figure. We'll confirm the final amount before the application opens.</em>
+          </p>
+          <Placeholder
+            note="how funds are disbursed — paid to the school directly, or to the student"
+          />
+        </div>
+      </div>
+
+      <div class="measure-wide prose follows">
+        <h3>It follows you wherever you go</h3>
+        <p>
+          In state or out of state. Public or private. A four-year school, a two-year school, or a
+          trade program. If it's the right place for you, the award goes with you.
+        </p>
+        <p>
+          We don't require you to stay in Pennsylvania, and we don't require you to come back.
+          <a href="/who-we-are/#the-question">That's the whole point.</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section surface-concrete">
+    <div class="wrap">
+      <div class="split prose">
+        <h2>How we choose</h2>
+        <p>
+          Two groups read applications together: the West Chester Area School District's scholarship
+          committee and the founders of Open Road. Neither picks alone.
+        </p>
+        <p>
+          We're looking for students who work hard and who want something specific — and who would
+          be held back from it by money alone.
+        </p>
+        <Placeholder note="the rubric or criteria the committee scores against" />
+        <Placeholder note="whether there is an interview round in year one" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section surface-paper">
+    <div class="wrap">
+      <div class="split prose">
+        <h2>When</h2>
+        <p>Fundraising opens September 1. The first award is made by April 1.</p>
+        <Placeholder note="application opens / application closes / notification date" />
+        <p>We'll email you the dates the moment they're set.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section surface-paper" id="questions">
+    <div class="wrap">
+      <div class="measure-wide">
+        <h2 class="faq-title">Questions</h2>
+        <Faq items={faqs} />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand heading="No application yet, and no deadline to miss.">
+    <p slot="body">Leave your name and we'll write to you the day it opens.</p>
+    <Button href="/get-involved/#interest">Tell us you're interested</Button>
+  </CtaBand>
+</BaseLayout>
+
+<style>
+  .checklist {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+
+  .checklist li {
+    position: relative;
+    padding-inline-start: var(--space-m);
+    line-height: var(--leading-body);
+    color: var(--fg-quiet);
+  }
+
+  /* A lane dash as the marker — the road motif doing a list's work. */
+  .checklist li::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 0.7em;
+    inline-size: 0.75rem;
+    block-size: 2px;
+    border-radius: 2px;
+    background-color: var(--lane);
+  }
+
+  .covers-title {
+    margin: 0 0 var(--space-l);
+    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+  }
+
+  .covers {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .covers-amount {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(3.25rem, 9vw, 5.5rem);
+    font-weight: 600;
+    line-height: 0.9;
+    letter-spacing: var(--tracking-display);
+  }
+
+  .covers-star {
+    color: var(--accent-text);
+  }
+
+  .covers-lane {
+    margin-block: var(--space-s);
+    max-inline-size: 14rem;
+  }
+
+  .covers-caption {
+    margin: 0;
+    font-size: var(--text-lg);
+    color: var(--fg-quiet);
+  }
+
+  .covers-footnote {
+    font-size: var(--text-sm);
+  }
+
+  .follows {
+    margin-block-start: var(--pad-minor);
+    padding-block-start: var(--space-l);
+    border-block-start: var(--border-hairline) solid var(--rule);
+  }
+
+  .faq-title {
+    margin: 0 0 var(--space-l);
+    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+  }
+
+  @media (max-width: 60rem) {
+    .covers {
+      grid-template-columns: 1fr;
+      gap: var(--space-l);
+    }
+  }
+</style>

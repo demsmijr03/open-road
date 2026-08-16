@@ -1,0 +1,35 @@
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# jetbrains setting folder
+.idea/
+
+# design-critique screenshots (regenerated on demand, never reviewed as source)
+temporary screenshots/
+
+# raw content drop zone — may contain photos whose consent/rights are unvetted.
+# Vetted content gets migrated into src/content/ and committed from there.
+# Exclude the contents, not the directory itself — git cannot re-include a file
+# whose parent directory is excluded, so `content_intake/` would have silently
+# swallowed the negation below.
+content_intake/*
+!content_intake/README.md

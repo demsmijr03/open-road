@@ -1,0 +1,152 @@
+---
+import Logo from './Logo.astro';
+import Button from './Button.astro';
+
+const { pathname } = Astro.url;
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/award/', label: 'The award' },
+  { href: '/who-we-are/', label: 'Who we are' },
+  { href: '/get-involved/', label: 'Get involved' },
+];
+
+const isCurrent = (href: string) =>
+  href === '/' ? pathname === '/' : pathname.startsWith(href);
+---
+
+<header class="header surface-paper">
+  <div class="header-inner">
+    <a href="/" class="header-brand" aria-label="The Open Road Foundation, home">
+      <Logo variant="full" />
+    </a>
+
+    <nav class="header-nav" aria-label="Main">
+      <ul>
+        {
+          links.map((link) => (
+            <li>
+              <a href={link.href} aria-current={isCurrent(link.href) ? 'page' : undefined}>
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <Button href="/get-involved/#give" class="header-cta">Support a student</Button>
+  </div>
+</header>
+
+<style>
+  .header {
+    border-block-end: var(--border-hairline) solid var(--rule);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
+    inline-size: min(100% - (var(--gutter) * 2), var(--width-page));
+    margin-inline: auto;
+    padding-block: var(--space-s);
+  }
+
+  .header-brand {
+    color: var(--fg);
+    text-decoration: none;
+    border-radius: var(--radius-btn);
+  }
+
+  .header-brand:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 4px;
+  }
+
+  .header-nav {
+    margin-inline-start: auto;
+  }
+
+  .header-nav ul {
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .header-nav a {
+    display: inline-block;
+    /* 44px target without pushing the bar taller */
+    padding-block: 0.75rem;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--fg);
+    text-decoration: none;
+    position: relative;
+  }
+
+  /* The lane marking, one dash long, as the active indicator. */
+  .header-nav a[aria-current='page']::after,
+  .header-nav a:hover::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0.35rem;
+    block-size: 2px;
+    border-radius: 2px;
+    background-color: var(--lane);
+  }
+
+  .header-nav a:hover::after {
+    opacity: 0.5;
+  }
+
+  .header-nav a[aria-current='page']::after {
+    opacity: 1;
+  }
+
+  .header-nav a:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-btn);
+  }
+
+  /* Small screens: the nav wraps under the brand, and the CTA stays reachable.
+     No hamburger — four links fit, and a disclosure widget for four items is
+     more machinery than the content needs. */
+  @media (max-width: 56rem) {
+    .header-inner {
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+
+    .header-nav {
+      order: 3;
+      inline-size: 100%;
+      margin-inline-start: 0;
+      border-block-start: var(--border-hairline) solid var(--rule);
+    }
+
+    .header-nav ul {
+      gap: var(--space-s);
+      flex-wrap: wrap;
+    }
+
+    .header-cta {
+      margin-inline-start: auto;
+    }
+  }
+
+  @media (max-width: 26rem) {
+    .header-nav ul {
+      gap: var(--space-xs);
+    }
+
+    .header-nav a {
+      font-size: var(--text-xs);
+    }
+  }
+</style>

@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Lane from '../components/Lane.astro';
+import Logo from '../components/Logo.astro';
+---
+
+<BaseLayout
+  title="Dead end · The Open Road Foundation"
+  description="That page doesn't exist."
+  noindex
+>
+  <section class="notfound surface-asphalt">
+    <div class="wrap notfound-grid">
+      <div>
+        <span class="eyebrow">404</span>
+        <h1>Dead end.</h1>
+        <Lane mode="recede" class="notfound-lane" />
+        <p class="notfound-body">
+          That page doesn't exist — or it moved and we didn't put up a sign. Here's the way back.
+        </p>
+        <ul class="notfound-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/award/">The award</a></li>
+          <li><a href="/who-we-are/">Who we are</a></li>
+          <li><a href="/get-involved/">Get involved</a></li>
+        </ul>
+      </div>
+
+      <div class="notfound-mark">
+        <Logo variant="scene" decorative />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound {
+    padding-block: var(--pad-major);
+  }
+
+  .notfound-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  .notfound h1 {
+    margin: var(--space-s) 0 var(--space-m);
+    font-size: clamp(2.5rem, 7vw, 4rem);
+  }
+
+  .notfound-lane {
+    max-inline-size: 12rem;
+    margin-block-end: var(--space-m);
+  }
+
+  .notfound-body {
+    margin: 0;
+    max-inline-size: var(--width-text);
+    font-size: var(--text-lg);
+    line-height: var(--leading-body);
+    color: var(--fg-quiet);
+  }
+
+  .notfound-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-m);
+    margin: var(--space-l) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .notfound-links a {
+    display: inline-block;
+    padding-block: 0.6rem;
+    color: var(--fg);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    text-decoration-color: var(--rule-strong);
+  }
+
+  .notfound-links a:hover {
+    color: var(--accent-text);
+    text-decoration-color: var(--accent-text);
+  }
+
+  .notfound-links a:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .notfound-mark {
+    inline-size: min(100%, 15rem);
+    margin-inline: auto;
+    color: var(--fg);
+  }
+
+  @media (max-width: 60rem) {
+    .notfound-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .notfound-mark {
+      inline-size: min(100%, 11rem);
+      margin-inline: 0;
+    }
+  }
+</style>

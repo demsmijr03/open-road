@@ -1,0 +1,312 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Placeholder from '../components/Placeholder.astro';
+import CtaBand from '../components/CtaBand.astro';
+import PageHero from '../components/PageHero.astro';
+import Faq from '../components/Faq.astro';
+import MilestoneRail from '../components/MilestoneRail.astro';
+import InterestForm from '../components/InterestForm.astro';
+
+const tiers = [
+  {
+    name: 'Founding Supporter',
+    amount: 'Any amount up to $499',
+    gets: 'Your name listed on this site as part of the founding year. That list closes the day the first student is funded.',
+  },
+  {
+    name: 'Avenue Partner',
+    amount: '$500',
+    gets: 'Everything above, plus your logo on event signage, a newsletter mention, and an invitation to the annual supporter gathering.',
+  },
+  {
+    name: 'Boulevard Partner',
+    amount: '$1,000',
+    gets: 'Everything above, plus featured logo placement and a dedicated social spotlight.',
+  },
+  {
+    name: 'Freeway Partner',
+    amount: '$1,500 and up',
+    gets: 'Everything above, plus the option to co-brand an event or initiative, and first invitation to corporate match conversations.',
+  },
+];
+
+const milestones = [
+  { when: 'September 1', what: 'Fundraising begins' },
+  { when: '', whenPlaceholder: 'date', what: 'WCASD high school reunions fundraiser' },
+  { when: '', whenPlaceholder: 'date', what: 'WCASD essay contest' },
+  { when: '', whenPlaceholder: 'date', what: 'Fundraising day with Twin Valley Coffee' },
+  { when: 'April 1', what: 'First round of scholarships' },
+];
+
+const donorFaqs = [
+  {
+    q: 'Is my donation tax-deductible?',
+    a: "Yes. We're a registered 501(c)(3) nonprofit organization, and you'll get a receipt for your records.",
+  },
+  {
+    q: 'Can I give monthly?',
+    a: 'Not at launch. A gift is a one-time thing for now. Recurring giving arrives when there’s a reason for it.',
+  },
+  {
+    q: 'What if you raise more than $10,000?',
+    a: 'It seeds next year’s fund. Anything past the goal carries into the next cycle rather than sitting still.',
+  },
+  {
+    q: 'Who runs this?',
+    a: 'Five people from West Chester, named with our roles on Who we are.',
+  },
+];
+---
+
+<BaseLayout
+  title="Get involved · The Open Road Foundation"
+  description="Give, partner, or tell us you're interested. We're raising $10,000 this year to fund a West Chester Area School District student."
+>
+  <PageHero
+    heading="Get involved"
+    lede="We're raising $10,000 this year to fund our first student. Here's every way to help — including one that costs nothing but the time it takes to fill in a form."
+  />
+
+  <section class="section surface-paper" id="give">
+    <div class="wrap">
+      <div class="split prose">
+        <h2>Give</h2>
+        <p>
+          One gift, one student, this year. There's no recurring giving at launch — when you give,
+          it's once, and it goes toward the award.
+        </p>
+        <p>
+          <strong>Your gift is tax-deductible.</strong> We're a registered 501(c)(3) nonprofit
+          organization, EIN <Placeholder note="EIN" as="inline" />, and you'll get a receipt for
+          your records.
+        </p>
+        <Placeholder note="donation link — Zeffy, Givebutter, or equivalent" />
+        <p><Button href="#interest">Support a student</Button></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section surface-concrete" id="partner">
+    <div class="wrap">
+      <div class="split prose">
+        <h2>Partner with us</h2>
+        <p>
+          For businesses, community organizations, and anyone who wants to give at a level that
+          carries their name alongside ours.
+        </p>
+      </div>
+
+      <!-- Tiers are named after road types and ascend in scale, so the naming
+           does real work: the reader can order them without reading amounts. -->
+      <ul class="tiers">
+        {
+          tiers.map((tier) => (
+            <li class="tier">
+              <p class="tier-name">{tier.name}</p>
+              <p class="tier-amount">{tier.amount}</p>
+              <p class="tier-gets">{tier.gets}</p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="tiers-note">
+        Recognition on printed materials and at events depends on what we produce this year. We'll
+        tell you what's real before you commit.
+      </p>
+    </div>
+  </section>
+
+  <section class="section surface-paper">
+    <div class="wrap">
+      <div class="split prose">
+        <h2>Employer matching</h2>
+        <p>
+          Many employers match charitable gifts from their staff, which can double what you give at
+          no extra cost to you. Ask your HR team for their matching gift form.
+        </p>
+        <p>You'll need:</p>
+        <Placeholder note="legal name, EIN, registered address" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section--major surface-concrete">
+    <div class="wrap">
+      <div class="plan-grid">
+        <div>
+          <h2 class="plan-title">The plan for year one</h2>
+          <p class="plan-goal">
+            <span class="plan-goal-label">Year-one goal</span>
+            <span class="plan-goal-figure">$10,000</span>
+          </p>
+        </div>
+        <MilestoneRail items={milestones} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section surface-paper">
+    <div class="wrap">
+      <div class="split prose">
+        <h2>Where the money goes</h2>
+        <Placeholder
+          note="FOR RILEY — the breakdown of where each dollar goes. If an 'every dollar goes to the award' claim is going to be made, it belongs here, and only once it's literally true."
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section surface-concrete" id="newsletter">
+    <div class="wrap">
+      <div class="split prose">
+        <h2>Newsletter</h2>
+        <p>
+          One email when there's something real to report — the application opening, a student
+          funded, the year's total. That's it, and we won't pass your address to anyone.
+        </p>
+        <Placeholder note="newsletter signup embed" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section--major surface-paper" id="interest">
+    <div class="wrap">
+      <h2 class="interest-title">Tell us you're interested</h2>
+      <InterestForm />
+    </div>
+  </section>
+
+  <section class="section surface-concrete">
+    <div class="wrap">
+      <div class="measure-wide">
+        <h2 class="faq-title">Questions from donors</h2>
+        <Faq items={donorFaqs} />
+        <p class="faq-extra">
+          <strong>Where does my money actually go?</strong> Toward the cost of college for a WCASD student.
+        </p>
+        <Placeholder note="Riley's breakdown" />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand heading="Open the road, and see what comes back.">
+    <p slot="body">
+      We're raising the first award now, and giving it to one WCASD student by the end of the school
+      year.
+    </p>
+    <Button href="#give">Support a student</Button>
+  </CtaBand>
+</BaseLayout>
+
+<style>
+  .tiers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: var(--space-m);
+    margin: var(--space-xl) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tier {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+    padding: var(--space-m);
+    background-color: var(--color-paper);
+    border-radius: var(--radius-panel);
+    border-block-start: var(--lane-stroke) solid var(--lane);
+    box-shadow: var(--shadow-base);
+  }
+
+  .tier-name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+  }
+
+  .tier-amount {
+    margin: 0 0 var(--space-2xs);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--fg-quiet);
+  }
+
+  .tier-gets {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--fg-quiet);
+  }
+
+  .tiers-note {
+    margin: var(--space-m) 0 0;
+    max-inline-size: var(--width-text);
+    font-size: var(--text-sm);
+    color: var(--fg-quiet);
+  }
+
+  .plan-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .plan-title {
+    margin: 0 0 var(--space-m);
+    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+  }
+
+  .plan-goal {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+    margin: 0;
+  }
+
+  .plan-goal-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--fg-quiet);
+  }
+
+  .plan-goal-figure {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: var(--tracking-display);
+  }
+
+  .interest-title,
+  .faq-title {
+    margin: 0 0 var(--space-l);
+    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+  }
+
+  .faq-extra {
+    margin: var(--space-l) 0 var(--space-s);
+    max-inline-size: var(--width-text);
+    line-height: var(--leading-body);
+    color: var(--fg-quiet);
+  }
+
+  .faq-extra strong {
+    color: var(--fg);
+  }
+
+  @media (max-width: 60rem) {
+    .plan-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-l);
+    }
+  }
+</style>

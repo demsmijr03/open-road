@@ -1,0 +1,29 @@
+{
+  "name": "openroad",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "shot": "node scripts/screenshot.mjs",
+    "audit:holes": "node scripts/audit-holes.mjs",
+    "audit:a11y": "node scripts/audit-a11y.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@fontsource-variable/newsreader": "^5.3.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.2.2",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "axe-core": "^4.13.0",
+    "puppeteer": "^25.7.0"
+  }
+}

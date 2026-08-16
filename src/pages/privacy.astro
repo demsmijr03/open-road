@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Placeholder from '../components/Placeholder.astro';
+import PageHero from '../components/PageHero.astro';
+---
+
+<BaseLayout
+  title="Privacy · The Open Road Foundation"
+  description="What we collect, why, and what we don't do with it."
+>
+  <PageHero
+    heading="Privacy"
+    lede="Short version: we collect what you type into our form, we use it to reply to you, and we don't sell it."
+  />
+
+  <section class="section surface-paper">
+    <div class="wrap">
+      <div class="measure prose">
+        <p class="updated">
+          Last updated <Placeholder note="date" as="inline" />
+        </p>
+
+        <h2>What we collect</h2>
+        <p>
+          If you fill in our interest form, we receive your name, your email address, the option you
+          picked from the dropdown, and whatever you write in the message box. If you tick the
+          newsletter box, we record that too.
+        </p>
+        <p>
+          We do not run a scholarship application on this site. That form lives elsewhere and asks
+          for financial information — this site never receives it.
+        </p>
+
+        <h2>Why we collect it</h2>
+        <p>
+          To reply to you, and to tell you when something happens that you asked to hear about.
+          That's all we use it for.
+        </p>
+
+        <h2>Who else sees it</h2>
+        <Placeholder
+          note="form provider, hosting provider, and analytics, once chosen. Name them plainly."
+        />
+        <p>We do not sell or share your details.</p>
+
+        <h2>How long we keep it</h2>
+        <Placeholder note="retention period" />
+
+        <h2>Asking us to delete it</h2>
+        <p>
+          Email us and we'll remove you. You don't have to give a reason.
+        </p>
+        <Placeholder note="contact email for privacy requests" />
+
+        <h2>Children</h2>
+        <p>
+          Students under 18 are welcome to contact us through the form. We ask for no more than a
+          name and an email address, and we don't knowingly collect anything else about a minor on
+          this site.
+        </p>
+
+        <Placeholder
+          note="full privacy policy, reviewed by Joe and counsel if needed — replaces this stub before launch"
+        />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .updated {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    font-size: var(--text-sm);
+    font-style: italic;
+  }
+</style>
