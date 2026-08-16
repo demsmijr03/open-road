@@ -208,13 +208,31 @@ const donorFaqs = [
 </BaseLayout>
 
 <style>
+  /* There are exactly four tiers and they are a sequence, so they belong on one
+     line. auto-fit was deciding the column count from a 15rem minimum, which
+     drops to three columns as soon as the reader's base font size is a little
+     larger than default and leaves the top tier stranded on a row of its own.
+     The steps are pinned instead: one, then two, then all four. */
   .tiers {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-m);
     margin: var(--space-xl) 0 0;
     padding: 0;
     list-style: none;
+  }
+
+  @media (min-width: 40rem) {
+    .tiers {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .tiers {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-s);
+    }
   }
 
   .tier {
