@@ -111,6 +111,30 @@ tokens therefore live in the `:root` block as `--space-*`, which Tailwind ignore
 - After changing tokens, rebuild and confirm the utility still resolves as intended:
   `grep -o "\.max-w-3xl{[^}]*}" dist/_astro/*.css`
 
+## Styling a child component from its parent
+
+A `class` passed to a child component lands on that child's root element, which
+sits in the **child's** style scope. A plain rule for it in the parent is
+stripped as unmatched, silently, with no build warning. This has bitten twice:
+the header CTA jumped above the logo because its `order` never applied, and
+every `<Lane>` on the site rendered full width because none of the five
+`max-inline-size` rules were ever emitted.
+
+Reach across the boundary explicitly, anchored to an element the parent owns:
+
+```css
+.award-figure :global(.award-lane) { max-inline-size: 12rem; }
+```
+
+Or wrap the child in a `<div>` the parent controls. After styling a child this
+way, confirm the rule actually shipped:
+
+```bash
+grep -ro "award-lane{[^}]*}" dist/ | head -1
+```
+
+Empty output means the selector was dropped, not that the style is working.
+
 ## Astro Architecture
 
 - **Zero JS by default.** Static `.astro` components; add `client:*` only where interaction truly requires it.

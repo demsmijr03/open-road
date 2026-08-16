@@ -37,7 +37,21 @@ const faqs = [
   <PageHero
     heading="The award"
     lede="One award, paid toward the cost of college, for a student graduating from the West Chester Area School District. Here's who can apply, what it covers, and how we choose."
-  />
+  >
+    <!-- The figure is what this page is about, so it belongs in the masthead
+         rather than four sections down. The footnote travels with it: an
+         asterisk in the hero whose explanation sits further down the page is
+         worse than no asterisk at all. -->
+    <div slot="aside" class="award-figure">
+      <p class="award-amount">$9,000<span class="award-star" aria-hidden="true">*</span></p>
+      <Lane mode="recede" class="award-lane" />
+      <p class="award-caption">one award, one student, this year.</p>
+      <p class="award-footnote">
+        <span aria-hidden="true">*</span>
+        <em>Year-one figure. We'll confirm the final amount before the application opens.</em>
+      </p>
+    </div>
+  </PageHero>
 
   <section class="section surface-paper">
     <div class="wrap">
@@ -74,30 +88,17 @@ const faqs = [
 
   <section class="section--major surface-paper">
     <div class="wrap">
-      <h2 class="covers-title">What the award covers</h2>
-
-      <div class="covers">
-        <div class="covers-figure">
-          <p class="covers-amount">$9,000<span class="covers-star" aria-hidden="true">*</span></p>
-          <Lane mode="recede" class="covers-lane" />
-          <p class="covers-caption">one award, one student, this year.</p>
-        </div>
-
-        <div class="covers-detail prose">
-          <p>
-            It's yours to put toward the real cost of going: tuition, books, a laptop, the travel to
-            get there. Anything that supports your time at the school you chose.
-          </p>
-          <p>
-            We'll confirm how the money reaches you, whether that's paid to your school or to you
-            directly, before the application opens.
-            <a href="/get-involved/#money">See where every dollar goes.</a>
-          </p>
-          <p class="covers-footnote">
-            <span aria-hidden="true">*</span>
-            <em>Year-one figure. We'll confirm the final amount before the application opens.</em>
-          </p>
-        </div>
+      <div class="split prose">
+        <h2>What the award covers</h2>
+        <p>
+          It's yours to put toward the real cost of going: tuition, books, a laptop, the travel to
+          get there. Anything that supports your time at the school you chose.
+        </p>
+        <p>
+          We'll confirm how the money reaches you, whether that's paid to your school or to you
+          directly, before the application opens.
+          <a href="/get-involved/#money">See where every dollar goes.</a>
+        </p>
       </div>
 
       <div class="measure-wide prose follows">
@@ -178,45 +179,41 @@ const faqs = [
     background-color: var(--lane);
   }
 
-  .covers-title {
-    margin: 0 0 var(--space-l);
-    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
-  }
-
-  .covers {
-    display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    gap: var(--space-xl);
-    align-items: start;
-  }
-
-  .covers-amount {
+  /* The figure, now in the masthead. Sized a little under the old in-page
+     version so it sits beside the h1 rather than competing with it. */
+  .award-amount {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(3.25rem, 9vw, 5.5rem);
+    font-size: clamp(3rem, 7vw, 4.5rem);
     font-weight: 600;
     line-height: 0.9;
     letter-spacing: var(--tracking-display);
   }
 
-  .covers-star {
+  /* --accent-text resolves to the text-safe amber on asphalt (7:1). */
+  .award-star {
     color: var(--accent-text);
   }
 
-  .covers-lane {
+  .award-figure :global(.award-lane) {
     margin-block: var(--space-s);
-    max-inline-size: 14rem;
+    max-inline-size: 12rem;
   }
 
-  .covers-caption {
+  .award-caption {
     margin: 0;
     font-size: var(--text-lg);
     color: var(--fg-quiet);
   }
 
-  .covers-footnote {
+  .award-footnote {
+    margin: var(--space-s) 0 0;
+    max-inline-size: 24rem;
     font-size: var(--text-sm);
+    line-height: 1.55;
+    color: var(--fg-quiet);
   }
+
 
   .follows {
     margin-block-start: var(--pad-minor);
@@ -229,10 +226,4 @@ const faqs = [
     font-size: clamp(1.75rem, 3.5vw, 2.25rem);
   }
 
-  @media (max-width: 60rem) {
-    .covers {
-      grid-template-columns: 1fr;
-      gap: var(--space-l);
-    }
-  }
 </style>

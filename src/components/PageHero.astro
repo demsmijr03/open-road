@@ -5,6 +5,10 @@ import Lane from './Lane.astro';
  * Interior page hero. Lighter than the home page's, one band of asphalt at the
  * top, then the page opens onto paper. Keeps the dark surface to two
  * appearances per page (here and the closing band) so it stays meaningful.
+ *
+ * The optional `aside` slot carries a page's headline fact into the masthead,
+ * so it is seen without scrolling. It renders only when filled, which leaves
+ * every other page's hero exactly as it was.
  */
 interface Props {
   heading: string;
@@ -12,13 +16,24 @@ interface Props {
 }
 
 const { heading, lede } = Astro.props;
+const hasAside = Astro.slots.has('aside');
 ---
 
 <section class="page-hero surface-asphalt">
-  <div class="wrap">
-    <Lane mode="recede" class="page-hero-lane" />
-    <h1>{heading}</h1>
-    {lede && <p class="page-hero-lede">{lede}</p>}
+  <div class:list={['wrap', hasAside && 'page-hero-grid']}>
+    <div class="page-hero-copy">
+      <Lane mode="recede" class="page-hero-lane" />
+      <h1>{heading}</h1>
+      {lede && <p class="page-hero-lede">{lede}</p>}
+    </div>
+
+    {
+      hasAside && (
+        <div class="page-hero-aside">
+          <slot name="aside" />
+        </div>
+      )
+    }
   </div>
 </section>
 
@@ -27,7 +42,21 @@ const { heading, lede } = Astro.props;
     padding-block: var(--pad-section);
   }
 
-  .page-hero-lane {
+  .page-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: var(--space-xl);
+    /* End-aligned so the figure sits on the copy's baseline rather than
+       floating in the middle of the band. */
+    align-items: end;
+  }
+
+  /* Reached through :global() on purpose. A class passed to a child component
+     lands on that child's root, which sits in the child's style scope, so a
+     plain `.page-hero-lane { }` here is stripped as unmatched and the lane
+     renders full width with no margin. The parent selector supplies the scope;
+     :global() crosses into the child. Same pattern wherever <Lane> is used. */
+  .page-hero :global(.page-hero-lane) {
     margin-block-end: var(--space-m);
     max-inline-size: 16rem;
   }
@@ -44,5 +73,19 @@ const { heading, lede } = Astro.props;
     font-size: var(--text-lg);
     line-height: var(--leading-body);
     color: var(--fg-quiet);
+  }
+
+  /* Stacked on narrow screens. The aside still lands high on the page, which is
+     the whole point of putting it in the masthead. */
+  @media (max-width: 60rem) {
+    .page-hero-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-l);
+    }
+
+    .page-hero-aside {
+      padding-block-start: var(--space-m);
+      border-block-start: var(--border-hairline) solid var(--rule);
+    }
   }
 </style>

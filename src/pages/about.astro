@@ -74,6 +74,32 @@ const board = [
     lede="Five people who grew up in West Chester and left for school. Some of us came back. All of us are still here in the ways that count."
   />
 
+  <!-- Sits flush under the masthead, edge to edge, so the two read as one unit
+       and the page opens on the place rather than on a slab of text.
+
+       Full width and uncropped rather than used as a hero background: the source
+       is a 3.5:1 panorama, and cropping it to a phone-shaped hero would reduce
+       it to an unreadable slice of rooftops.
+
+       The five-founders group shot this replaced was dropped because five real
+       headshots already do that job, and with the founders in five cities a
+       group photo would have held the page indefinitely. -->
+  <section class="town-band surface-paper">
+    <figure class="town">
+      <Image
+        src={townPhoto}
+        alt="West Chester, Pennsylvania at sunset, looking across the rooftops of High Street toward the courthouse clock tower."
+        widths={[800, 1200, 1600, 2000]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <figcaption class="wrap">
+        West Chester, Pennsylvania. The place all five of us left, and came back to.
+      </figcaption>
+    </figure>
+  </section>
+
   <section class="section surface-paper">
     <div class="wrap">
       <div class="split prose">
@@ -122,25 +148,6 @@ const board = [
       <div class="question-mark">
         <Logo variant="scene" decorative />
       </div>
-    </div>
-  </section>
-
-  <!-- The five-founders group shot was dropped: five real headshots already do
-       that job, and with the founders spread across five cities a group photo is
-       a scheduling problem that would hold the page indefinitely. The town
-       itself is the better picture here, and it is the place the whole argument
-       is about. -->
-  <section class="section surface-paper">
-    <div class="wrap">
-      <figure class="town">
-        <Image
-          src={townPhoto}
-          alt="West Chester, Pennsylvania at sunset, looking across the rooftops of High Street toward the courthouse clock tower."
-          widths={[800, 1200, 1600]}
-          sizes="(max-width: 60rem) 100vw, 72rem"
-        />
-        <figcaption>West Chester, Pennsylvania. The place all five of us left, and came back to.</figcaption>
-      </figure>
     </div>
   </section>
 
@@ -244,14 +251,32 @@ const board = [
     color: var(--fg);
   }
 
+  /* No top padding: the band butts against the masthead with no seam. */
+  .town-band {
+    padding-block: 0 var(--space-m);
+  }
+
   .town {
     margin: 0;
   }
 
   .town :global(img) {
+    display: block;
     inline-size: 100%;
     block-size: auto;
-    border-radius: var(--radius-panel);
+  }
+
+  /* At 390px the native 3.5:1 leaves a 111px ribbon, too thin to register as a
+     photograph. Below 40rem it takes a 2:1 box and covers, trimming width
+     rather than height so the buildings stay large enough to read. Wider
+     screens keep the full uncropped sweep. */
+  @media (max-width: 40rem) {
+    .town :global(img) {
+      aspect-ratio: 2 / 1;
+      block-size: auto;
+      object-fit: cover;
+      object-position: 50% 50%;
+    }
   }
 
   .town figcaption {
