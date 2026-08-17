@@ -90,7 +90,19 @@ try {
     // makes the class change land instantly instead of adding a wait, which
     // would have to guess at the slowest delay on the page.
     await page.addStyleTag({
-      content: '.reveal, .reveal.is-visible { transition: none !important; }',
+      content: `.reveal, .reveal.is-visible { transition: none !important; }
+        /* .rise and .stagger are the other half of the motion system and were
+           never settled here. They animate on load, in CSS, with delays running
+           to 690ms, so a capture taken before they finish shows them part way
+           through their fade. That is not a hypothetical: the 404 mark was
+           photographed at opacity 0.545 during this QA pass and read as a
+           washed-out, broken logo, when the page itself was fine. Pin the end
+           state rather than waiting on it, exactly as .reveal does above. */
+        .rise, .stagger > * {
+          animation: none !important;
+          opacity: 1 !important;
+          transform: none !important;
+        }`,
     });
     await page.evaluate(() => {
       document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
