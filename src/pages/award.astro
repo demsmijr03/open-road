@@ -93,7 +93,7 @@ const faqs = [
         </p>
         <p>
           We'll confirm how the money reaches you, whether that's paid to your school or to you
-          directly, before the application opens.
+          directly, before the application opens.{' '}
           <a href="/get-involved/#plan">See the plan for the year.</a>
         </p>
       </div>
@@ -105,7 +105,7 @@ const faqs = [
           trade program. If it's the right place for you, the award goes with you.
         </p>
         <p>
-          We don't require you to stay in Pennsylvania, and we don't require you to come back.
+          We don't require you to stay in Pennsylvania, and we don't require you to come back.{' '}
           <a href="/about/#the-question">That's the whole point.</a>
         </p>
       </div>
@@ -160,7 +160,8 @@ const faqs = [
 
   .qual-title {
     margin: 0 0 var(--space-l);
-    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+    font-size: var(--text-h2);
+    letter-spacing: var(--tracking-h2);
   }
 
   .quals {
@@ -187,7 +188,7 @@ const faqs = [
     padding: var(--space-m);
     border-radius: var(--radius-panel);
     background-color: var(--color-surface);
-    box-shadow: var(--shadow-base);
+    border: var(--border-hairline) solid var(--rule);
   }
 
   /* Numbered because eligibility is a checklist, not a ranking: the numerals
@@ -197,7 +198,7 @@ const faqs = [
     font-family: var(--font-display);
     font-size: var(--text-lg);
     font-weight: 600;
-    color: var(--accent-text);
+    color: var(--fg-quiet);
   }
 
   .qual-t {
@@ -279,7 +280,8 @@ const faqs = [
 
   .faq-title {
     margin: 0 0 var(--space-l);
-    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+    font-size: var(--text-h2);
+    letter-spacing: var(--tracking-h2);
   }
 
 </style>

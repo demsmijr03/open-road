@@ -277,7 +277,8 @@ const donorFaqs = [
 
   .ways-title {
     margin: 0 0 var(--space-l);
-    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+    font-size: var(--text-h2);
+    letter-spacing: var(--tracking-h2);
   }
 
   .ways {
@@ -314,14 +315,12 @@ const donorFaqs = [
     color: inherit;
     transition:
       transform var(--duration) var(--ease-spring),
-      border-color var(--duration) var(--ease-spring),
-      box-shadow var(--duration) var(--ease-spring);
+      border-color var(--duration) var(--ease-spring);
   }
 
   .way a:hover {
     transform: translateY(-2px);
     border-color: var(--rule-strong);
-    box-shadow: var(--shadow-elevated);
   }
 
   .way a:focus-visible {
@@ -331,7 +330,7 @@ const donorFaqs = [
 
   .way-icon {
     inline-size: 1.75rem;
-    color: var(--accent-text);
+    color: var(--fg);
     margin-block-end: var(--space-2xs);
   }
 
@@ -391,22 +390,26 @@ const donorFaqs = [
     background-color: var(--color-surface);
   }
 
-  /* The ascent, in four steps of elevation. */
+  /* The ascent, in four steps.
+     This used to be four steps of drop shadow, which made the tiles read as
+     UI cards floating over the page rather than as part of it. The sequence
+     is the same, expressed in weight rather than depth: hairline, stronger
+     hairline, 2px, then the dark band. Shadow is reserved for things that
+     genuinely float above the page, which none of these do. */
   .tier--1 {
-    box-shadow: none;
     border: var(--border-hairline) solid var(--rule);
   }
 
   .tier--2 {
-    box-shadow: var(--shadow-base);
+    border: var(--border-hairline) solid var(--rule-strong);
   }
 
+  /* Full-strength deep, not a panel ground: these tiles sit ON the panel
+     surface already, so a panel background would have made the third tile
+     disappear. 2px of the actual foreground colour is the last step before
+     the fourth tile fills with it. */
   .tier--3 {
-    box-shadow: var(--shadow-elevated);
-  }
-
-  .tier--4 {
-    box-shadow: var(--shadow-floating);
+    border: 2px solid var(--fg);
   }
 
   .tier-name {
@@ -452,7 +455,8 @@ const donorFaqs = [
 
   .plan-title {
     margin: 0 0 var(--space-m);
-    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+    font-size: var(--text-h2);
+    letter-spacing: var(--tracking-h2);
   }
 
   .plan-goal {
@@ -489,7 +493,8 @@ const donorFaqs = [
   .interest-title,
   .faq-title {
     margin: 0 0 var(--space-l);
-    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+    font-size: var(--text-h2);
+    letter-spacing: var(--tracking-h2);
   }
 
   .faq-extra {

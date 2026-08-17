@@ -64,7 +64,7 @@ import Placeholder from './Placeholder.astro';
   <Button type="submit">Send</Button>
 
   <p class="form-privacy">
-    We use what you send here to reply to you. Nothing else.
+    We use what you send here to reply to you. Nothing else.{' '}
     <a href="/privacy/">See our privacy policy.</a>
   </p>
 </form>
@@ -136,7 +136,9 @@ import Placeholder from './Placeholder.astro';
     color: var(--fg);
     background-color: var(--bg);
     border: var(--border-hairline) solid var(--rule-strong);
-    border-radius: var(--radius-btn);
+    /* Not --radius-btn. Buttons became pills; a pill-shaped multi-line
+       textarea is a different object, so fields carry their own radius. */
+    border-radius: var(--radius-input);
     transition: border-color var(--duration) var(--ease-spring);
   }
 

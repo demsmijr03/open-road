@@ -67,7 +67,7 @@
   /* Type scale, 1.25 major third from a 16px base */
   --text-xs: 0.8rem;
   --text-sm: 0.9rem;
-  --text-base: 1rem;
+  --text-base: 1.0625rem; /* 17px. Was 16px, which read as drafted rather than published. */
   --text-lg: 1.125rem;
   --text-xl: 1.375rem;
   --text-2xl: 1.75rem;
@@ -75,7 +75,16 @@
   --text-4xl: 3rem;
   --text-5xl: 4rem;
 
+  /* Section headings, in one place. Every page used to repeat this clamp with a
+     36px ceiling, which left the site speaking through colour instead of scale.
+     Airbnb.org sets headings at 48px and calls the whole system "scale and
+     silence". */
+  --text-h2: clamp(2rem, 4.5vw, 2.75rem);
+
+  --weight-body: 450;
+
   --tracking-display: -0.025em; /* tight on large headings */
+  --tracking-h2: -0.03em;
   --tracking-label: 0.12em; /* eyebrows and small caps labels */
 
   --leading-display: 1.06;
@@ -90,7 +99,11 @@
      read, and it costs no credibility because the type and the restraint carry
      the professionalism. */
   --radius-panel: 10px;
-  --radius-btn: 8px;
+  /* Pills everywhere. The header was already using them and the body was not,
+     which read as an accident rather than a distinction. Inputs keep a modest
+     radius: a pill-shaped textarea is a different thing entirely. */
+  --radius-btn: 999px;
+  --radius-input: 10px;
 
   /* ---------------------------------------------------------------------
      DEPTH, layered and tinted with the deep hue, never flat black.

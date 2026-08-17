@@ -17,6 +17,7 @@
     margin: 0;
     font-family: var(--font-body);
     font-size: var(--text-base);
+    font-weight: var(--weight-body);
     line-height: var(--leading-body);
     color: var(--color-deep);
     background-color: var(--color-surface);
@@ -117,10 +118,18 @@
      stays as shallow as the single-column version it replaced. */
   .split {
     display: grid;
-    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    grid-template-columns: minmax(0, 0.55fr) minmax(0, 1.45fr);
     column-gap: var(--space-xl);
     row-gap: var(--space-m);
     align-items: start;
+    /* The floor that makes the zero-height heading below safe. With the heading
+       out of row sizing, a section whose body is shorter than its heading would
+       let the heading run past the section and into the one after it, which is
+       exactly what privacy's short blocks did (39px over). Two lines of heading
+       is the realistic worst case, so that is the floor. Derived from the
+       heading token rather than typed as a pixel value, so it tracks if the
+       heading scale ever moves. */
+    min-block-size: calc(var(--text-h2) * 2.5);
   }
 
   /* h3 as well as h2: a sub-block inside a section needs the same spine, and
@@ -135,10 +144,22 @@
     grid-column: 1;
     grid-row: 1 / -1;
     margin-block: 0;
+    /* Zero-height on purpose, and the whole reason the rhythm holds.
+       A grid item spanning `1 / -1` contributes its height to the tracks it
+       spans, so whenever the heading was taller than the body rows the browser
+       distributed the surplus into the row gaps. That is not a gap the design
+       asks for: a two-line heading pushed 24px of row-gap out to 107px, and a
+       three-line one to 154px, which read as an accidental hole between two
+       paragraphs. Taking the box out of row sizing leaves row-gap as the only
+       thing setting vertical rhythm. Column 1 holds nothing else, so the text
+       renders into empty space. Restored to auto below 60rem, where the grid
+       collapses to one column and the heading is back in normal flow. */
+    block-size: 0;
   }
 
   .split > h2 {
-    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+    font-size: var(--text-h2);
+    letter-spacing: var(--tracking-h2);
   }
 
   .split > h3 {
@@ -147,7 +168,7 @@
 
   .split > :not(h2, h3) {
     grid-column: 2;
-    max-inline-size: var(--width-text);
+    max-inline-size: var(--width-wide);
   }
 
   /* .prose sets margin-block-start on siblings; row-gap already spaces the
@@ -160,11 +181,13 @@
     .split {
       grid-template-columns: minmax(0, 1fr);
       row-gap: var(--space-s);
+      min-block-size: 0;
     }
 
     .split > :is(h2, h3) {
       grid-column: 1;
       grid-row: auto;
+      block-size: auto;
     }
 
     .split > :not(h2, h3) {
@@ -198,7 +221,8 @@
 
   .prose h2 {
     margin-block-start: var(--space-xl);
-    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+    font-size: var(--text-h2);
+    letter-spacing: var(--tracking-h2);
     color: var(--fg);
   }
 
@@ -220,8 +244,7 @@
   }
 
   .prose a:hover {
-    color: var(--accent-text);
-    text-decoration-color: var(--accent-text);
+    text-decoration-color: var(--fg);
   }
 }
 
