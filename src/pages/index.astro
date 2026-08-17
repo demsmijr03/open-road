@@ -157,6 +157,17 @@ import heroPhoto from '../assets/landingpage.png';
     min-block-size: 100svh;
     /* Extra top padding clears the floating header. */
     padding-block: calc(var(--pad-major) + 3rem) var(--pad-major);
+  }
+
+  /* The header floats over this photograph and is at its tallest on the
+     narrowest screens, where the viewport is also shortest. Those two work
+     against each other, and at 360x780 the eyebrow ended up 5px above the
+     header's bottom rule rather than below it. More top padding here is the
+     floor that stops it happening again. */
+  @media (max-width: 62rem) {
+    .hero {
+      padding-block-start: calc(var(--pad-major) + 7rem);
+    }
     /* Full bleed: the photograph runs to the top and both edges rather than
        sitting inset as a panel. */
   }

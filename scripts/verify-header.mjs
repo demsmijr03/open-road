@@ -198,6 +198,50 @@ try {
     await page.close();
   }
 
+  // --- 3c. The phone header stays two tidy rows -----------------------------
+  // It was three, each on a different alignment, and 208px of an 844px screen.
+  // Both rows must now span the same gutters, and the brand and the button must
+  // share row one, because a third row is what pushed the header into the hero.
+  for (const [w, h] of [[360, 780], [390, 844], [393, 852], [412, 915], [430, 932]]) {
+    const page = await browser.newPage();
+    await page.setViewport({ width: w, height: h });
+    await page.goto(`${BASE}/`, { waitUntil: 'networkidle2', timeout: 60_000 });
+    const r = await page.evaluate(() => {
+      const brand = document.querySelector('.header-brand').getBoundingClientRect();
+      const cta = document.querySelector('.header-cta').getBoundingClientRect();
+      // The <ul> carries a negative inline margin so the links' own padding
+      // does not inset their labels; its box therefore sits ~6px outside the
+      // gutter on purpose. What has to line up is the TEXT, so measure that.
+      const linkEls = [...document.querySelectorAll('.header-nav a')];
+      const textBox = (el) => { const r = document.createRange(); r.selectNodeContents(el); return r.getBoundingClientRect(); };
+      const navTextLeft = textBox(linkEls[0]).left;
+      const navTextRight = textBox(linkEls[linkEls.length - 1]).right;
+      const hd = document.querySelector('.header').getBoundingClientRect();
+      const eb = document.querySelector('.hero .eyebrow, .hero [class*=eyebrow]').getBoundingClientRect();
+      const links = linkEls.map((a) => {
+        const b = a.getBoundingClientRect();
+        return { w: Math.round(b.width), h: Math.round(b.height) };
+      });
+      return {
+        sameRow: Math.abs(brand.top - cta.top) < 4,
+        headerH: Math.round(hd.height),
+        navLeft: Math.round(navTextLeft),
+        brandLeft: Math.round(brand.left),
+        navRight: Math.round(navTextRight),
+        ctaRight: Math.round(cta.right),
+        gap: Math.round(eb.top - hd.bottom),
+        smallest: Math.min(...links.map((l) => l.w)),
+        shortest: Math.min(...links.map((l) => l.h)),
+      };
+    });
+    check(r.sameRow, `@${w} brand and button share a row`, `header ${r.headerH}px`);
+    check(Math.abs(r.navLeft - r.brandLeft) <= 2, `@${w} rows share a left edge`, `nav ${r.navLeft} vs brand ${r.brandLeft}`);
+    check(Math.abs(r.navRight - r.ctaRight) <= 2, `@${w} rows share a right edge`, `nav ${r.navRight} vs cta ${r.ctaRight}`);
+    check(r.gap >= 24, `@${w}x${h} hero eyebrow clears the header`, `${r.gap}px`);
+    check(r.smallest >= 44 && r.shortest >= 44, `@${w} every nav target is 44px+`, `${r.smallest}x${r.shortest}`);
+    await page.close();
+  }
+
   // --- 4. Anchor targets clear the pinned bar ------------------------------
   {
     const page = await browser.newPage();

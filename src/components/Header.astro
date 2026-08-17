@@ -188,8 +188,18 @@ const isCurrent = (href: string) =>
     padding-inline: 1.15rem;
   }
 
-  @media (max-width: 30rem) {
-    .header-ghost {
+  /* :global, and that is the whole point. `header-ghost` is passed as a class
+     to <Button>, so it lands on that component's root and carries Button's
+     scope id, not this file's. The rule shipped as
+     `.header-ghost[data-astro-cid-nen7h5rs]` and could never match anything,
+     which is why Contact was still on screen at 390px. Same trap as the CTA
+     wrapper above, and the third time this file has hit it.
+
+     48rem rather than 30rem: below that the logo and both buttons do not fit on
+     one row, and Contact is the one that can go, since it points at the same
+     page as the interest form. */
+  @media (max-width: 48rem) {
+    .header-cta :global(.header-ghost) {
       display: none;
     }
   }
@@ -250,30 +260,66 @@ const isCurrent = (href: string) =>
 
      No hamburger: four links fit, and a disclosure widget for four items is
      more machinery than the content needs. */
+  /* Two rows, both spanning gutter to gutter.
+
+     It used to be three, each aligned differently: the brand took a full row of
+     its own, the links sat left and stopped short, and the buttons were shoved
+     right by an auto margin so they began 60px in from where the links began.
+     Nothing lined up with anything, which is what read as out of order on a
+     phone, and it cost 208px of an 844px screen before the hero started.
+
+     Now the brand shares row one with the button, and the links spread across
+     row two, so both rows start and end on the same gutter. */
   @media (max-width: 62rem) {
     .header-inner {
       flex-wrap: wrap;
-      gap: var(--space-xs) var(--space-m);
+      /* 8px, not 24px, and the difference decides the whole layout. The brand
+         is 148px and the button 179px, so at 390px the pair overflowed the
+         349px row by exactly 2px and wrapped, costing a third row and 56px of
+         screen. A tighter column gap buys 16px and the two sit together from
+         390px up, which covers most phones in use. */
+      gap: var(--space-xs) var(--space-2xs);
     }
 
     .header-brand {
       order: 1;
-      inline-size: 100%;
+    }
+
+    .header-cta {
+      order: 2;
+      margin-inline-start: auto;
     }
 
     .header-nav {
-      order: 2;
+      order: 3;
+      inline-size: 100%;
       margin-inline-start: 0;
     }
 
     .header-nav ul {
-      gap: var(--space-m);
-      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: var(--space-2xs);
+      flex-wrap: nowrap;
+      /* The links carry inline padding so each tap target clears 44px wide,
+         which "Home" did not at 35px. The negative margin pulls the row back
+         out so the first and last labels still sit on the gutter rather than
+         being inset by their own padding. */
+      margin-inline: -0.4rem;
     }
 
-    .header-cta {
-      order: 3;
-      margin-inline-start: auto;
+    .header-nav a {
+      padding-inline: 0.4rem;
+    }
+  }
+
+  /* At 360px the pair still overflowed by 15px and dropped to three rows, and
+     on a 780px-tall screen that 208px header ran straight into the hero
+     eyebrow, overlapping it by 5px. Trimming the pill's side padding recovers
+     18px, which is enough to keep two rows down to the narrowest phones in
+     use. The label is unchanged; only the air around it is tighter. */
+  @media (max-width: 24rem) {
+    .header-cta :global(.btn) {
+      padding-inline: 0.6rem;
     }
   }
 

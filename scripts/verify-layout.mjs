@@ -59,14 +59,78 @@ const desk = await browser.newPage();
 await desk.setViewport({ width: 1440, height: 900 });
 await desk.goto(`${BASE}/get-involved/`, { waitUntil: 'networkidle2', timeout: 60_000 });
 
+// page.hover() scrolls the target into view and aims at its centre, which is
+// not safe here: the header is sticky from 62rem up, so depending on where the
+// scroll lands the pointer can come down on the bar instead of the row. That
+// made this check fail approximately one run in three, always reporting
+// "0px to 0px", which reads as the hover styling being broken rather than as
+// the pointer having missed. Centring the row in the viewport puts it well
+// clear of a 65px bar, and elementFromPoint proves the pointer actually landed
+// on it before anything is measured.
+// Two things made this check fail roughly one run in three, both timing.
+//
+// The rail rows carry .reveal, so scrolling them into view starts a 900ms
+// transform. Coordinates measured during that go stale before the pointer
+// arrives, and the hover lands on empty space. So wait until the row's own
+// rect stops changing rather than guessing at a delay.
+//
+// Then move the pointer twice. A single mouse.move to a fresh position does not
+// always produce a mousemove Chrome treats as a hover, and a one-pixel second
+// move makes it deterministic.
+await desk.evaluate(() => {
+  document.querySelector('.rail-item').scrollIntoView({ block: 'center', behavior: 'instant' });
+});
+await desk.waitForFunction(
+  () => {
+    const el = document.querySelector('.rail-item');
+    const y = Math.round(el.getBoundingClientRect().top);
+    const settled = window.__lastY === y;
+    window.__lastY = y;
+    return settled;
+  },
+  { polling: 120, timeout: 8000 }
+);
+
+const target = await desk.evaluate(() => {
+  const el = document.querySelector('.rail-item');
+  const r = el.getBoundingClientRect();
+  const x = Math.round(r.x + r.width / 2);
+  const y = Math.round(r.y + r.height / 2);
+  const hit = document.elementFromPoint(x, y);
+  return { x, y, onTarget: !!hit && (el === hit || el.contains(hit)), hit: hit ? hit.className : null };
+});
+
 const beforeHover = await desk.evaluate(
   () => document.querySelector('.rail-detail').getBoundingClientRect().height
 );
-await desk.hover('.rail-item');
-await new Promise((r) => setTimeout(r, 600));
+await desk.mouse.move(target.x - 1, target.y - 1);
+await desk.mouse.move(target.x, target.y);
+
+// Poll instead of sampling once after a sleep. The pointer event updates
+// hit-testing straight away, so the row matches :hover immediately, but with no
+// compositor activity in headless the descendant restyle can lag: measured once
+// after a fixed delay this read the stale collapsed value about one run in
+// three and reported "0px to 0px", which looks like broken CSS rather than a
+// harness artefact. Reading getComputedStyle forces the recalculation, so
+// polling is both the wait and the fix.
+await desk
+  .waitForFunction(
+    () => {
+      const d = document.querySelector('.rail-detail');
+      return getComputedStyle(d).maxBlockSize !== '0px' && d.getBoundingClientRect().height > 0;
+    },
+    { polling: 100, timeout: 3000 }
+  )
+  .catch(() => {}); // a real failure falls through and is reported below
+
 const afterHover = await desk.evaluate(
   () => document.querySelector('.rail-detail').getBoundingClientRect().height
 );
+
+console.log(
+  `${target.onTarget ? 'PASS' : 'FAIL'}  timeline row is reachable by pointer  (${target.onTarget ? 'clear' : 'obscured by ' + target.hit})`
+);
+if (!target.onTarget) failures++;
 
 const expands = afterHover > beforeHover;
 console.log(
