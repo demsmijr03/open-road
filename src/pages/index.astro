@@ -32,21 +32,21 @@ import heroPhoto from '../assets/landingpage.png';
 
     <div class="wrap">
       <div class="hero-content">
-      <span class="eyebrow rise" style="--rise-delay:80ms">West Chester, Pennsylvania</span>
+      <span class="eyebrow rise" style="--rise-delay:100ms">West Chester, Pennsylvania</span>
 
-      <div class="rise" style="--rise-delay:160ms">
+      <div class="rise" style="--rise-delay:200ms">
         <AnimatedHeadline
           lead="We fund one student a year to go find"
           words={['perspective', 'opportunity', 'a wider view', 'their footing']}
         />
       </div>
 
-      <p class="hero-lede rise" style="--rise-delay:280ms">
+      <p class="hero-lede rise" style="--rise-delay:330ms">
         The Open Road Foundation helps West Chester Area School District students afford the school
         that fits them best, wherever it takes them.
       </p>
 
-      <div class="hero-actions rise" style="--rise-delay:380ms">
+      <div class="hero-actions rise" style="--rise-delay:440ms">
         <Button href="/get-involved/#give">Support a student</Button>
         <Button href="/about/" variant="secondary">Read our story</Button>
       </div>
@@ -78,7 +78,7 @@ import heroPhoto from '../assets/landingpage.png';
         </DistanceStat>
         </div>
 
-        <div class="reveal" style="--reveal-delay:80ms">
+        <div class="reveal" style="--reveal-delay:128ms">
         <DistanceStat
           distance={2}
           scope="In Pennsylvania"
@@ -93,7 +93,7 @@ import heroPhoto from '../assets/landingpage.png';
         </DistanceStat>
         </div>
 
-        <div class="reveal" style="--reveal-delay:160ms">
+        <div class="reveal" style="--reveal-delay:256ms">
         <DistanceStat
           distance={3}
           scope="Here, in this district"
@@ -173,7 +173,14 @@ import heroPhoto from '../assets/landingpage.png';
     overflow: hidden;
     display: grid;
     align-content: center;
-    min-block-size: min(88vh, 46rem);
+    /* Fills the viewport. The previous min(88vh, 46rem) capped the photograph
+       at 736px, so on a laptop it stopped short of the fold and left a band of
+       white beneath it. Content stays centred, so the section still grows past
+       the viewport if the copy ever needs more room than that. */
+    min-block-size: 100vh;
+    /* svh excludes mobile browser chrome, which vh does not, so the hero is not
+       taller than the visible area on a phone. */
+    min-block-size: 100svh;
     /* Extra top padding clears the floating header. */
     padding-block: calc(var(--pad-major) + 3rem) var(--pad-major);
     /* Full bleed: the photograph runs to the top and both edges rather than

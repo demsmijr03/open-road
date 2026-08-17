@@ -12,7 +12,7 @@ import Placeholder from './Placeholder.astro';
  * of the year is honest about what is still unscheduled.
  */
 interface Props {
-  items: { when: string; whenPlaceholder?: string; what: string }[];
+  items: { when: string; whenPlaceholder?: string; what: string; detail?: string }[];
 }
 
 const { items } = Astro.props;
@@ -32,6 +32,7 @@ const { items } = Astro.props;
             )}
           </div>
           <p class="rail-what">{item.what}</p>
+          {item.detail && <p class="rail-detail">{item.detail}</p>}
         </div>
       </li>
     ))
@@ -106,5 +107,60 @@ const { items } = Astro.props;
     line-height: 1.3;
     letter-spacing: -0.015em;
     color: var(--fg);
+  }
+
+  .rail-detail {
+    margin: var(--space-2xs) 0 0;
+    max-inline-size: 34rem;
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--fg-quiet);
+  }
+
+  /*
+    The detail is shown outright by default. It only collapses where hovering is
+    genuinely available, so touch users and anyone on a narrow screen read the
+    whole timeline without needing to hover something they cannot hover.
+
+    A hover-only reveal here would have hidden five descriptions from every
+    phone on the internet.
+  */
+  @media (hover: hover) and (pointer: fine) {
+    .rail-detail {
+      overflow: hidden;
+      max-block-size: 0;
+      opacity: 0;
+      margin-block-start: 0;
+      transition:
+        max-block-size 420ms var(--ease-spring),
+        opacity 300ms var(--ease-spring),
+        margin-block-start 420ms var(--ease-spring);
+    }
+
+    /* focus-within as well as hover: the row contains links on some pages, and
+       a keyboard user tabbing through should see the same thing a mouse does. */
+    .rail-item:hover .rail-detail,
+    .rail-item:focus-within .rail-detail {
+      max-block-size: 12rem;
+      opacity: 1;
+      margin-block-start: var(--space-2xs);
+    }
+
+    .rail-item {
+      transition: opacity 300ms var(--ease-spring);
+    }
+
+    /* The hovered row stays at full strength while its neighbours step back,
+       so the eye lands on the one being read. */
+    .rail:hover .rail-item:not(:hover) {
+      opacity: 0.55;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rail-detail,
+    .rail-item {
+      transition: none;
+    }
   }
 </style>

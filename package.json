@@ -15,7 +15,8 @@
     "assets": "node scripts/make-assets.mjs",
     "audit:a11y": "node scripts/audit-a11y.mjs",
     "verify:motion": "node scripts/verify-motion.mjs",
-    "verify:transitions": "node scripts/verify-transitions.mjs"
+    "verify:transitions": "node scripts/verify-transitions.mjs",
+    "verify:layout": "node scripts/verify-layout.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

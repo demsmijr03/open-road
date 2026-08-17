@@ -47,7 +47,7 @@ const board = [
   {
     slug: 'niko-levin',
     name: 'Niko Levin',
-    role: 'VP, Community Engagement',
+    role: 'VP, Community Outreach',
     bio: 'Miami by way of West Chester East, now back in Philadelphia as an analyst at Accenture. Close enough to be in the room, which is most of the job.',
   },
   {
@@ -59,7 +59,7 @@ const board = [
   {
     slug: 'demetrius-smith',
     name: 'Demetrius Smith Jr.',
-    role: 'VP, Marketing & Communications',
+    role: 'VP, Marketing',
     bio: 'Ohio State, chosen to see somewhere he had never been. An analyst at Accenture in New York. He tells the foundation’s story.',
   },
 ];
@@ -153,11 +153,14 @@ const board = [
     </div>
   </section>
 
+  <!-- On the .split spine, like every other text section. This was a 34rem
+       quote inside a 46rem column on a 72rem page: three nested width caps,
+       which left most of the section empty. -->
   <section class="section surface-panel">
     <div class="wrap">
-      <div class="measure-wide">
+      <div class="split">
         <h2 class="mission-title reveal">Our mission</h2>
-        <blockquote class="mission">
+        <blockquote class="mission reveal">
           The Open Road Foundation exists to uplift Philadelphia Area students pursuing a college
           degree through financial support and mentorship, offering greater educational
           opportunities and a chance to explore their passions in the settings that will help them
@@ -187,7 +190,7 @@ const board = [
           board.map((person, i) => {
             const photo = photoFor(person.slug);
             return (
-              <li class="board-member reveal" style={`--reveal-delay:${i * 60}ms`}>
+              <li class="board-member reveal" style={`--reveal-delay:${i * 95}ms`}>
                 <div class="board-portrait">
                   {photo ? (
                     <Image
@@ -305,10 +308,18 @@ const board = [
 
   /* Set large and given room, with no rule down the side. The size and the
      display face are enough to mark it as the quoted mission. */
+  /* .split caps its right column at --width-text (38rem), which is the right
+     measure for body copy but too narrow for a display-size quote. These two
+     take the full column instead: at ~1.875rem the line still lands near 60
+     characters, so the measure holds. */
+  .split > .mission,
+  .split > .mission-note {
+    max-inline-size: none;
+  }
+
   .mission {
     margin: 0;
     padding: 0;
-    max-inline-size: 34rem;
     font-family: var(--font-display);
     font-size: clamp(1.375rem, 3vw, 1.875rem);
     line-height: 1.4;

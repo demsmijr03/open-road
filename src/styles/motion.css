@@ -31,18 +31,22 @@ html.js-reveal .reveal.is-visible {
   opacity: 1;
   transform: none;
   transition:
-    opacity 620ms var(--ease-spring),
-    transform 620ms var(--ease-spring);
+    opacity 900ms var(--ease-spring),
+    transform 900ms var(--ease-spring);
   transition-delay: var(--reveal-delay, 0ms);
 }
 
 /* Load-in ------------------------------------------------------------------
 
    For things above the fold, which are on screen before any observer could
-   fire. Pure CSS, so it runs even with JavaScript off. */
+   fire. Pure CSS, so it runs even with JavaScript off.
+
+   Timings are deliberately unhurried. The one exception on the site is the
+   rotating headline in AnimatedHeadline.astro, which is continuous rather than
+   one-shot: slowing that reads as the page stalling, not as calm. */
 
 .rise {
-  animation: rise 720ms var(--ease-spring) both;
+  animation: rise 1000ms var(--ease-spring) both;
   animation-delay: var(--rise-delay, 0ms);
 }
 
@@ -59,15 +63,15 @@ html.js-reveal .reveal.is-visible {
 
 /* Stagger helper: children animate in sequence without hand-numbering each one. */
 .stagger > * {
-  animation: rise 720ms var(--ease-spring) both;
+  animation: rise 1000ms var(--ease-spring) both;
 }
 
-.stagger > :nth-child(1) { animation-delay: 60ms; }
-.stagger > :nth-child(2) { animation-delay: 140ms; }
-.stagger > :nth-child(3) { animation-delay: 220ms; }
-.stagger > :nth-child(4) { animation-delay: 300ms; }
-.stagger > :nth-child(5) { animation-delay: 380ms; }
-.stagger > :nth-child(6) { animation-delay: 460ms; }
+.stagger > :nth-child(1) { animation-delay: 90ms; }
+.stagger > :nth-child(2) { animation-delay: 210ms; }
+.stagger > :nth-child(3) { animation-delay: 330ms; }
+.stagger > :nth-child(4) { animation-delay: 450ms; }
+.stagger > :nth-child(5) { animation-delay: 570ms; }
+.stagger > :nth-child(6) { animation-delay: 690ms; }
 
 /* Reduced motion ------------------------------------------------------------
 

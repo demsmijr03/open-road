@@ -43,6 +43,26 @@ try {
         continue;
       }
 
+      // Settle every entrance animation before measuring.
+      //
+      // axe reads computed colour at the instant it runs. Mid-fade, a wrapper
+      // sitting at opacity 0 means it measures the element against whatever is
+      // behind it: on the home page that is the hero photograph, which produced
+      // a phantom 1.31:1 failure on a button whose real contrast is 6.02:1.
+      // The settled state is what a person actually reads, so that is what gets
+      // audited.
+      await page.addStyleTag({
+        content: `*, *::before, *::after {
+          animation-duration: 0s !important;
+          animation-delay: 0s !important;
+          transition-duration: 0s !important;
+          transition-delay: 0s !important;
+        }`,
+      });
+      await page.evaluate(() => {
+        document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
+      });
+
       await page.addScriptTag({ path: axePath });
       const results = await page.evaluate(async () =>
         await window.axe.run(document, {

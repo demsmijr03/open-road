@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     q: 'How much is the award, and what can I spend it on?',
-    a: '$9,000*, once, to one student. Put it toward tuition, books, a laptop, or travel, whatever it takes to support your time there. The figure is provisional until the application opens.',
+    a: 'One award, once, to one student. We are raising $10,000 this year and every dollar of it goes into the fund. The share that reaches this year’s student is confirmed before the application opens, so we are not putting a number on it yet.',
   },
   {
     q: 'Can I use it at an out-of-state school?',
@@ -40,39 +40,28 @@ const faqs = [
   title="The award | The Open Road Foundation"
   description="Who can apply, what it covers, and how we choose. One award, for a West Chester Area School District student."
 >
+  <!-- The page opens on what the foundation does, not on the word "award".
+       The standalone "What we do" section this replaced is gone: its wording
+       is the masthead now.
+
+       The figure is the fund, not the award. Every dollar raised goes into it,
+       and the share that reaches this year's student is set before the
+       application opens. Stating a number now would mean revising it later. -->
   <PageHero
-    heading="The award"
-    lede="One award, paid toward the cost of college, for a student graduating from the West Chester Area School District. Here's who can apply, what it covers, and how we choose."
+    heading="We raise money here, and put it toward college"
+    lede="Money from people who live in West Chester, for a student who has been accepted somewhere they can't quite afford. Here's who can apply, what it covers, and how we choose."
   >
-    <!-- The figure is what this page is about, so it belongs in the masthead
-         rather than four sections down. The footnote travels with it: an
-         asterisk in the hero whose explanation sits further down the page is
-         worse than no asterisk at all. -->
     <div slot="aside" class="award-figure">
-      <p class="award-amount">$9,000<span class="award-star" aria-hidden="true">*</span></p>
-      <p class="award-caption">one award, one student, this year.</p>
+      <p class="award-amount">$10,000</p>
+      <p class="award-caption">the year-one fund, every dollar of it.</p>
       <p class="award-footnote">
-        <span aria-hidden="true">*</span>
-        <em>Year-one figure. We'll confirm the final amount before the application opens.</em>
+        <em>
+          Running the foundation is paid for by the founders, so nothing comes out of this. The
+          share that goes to this year's student is confirmed before the application opens.
+        </em>
       </p>
     </div>
   </PageHero>
-
-  <section class="section surface-base">
-    <div class="wrap">
-      <div class="split prose">
-        <h2 class="reveal">What we do</h2>
-        <p>
-          We raise money from people who live here and put it toward the cost of college for a
-          student who has been accepted somewhere they can't quite afford.
-        </p>
-        <p>
-          In year one we're raising $10,000 and making one award. We'd rather do that properly than
-          do more of it badly.
-        </p>
-      </div>
-    </div>
-  </section>
 
   <section class="section surface-panel">
     <div class="wrap">
@@ -83,7 +72,7 @@ const faqs = [
       <ul class="quals">
         {
           criteria.map((c, i) => (
-            <li class="qual reveal" style={`--reveal-delay:${i * 70}ms`}>
+            <li class="qual reveal" style={`--reveal-delay:${i * 110}ms`}>
               <p class="qual-n">{String(i + 1).padStart(2, '0')}</p>
               <p class="qual-t">{c.title}</p>
               <p class="qual-d">{c.detail}</p>
@@ -105,7 +94,7 @@ const faqs = [
         <p>
           We'll confirm how the money reaches you, whether that's paid to your school or to you
           directly, before the application opens.
-          <a href="/get-involved/#money">See where every dollar goes.</a>
+          <a href="/get-involved/#plan">See the plan for the year.</a>
         </p>
       </div>
 
@@ -254,11 +243,6 @@ const faqs = [
     font-weight: 600;
     line-height: 0.9;
     letter-spacing: var(--tracking-display);
-  }
-
-  /* --accent-text resolves to the text-safe apricot on the deep surface (5.3:1). */
-  .award-star {
-    color: var(--accent-text);
   }
 
 
