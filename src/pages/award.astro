@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import eastHigh from '../assets/wc-east-high-school.jpg';
+import campusPath from '../assets/campus-path.jpg';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
 import CtaBand from '../components/CtaBand.astro';
@@ -65,24 +65,23 @@ const faqs = [
     </div>
   </PageHero>
 
-  <!-- The first eligibility line is "you go to a WCASD high school", so the
-       page shows one. A real building, not a stand-in: the photograph is of
-       East, from Wikimedia Commons, and the credit under it is a licence
-       condition rather than a courtesy. -->
+  <!-- The destination, not the origin. This band held a photograph of West
+       Chester East, which was wrong twice over: East is one of three district
+       high schools, so a student at Rustin or Henderson was being shown
+       someone else's building on the page telling them they qualify, and a
+       building they already attend is not what makes anyone apply. Students
+       walking away down a path, backs to camera, so there is no face to
+       misrepresent and the frame is about where the money takes you. -->
   <figure class="school-band reveal">
     <div class="school-media">
       <Image
-        src={eastHigh}
-        alt="West Chester East High School, its name spelled in metal letters across the entrance canopy, seen from the parking lot on a clear day."
+        src={campusPath}
+        alt="Three students walking away from the camera along a tree-shaded path toward a college building on a bright day."
         widths={[768, 1280, 1920]}
         sizes="100vw"
         loading="lazy"
       />
     </div>
-    <figcaption class="school-credit">
-      West Chester East High School. Photo by RowEpict,
-      <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="license noopener noreferrer" target="_blank">CC BY-SA 3.0</a>.
-    </figcaption>
   </figure>
 
   <section class="section surface-panel">
@@ -307,10 +306,10 @@ const faqs = [
   }
 
 
-  /* Full-bleed band. The source is a 4:3 snapshot with a light pole rising
-     through the middle and a parking lot across the bottom third, so the crop
-     takes a wide slice from the upper half: the facade and the lettering
-     survive, the asphalt does not. */
+  /* Full-bleed band, from a tall source, so the crop decides what the image is
+     about. Set by rendering three positions and looking: high enough to keep
+     the building and the receding path in frame, low enough that the three
+     figures stay whole rather than being cut at the knee. */
   .school-band {
     margin: 0;
   }
@@ -326,7 +325,7 @@ const faqs = [
     inline-size: 100%;
     block-size: 100%;
     object-fit: cover;
-    object-position: 50% 38%;
+    object-position: 50% 62%;
   }
 
   /* Colour treatment, per the house rules: a multiply layer in the brand hue
@@ -351,19 +350,6 @@ const faqs = [
     opacity: 0.14;
   }
 
-  .school-credit {
-    inline-size: min(100% - (var(--gutter) * 2), var(--width-page));
-    margin-inline: auto;
-    padding-block: var(--space-2xs);
-    font-size: var(--text-xs);
-    color: var(--fg-quiet);
-  }
-
-  .school-credit a {
-    color: inherit;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-  }
 
   @media (max-width: 48rem) {
     .school-media {
