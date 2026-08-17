@@ -13,7 +13,7 @@ import Icon from '../components/Icon.astro';
 
 const ways = [
   { icon: 'give',    name: 'Give',                     note: 'One gift, once, straight to the award.', href: '#give' },
-  { icon: 'partner', name: 'Partner with us',          note: 'For businesses and community organisations.', href: '#partner' },
+  { icon: 'partner', name: 'Partner with us',          note: 'For businesses and community organizations.', href: '#partner' },
   { icon: 'ask',     name: "Tell us you're interested", note: 'Student, parent, counselor, mentor, donor.', href: '#interest' },
   { icon: 'tell',    name: 'Spread the word',          note: 'Send this to someone in West Chester.', href: '#newsletter' },
 ] as const;
@@ -43,10 +43,11 @@ const tiers = [
 
 /*
  * Details are inferred from the titles and are written to describe intent
- * rather than to commit anyone to specifics. The Twin Valley Coffee line in
- * particular describes another business's participation, so it says what we
- * are doing, not what they have agreed to. All five need founder sign-off
- * before launch.
+ * rather than to commit anyone to specifics. The March line named Twin Valley
+ * Coffee until nothing turned out to be confirmed with them: a title naming a
+ * business states a joint event as fact, whatever the description underneath
+ * is careful to avoid. It stays unnamed until there is an agreement to point
+ * at. All five need founder sign-off before launch.
  */
 const milestones = [
   {
@@ -69,7 +70,7 @@ const milestones = [
   },
   {
     when: 'March',
-    what: 'Fundraising day with Twin Valley Coffee',
+    what: 'Fundraising day with a local coffee shop',
     detail:
       'A day at a local shop, with the community invited to come by and give. The last push before the award is decided.',
   },
@@ -88,11 +89,11 @@ const donorFaqs = [
   },
   {
     q: 'Can I give monthly?',
-    a: 'Not at launch. A gift is a one-time thing for now. Recurring giving arrives when there’s a reason for it.',
+    a: "Not at launch. A gift is a one-time thing for now. Recurring giving arrives when there's a reason for it.",
   },
   {
     q: 'What if you raise more than $10,000?',
-    a: 'It seeds next year’s fund. Anything past the goal carries into the next cycle rather than sitting still.',
+    a: "It seeds next year's fund. Anything past the goal carries into the next cycle rather than sitting still.",
   },
   {
     q: 'Who runs this?',

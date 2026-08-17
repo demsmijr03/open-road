@@ -19,7 +19,7 @@ const require = createRequire(import.meta.url);
 const axePath = require.resolve('axe-core/axe.min.js');
 
 const BASE = process.argv[2] ?? 'http://localhost:4321';
-const PAGES = ['/', '/award/', '/about/', '/get-involved/', '/privacy/', '/404', '/explore/', '/review/'];
+const PAGES = ['/', '/award/', '/about/', '/get-involved/', '/privacy/', '/404'];
 const VIEWPORTS = [
   { name: 'mobile', width: 390, height: 844 },
   { name: 'desktop', width: 1440, height: 900 },

@@ -81,13 +81,13 @@ grep -rnP "\x{00B7}" src/     # middle dot
 
 Two systems, in `src/styles/motion.css`:
 
-- `.reveal` — scroll-triggered. Needs `src/scripts/reveal.ts`, which listens on
+- `.reveal`, scroll-triggered. Needs `src/scripts/reveal.ts`, which listens on
   `astro:page-load`, **not** `DOMContentLoaded`. `<ClientRouter />` does
   client-side navigation, so a `DOMContentLoaded` listener fires once, on the
   first page only; every page navigated to afterwards would arrive with its
   `.reveal` content stuck at `opacity: 0` forever. This is the failure mode
   `verify:transitions` exists to catch.
-- `.rise` / `.stagger` — load-triggered, pure CSS, for content already on
+- `.rise` / `.stagger`, load-triggered, pure CSS, for content already on
   screen (heroes, mastheads). No script involved, so it works with JS off.
 
 **Content must never depend on JavaScript to become visible.** The `.reveal`
