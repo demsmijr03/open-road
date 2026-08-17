@@ -13,14 +13,22 @@ import PageHero from '../components/PageHero.astro';
     lede="Short version: we collect what you type into our form, we use it to reply to you, and we don't sell it."
   />
 
+  <!-- On the .split spine like every other page. This was one long .measure
+       column: a 38rem strip on a 72rem page, the same emptiness the mission
+       block had. Each heading now sits in the left rail with its own text
+       beside it, which also makes a long policy page scannable. -->
   <section class="section surface-base">
     <div class="wrap">
-      <div class="measure prose">
-        <p class="updated">
-          Last updated <Placeholder note="date" as="inline" />
-        </p>
+      <p class="updated reveal">
+        Last updated <Placeholder note="date" as="inline" />
+      </p>
+    </div>
+  </section>
 
-        <h2>What we collect</h2>
+  <section class="section--minor surface-base">
+    <div class="wrap">
+      <div class="split prose">
+        <h2 class="reveal">What we collect</h2>
         <p>
           If you fill in our interest form, we receive your name, your email address, the option you
           picked from the dropdown, and whatever you write in the message box. If you tick the
@@ -30,39 +38,71 @@ import PageHero from '../components/PageHero.astro';
           We do not run a scholarship application on this site. That form lives elsewhere and asks
           for financial information, and this site never receives it.
         </p>
+      </div>
+    </div>
+  </section>
 
-        <h2>Why we collect it</h2>
+  <section class="section--minor surface-panel">
+    <div class="wrap">
+      <div class="split prose">
+        <h2 class="reveal">Why we collect it</h2>
         <p>
           To reply to you, and to tell you when something happens that you asked to hear about.
           That's all we use it for.
         </p>
+      </div>
+    </div>
+  </section>
 
-        <h2>Who else sees it</h2>
+  <section class="section--minor surface-base">
+    <div class="wrap">
+      <div class="split prose">
+        <h2 class="reveal">Who else sees it</h2>
         <Placeholder
           note="form provider, hosting provider, and analytics, once chosen. Name them plainly."
         />
         <p>We do not sell or share your details.</p>
+      </div>
+    </div>
+  </section>
 
-        <h2>How long we keep it</h2>
+  <section class="section--minor surface-panel">
+    <div class="wrap">
+      <div class="split prose">
+        <h2 class="reveal">How long we keep it</h2>
         <Placeholder note="retention period" />
+      </div>
+    </div>
+  </section>
 
-        <h2>Asking us to delete it</h2>
-        <p>
-          Email us and we'll remove you. You don't have to give a reason.
-        </p>
+  <section class="section--minor surface-base">
+    <div class="wrap">
+      <div class="split prose">
+        <h2 class="reveal">Asking us to delete it</h2>
+        <p>Email us and we'll remove you. You don't have to give a reason.</p>
         <Placeholder note="contact email for privacy requests" />
+      </div>
+    </div>
+  </section>
 
-        <h2>Children</h2>
+  <section class="section--minor surface-panel">
+    <div class="wrap">
+      <div class="split prose">
+        <h2 class="reveal">Children</h2>
         <p>
           Students under 18 are welcome to contact us through the form. We ask for no more than a
           name and an email address, and we don't knowingly collect anything else about a minor on
           this site.
         </p>
-
-        <Placeholder
-          note="full privacy policy, reviewed by Joe and counsel if needed, replaces this stub before launch"
-        />
       </div>
+    </div>
+  </section>
+
+  <section class="section surface-base">
+    <div class="wrap">
+      <Placeholder
+        note="full privacy policy, reviewed by Joe and counsel if needed, replaces this stub before launch"
+      />
     </div>
   </section>
 </BaseLayout>
@@ -75,5 +115,7 @@ import PageHero from '../components/PageHero.astro';
     flex-wrap: wrap;
     font-size: var(--text-sm);
     font-style: italic;
+    color: var(--fg-quiet);
+    margin: 0;
   }
 </style>

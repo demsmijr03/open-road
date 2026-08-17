@@ -26,14 +26,20 @@ await page.goto(`${BASE}/`, { waitUntil: 'networkidle2', timeout: 60_000 });
 // load. ClientRouter does a soft (History API) navigation, which
 // page.waitForNavigation() does not reliably observe, so wait on the router's
 // own completion signal instead: the next astro:page-load event.
-await page.evaluate(() => {
-  window.__navigated = new Promise((resolve) => {
-    document.addEventListener('astro:page-load', resolve, { once: true });
-  });
-});
 await page.click('a[href="/award/"]');
-await page.evaluate(() => window.__navigated);
-await new Promise((r) => setTimeout(r, 100)); // let the observer's own handler run
+
+// Wait on the observable outcome, not on a promise handle. An earlier version
+// stashed a promise on `window` and awaited it after the click, but a soft
+// navigation can replace the execution context, in which case the handle reads
+// as undefined and the await resolves instantly, checking the page before it
+// had arrived. That produced a failure on a navigation that actually worked.
+await page.waitForFunction(() => location.pathname.startsWith('/award'), { timeout: 15_000 });
+await page.waitForFunction(
+  () =>
+    document.documentElement.classList.contains('js-reveal') &&
+    document.querySelectorAll('.reveal.is-visible').length > 0,
+  { timeout: 15_000 }
+);
 
 const result = await page.evaluate(() => ({
   onAwardPage: location.pathname.startsWith('/award'),

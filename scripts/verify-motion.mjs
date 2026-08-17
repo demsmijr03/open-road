@@ -14,7 +14,7 @@
 import puppeteer from 'puppeteer';
 
 const BASE = process.argv[2] ?? 'http://localhost:4321';
-const PAGES = ['/', '/award/', '/about/', '/get-involved/'];
+const PAGES = ['/', '/award/', '/about/', '/get-involved/', '/privacy/', '/404'];
 
 const browser = await puppeteer.launch({ headless: true });
 let failures = 0;

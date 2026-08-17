@@ -7,6 +7,7 @@ import Placeholder from '../components/Placeholder.astro';
 import CtaBand from '../components/CtaBand.astro';
 import PageHero from '../components/PageHero.astro';
 import Logo from '../components/Logo.astro';
+import DistanceStat from '../components/DistanceStat.astro';
 import townPhoto from '../assets/westchester.jpg';
 
 /**
@@ -126,6 +127,49 @@ const board = [
     </div>
   </section>
 
+  <!-- The wider case, moved off the home page. Three statistics stacked at the
+       top of a donation funnel work against it; here, a reader who wants the
+       context has come looking for it. The home page keeps the local fact. -->
+  <section class="section surface-panel">
+    <div class="wrap">
+      <div class="split">
+        <h2 class="reveal">It isn't only here.</h2>
+
+        <div class="context-stats">
+          <div class="reveal">
+            <DistanceStat
+              scale="inline"
+              scope="Nationally"
+              figure="35%"
+              source="National College Attainment Network, September 2025."
+            >
+              <p>
+                Only about a third of public four-year colleges are affordable to a student from a
+                low-income family. For families in the lowest income quarter, the price after aid
+                eats close to 90% of what they earn in a year.
+              </p>
+            </DistanceStat>
+          </div>
+
+          <div class="reveal" style="--reveal-delay:120ms">
+            <DistanceStat
+              scale="inline"
+              scope="In Pennsylvania"
+              figure="29%"
+              source="Education Data Initiative, 2025–26."
+            >
+              <p>
+                Pennsylvania's in-state tuition at public four-year universities runs 29% above the
+                national average, at $17,909 a year. Staying close to home is not the discount
+                people assume it is.
+              </p>
+            </DistanceStat>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- The question. The site's argument, so it gets the dark band and the mark
        at a size where the prism resolves. -->
   <section class="section--major surface-deep" id="the-question">
@@ -225,6 +269,25 @@ const board = [
 </BaseLayout>
 
 <style>
+  /* Two facts side by side on a wide screen, stacked below. They sit in the
+     .split right column, which caps at --width-text, so the pair needs the cap
+     lifted to breathe. */
+  .split > .context-stats {
+    max-inline-size: none;
+  }
+
+  .context-stats {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 52rem) {
+    .context-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
   /* A pull quote, not a heading: it is the sentence the page turns on, so it
      gets display size without taking a level in the outline. */
   .pull {

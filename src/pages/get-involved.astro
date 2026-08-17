@@ -48,7 +48,7 @@ const tiers = [
  */
 const milestones = [
   {
-    when: 'September 1',
+    when: 'September',
     what: 'Fundraising begins',
     detail:
       'The fund opens for the year. From this point every gift goes toward the first award.',
@@ -72,7 +72,7 @@ const milestones = [
       'A day at a local shop, with the community invited to come by and give. The last push before the award is decided.',
   },
   {
-    when: 'April 1',
+    when: 'April',
     what: 'First round of scholarships',
     detail:
       'The district committee and the founders read together, and the first award is made.',
@@ -248,7 +248,7 @@ const donorFaqs = [
 
   <section class="section surface-panel">
     <div class="wrap">
-      <div class="measure-wide">
+      <div class="split faq-split">
         <h2 class="faq-title reveal">Questions from donors</h2>
         <Faq items={donorFaqs} />
       </div>
@@ -265,6 +265,14 @@ const donorFaqs = [
 </BaseLayout>
 
 <style>
+  .faq-split > :not(h2, h3) {
+    max-inline-size: none;
+  }
+
+  .faq-title {
+    margin-block: 0;
+  }
+
   /* --- ways to help ---------------------------------------------------- */
 
   .ways-title {

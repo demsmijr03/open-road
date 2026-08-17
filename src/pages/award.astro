@@ -37,7 +37,7 @@ const faqs = [
 ---
 
 <BaseLayout
-  title="The award | The Open Road Foundation"
+  title="For students | The Open Road Foundation"
   description="Who can apply, what it covers, and how we choose. One award, for a West Chester Area School District student."
 >
   <!-- The page opens on what the foundation does, not on the word "award".
@@ -98,7 +98,7 @@ const faqs = [
         </p>
       </div>
 
-      <div class="measure-wide prose follows">
+      <div class="split prose follows">
         <h3>It follows you wherever you go</h3>
         <p>
           In state or out of state. Public or private. A four-year school, a two-year school, or a
@@ -125,7 +125,7 @@ const faqs = [
           held back from it by money alone.
         </p>
         <p>
-          Fundraising opens September 1. The first award is made by April 1. We'll email you the
+          Fundraising opens in September. The first award is made in April. We'll email you the
           application dates the moment they're set.
         </p>
       </div>
@@ -134,7 +134,7 @@ const faqs = [
 
   <section class="section surface-base" id="questions">
     <div class="wrap">
-      <div class="measure-wide">
+      <div class="split faq-split">
         <h2 class="faq-title reveal">Questions</h2>
         <Faq items={faqs} />
       </div>
@@ -148,6 +148,16 @@ const faqs = [
 </BaseLayout>
 
 <style>
+  /* The accordion fills its column: .split caps children at --width-text, which
+     squeezes FAQ rows that already wrap. */
+  .faq-split > :not(h2, h3) {
+    max-inline-size: none;
+  }
+
+  .faq-title {
+    margin-block: 0;
+  }
+
   .qual-title {
     margin: 0 0 var(--space-l);
     font-size: clamp(1.75rem, 3.5vw, 2.25rem);

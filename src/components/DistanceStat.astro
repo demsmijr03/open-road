@@ -1,51 +1,51 @@
 ---
 /**
- * One of the three numbers on the home page.
+ * A single sourced fact, set at display size.
  *
- * content.md introduces this section as "Here's the problem, from three
- * distances", national, then state, then local. That is perspective used as
- * information design, so the component renders it that way: the further from
- * West Chester a fact is, the narrower and quieter it sits; the nearer it gets,
- * the wider and larger it becomes, until the local number fills the page.
+ * This used to carry a "distance" system: three stats on the home page, each
+ * scaled and coloured by how far from West Chester the fact was, so the reader
+ * walked in from a national horizon to their own district. That worked only
+ * while all three sat together.
  *
- * The reader walks in from the national horizon and arrives at their own
- * district at full size. The scale is the argument.
+ * The facts are now split up. The home page keeps the local one, because a
+ * statistic is a poor substitute for a person and one is enough at the top of a
+ * donation funnel; the national and state figures moved into the About page's
+ * narrative, where a reader who wants the wider case is already looking. With
+ * nothing left to compare against on either page, relative scaling would have
+ * read as arbitrary emphasis rather than as distance, so it is gone.
  *
- * Recession is carried by width, figure size, colour and dash weight, never
- * by opacity. Fading text is the easy way to suggest distance and it drags
- * body copy under the 4.5:1 contrast floor, which is not a trade worth making.
+ * What remains is one consistent treatment. `scale` adjusts presence for
+ * context, not for meaning.
  */
 interface Props {
-  /** 1 = furthest (national), 3 = nearest (local, here). */
-  distance: 1 | 2 | 3;
   scope: string;
   figure: string;
   source: string;
+  /** `lead` for a fact carrying a section on its own, `inline` inside prose. */
+  scale?: 'lead' | 'inline';
 }
 
-const { distance, scope, figure, source } = Astro.props;
+const { scope, figure, source, scale = 'lead' } = Astro.props;
 ---
 
-<article class="stat" data-distance={distance}>
-  <div class="stat-lead">
-    <div class="stat-head">
-      <span class="stat-scope">{scope}</span>
-      <span class="stat-rule" aria-hidden="true"></span>
-    </div>
-    <p class="stat-figure">{figure}</p>
+<article class="stat" data-scale={scale}>
+  <div class="stat-head">
+    <span class="stat-scope">{scope}</span>
+    <span class="stat-rule" aria-hidden="true"></span>
   </div>
 
-  <div class="stat-detail">
-    <div class="stat-body"><slot /></div>
-    <p class="stat-source">{source}</p>
-  </div>
+  <p class="stat-figure">{figure}</p>
+
+  <div class="stat-body"><slot /></div>
+  <p class="stat-source">{source}</p>
 </article>
 
 <style>
+  /* One column. The figure sits directly above the sentence explaining it,
+     which is what the old two-column split kept pulling apart. */
   .stat {
-    display: grid;
-    gap: var(--space-s);
-    max-inline-size: var(--block);
+    display: block;
+    max-inline-size: var(--stat-measure);
   }
 
   .stat-head {
@@ -67,28 +67,26 @@ const { distance, scope, figure, source } = Astro.props;
   .stat-rule {
     flex: 1;
     min-inline-size: 2rem;
-    /* A solid rule that thickens as the fact gets closer to home. The dashed
-       lane marking that used to do this said "road"; the weight says the same
-       thing about distance without the metaphor. */
-    block-size: var(--rule-weight);
+    block-size: 2px;
     border-radius: 2px;
-    background-color: color-mix(in srgb, var(--fg) 32%, transparent);
+    background-color: color-mix(in srgb, var(--fg) 28%, transparent);
   }
 
   .stat-figure {
     margin: 0;
     font-family: var(--font-display);
     font-weight: 600;
-    line-height: 0.9;
+    line-height: 0.95;
     letter-spacing: var(--tracking-display);
-    color: var(--fig-color);
-    font-size: var(--size);
+    color: var(--fg);
+    font-size: var(--stat-size);
   }
 
   .stat-body {
+    margin-block-start: var(--space-s);
     color: var(--fg-quiet);
     line-height: var(--leading-body);
-    font-size: var(--body-size);
+    font-size: var(--stat-body);
   }
 
   .stat-body :global(p) {
@@ -102,54 +100,18 @@ const { distance, scope, figure, source } = Astro.props;
     color: var(--fg-quiet);
   }
 
-  /* --- Perspective ---------------------------------------------------- */
-
-  .stat[data-distance='1'] {
-    --block: 44rem;
-    --size: clamp(2.5rem, 6vw, 3.25rem);
-    --body-size: var(--text-base);
-    --rule-weight: 1px;
-    --fig-color: var(--fg-quiet);
+  /* Carrying a section on its own. */
+  .stat[data-scale='lead'] {
+    --stat-measure: 34rem;
+    --stat-size: clamp(3.5rem, 9vw, 5rem);
+    --stat-body: var(--text-lg);
   }
 
-  .stat[data-distance='2'] {
-    --block: 56rem;
-    --size: clamp(3.25rem, 8vw, 4.5rem);
-    --body-size: var(--text-lg);
-    --rule-weight: 2px;
-    --fig-color: color-mix(in srgb, var(--fg) 80%, var(--fg-quiet));
-  }
-
-  .stat[data-distance='3'] {
-    --block: 100%;
-    --size: clamp(4rem, 11vw, 6.5rem);
-    --body-size: var(--text-xl);
-    --rule-weight: 3px;
-    --fig-color: var(--fg);
-  }
-
-  @media (min-width: 60rem) {
-    .stat {
-      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-      column-gap: var(--space-xl);
-      align-items: center;
-    }
-  }
-
-  /* Narrow screens: the width gradient does the work on its own, and a 6.5rem
-     figure beside a 2.5rem one at 390px reads as a bug rather than a gradient,
-     so the sizes pull closer together. */
-  @media (max-width: 60rem) {
-    .stat[data-distance='1'] {
-      --size: 2.75rem;
-      --block: 100%;
-    }
-    .stat[data-distance='2'] {
-      --size: 3.5rem;
-      --block: 100%;
-    }
-    .stat[data-distance='3'] {
-      --size: 4.5rem;
-    }
+  /* Sitting inside a run of prose, so it reads as part of the argument rather
+     than as an interruption. */
+  .stat[data-scale='inline'] {
+    --stat-measure: 100%;
+    --stat-size: clamp(2.25rem, 5vw, 2.75rem);
+    --stat-body: var(--text-base);
   }
 </style>

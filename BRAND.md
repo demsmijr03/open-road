@@ -16,10 +16,11 @@ road metaphor is out of the token names too, because leaving `asphalt` and
 `concrete` in place would have kept the old idea alive in every file long after
 the logo changed.
 
-One rule still governs the layout, and it comes from the content itself. The
-home page introduces its three numbers as *"the problem, from three distances"*:
-
-> **Things nearer to home render larger and louder. Things further away recede.**
+The home page once carried three statistics scaled by distance, nearer reading
+larger, which encoded that idea in the layout. Those facts have since been split
+between two pages, so nothing is left to compare against and the scaling is
+gone. The idea now lives in the mark and the writing rather than in a grid. See
+"Statistics are standing in for a person" below.
 
 ## The mark: Prism
 
@@ -81,8 +82,9 @@ The tagline this replaced, *"Some roads are worth leaving home for,"* was not
 cut. It moved to the oversize statement lower on the page, which also removed
 a near-duplicate of the same line on the About page.
 
-The hero itself is a rounded, inset photograph with the header floating on it
-in white, styled after a reference the client supplied. That reference was
+The hero itself is a full-bleed photograph running to the top and both edges,
+with the header floating on it in white, styled after a reference the client
+supplied. That reference was
 React, framer-motion and shadcn; **none of it was adopted**, because this site
 ships zero JavaScript beyond Astro's own router. Every effect (the rotating
 word, the load-in, the scroll reveals) is native CSS plus a ~1KB observer. See
@@ -97,8 +99,8 @@ it**. It did four jobs, and each is now done by the plainest thing that works:
 a solid underline for the active nav item, a plain plus for the question toggle,
 a round bullet for list markers, a hairline for the timeline connector.
 
-The site already has three signatures stronger than a dash: the perspective
-scale on the three numbers, the surface system, and the type pairing. Restraint
+The site already has signatures stronger than a dash: the surface system, the
+type pairing, and the mark itself. Restraint
 is also the more expensive-looking choice. If a motif is wanted later it should
 come out of the mark, so it means something, rather than being added because
 removing the old one left a hole.
@@ -128,3 +130,24 @@ Run `npm run audit:holes` for the current count.
   of the question. Worth stating plainly: **an image, a caption and a quote from
   the first recipient is the single highest-value addition this site will ever
   get**, and it belongs on the home page the week that award is made.
+
+## Statistics are standing in for a person
+
+The home page carries exactly one fact, `1 in 8`, and it is there because the
+better option does not exist yet.
+
+The research is consistent: giving falls when a statistic is added to an
+appeal about an identifiable person, and response can drop further as the
+numbers grow (Small, Loewenstein & Slovic 2007; Slovic on compassion fade).
+Three figures stacked near the top of the page were working against the ask, so
+the national and state context moved into the About page's narrative, where a
+reader who wants the wider case has gone looking for it.
+
+`1 in 8` earns its place because it is local and counterintuitive: a district
+with a $137,133 median household income where one in eight students is
+economically disadvantaged. That is the fact that makes a West Chester donor
+stop.
+
+**When the first student is funded, their story leads the home page and this
+statistic becomes supporting.** That is the moment a number stops having to do
+a person's job.

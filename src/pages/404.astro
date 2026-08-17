@@ -10,21 +10,24 @@ import Logo from '../components/Logo.astro';
 >
   <section class="notfound surface-deep">
     <div class="wrap notfound-grid">
+      <!-- Load-in rather than scroll reveal: this page is one screen, so there
+           is nothing below the fold for an observer to trigger on. Without it,
+           arriving here from an animated page read as the site breaking. -->
       <div>
-        <span class="eyebrow">404</span>
-        <h1>Dead end.</h1>
-        <p class="notfound-body">
+        <span class="eyebrow rise" style="--rise-delay:80ms">404</span>
+        <h1 class="rise" style="--rise-delay:160ms">Dead end.</h1>
+        <p class="notfound-body rise" style="--rise-delay:280ms">
           That page doesn't exist, or it moved and we didn't put up a sign. Here's the way back.
         </p>
-        <ul class="notfound-links">
+        <ul class="notfound-links rise" style="--rise-delay:400ms">
           <li><a href="/">Home</a></li>
-          <li><a href="/award/">The award</a></li>
+          <li><a href="/award/">For students</a></li>
           <li><a href="/about/">About us</a></li>
           <li><a href="/get-involved/">Get involved</a></li>
         </ul>
       </div>
 
-      <div class="notfound-mark">
+      <div class="notfound-mark rise" style="--rise-delay:520ms">
         <Logo variant="mark" decorative />
       </div>
     </div>

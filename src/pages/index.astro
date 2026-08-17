@@ -55,57 +55,32 @@ import heroPhoto from '../assets/landingpage.png';
 
   </section>
 
-  <!-- Three numbers ----------------------------------------------------- -->
+  <!-- One fact, the local one --------------------------------------------
+       This was three stats stacked. Statistics dampen giving relative to an
+       identifiable person, and response can fall as numbers accumulate, so a
+       wall of figures this early was working against the page. The national and
+       state context moved to About, where a reader who wants the wider case is
+       already looking.
+
+       This is the one that stops a West Chester donor: an affluent district
+       where the need is real and invisible. When a student is funded, their
+       story leads here and this becomes supporting. -->
   <section class="section--major surface-base">
     <div class="wrap">
-      <header class="numbers-head">
-        <h2 class="reveal">Here's the problem, from three distances.</h2>
-      </header>
-
-      <div class="numbers">
-        <div class="reveal">
-        <DistanceStat
-          distance={1}
-          scope="Nationally"
-          figure="35%"
-          source="National College Attainment Network, September 2025."
-        >
-          <p>
-            Only about a third of public four-year colleges are affordable to a student from a
-            low-income family. For families in the lowest income quarter, the price after aid eats
-            close to 90% of what they earn in a year.
-          </p>
-        </DistanceStat>
-        </div>
-
-        <div class="reveal" style="--reveal-delay:128ms">
-        <DistanceStat
-          distance={2}
-          scope="In Pennsylvania"
-          figure="29%"
-          source="Education Data Initiative, 2025–26."
-        >
-          <p>
-            Pennsylvania's in-state tuition at public four-year universities runs 29% above the
-            national average, at $17,909 a year. Staying close to home is not the discount people
-            assume it is.
-          </p>
-        </DistanceStat>
-        </div>
-
-        <div class="reveal" style="--reveal-delay:256ms">
-        <DistanceStat
-          distance={3}
-          scope="Here, in this district"
-          figure="1 in 8"
-          source="U.S. Census ACS 2024; NCES Common Core of Data, 2024–25."
-        >
-          <p>
-            Median household income in the West Chester Area School District is $137,133. That is
-            exactly why the need here goes unseen. About one in eight of the district's 12,042
-            students is economically disadvantaged.
-          </p>
-        </DistanceStat>
+      <div class="split">
+        <h2 class="reveal">The need here is easy to miss.</h2>
+        <div class="reveal" style="--reveal-delay:120ms">
+          <DistanceStat
+            scope="Here, in this district"
+            figure="1 in 8"
+            source="U.S. Census ACS 2024; NCES Common Core of Data, 2024–25."
+          >
+            <p>
+              Median household income in the West Chester Area School District is $137,133. That is
+              exactly why the need goes unseen. About one in eight of the district's 12,042 students
+              is economically disadvantaged.
+            </p>
+          </DistanceStat>
         </div>
       </div>
     </div>
@@ -275,41 +250,5 @@ import heroPhoto from '../assets/landingpage.png';
     flex-wrap: wrap;
     gap: var(--space-s);
     margin-block-start: var(--space-l);
-  }
-
-
-  .numbers-head {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-m);
-    margin-block-end: var(--space-xl);
-  }
-
-  .numbers-head h2 {
-    margin: 0;
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    white-space: nowrap;
-  }
-
-
-  /* The three sit in a column, not a row. A row would make them equal, and the
-     whole point is that they are at different distances. The reader travels
-     from the national horizon down to their own district. */
-  .numbers {
-    display: flex;
-    flex-direction: column;
-    gap: var(--pad-minor);
-  }
-
-  @media (max-width: 60rem) {
-    .numbers-head {
-      flex-direction: column;
-      align-items: stretch;
-      gap: var(--space-s);
-    }
-
-    .numbers-head h2 {
-      white-space: normal;
-    }
   }
 </style>

@@ -123,13 +123,29 @@
     align-items: start;
   }
 
-  .split > h2 {
+  /* h3 as well as h2: a sub-block inside a section needs the same spine, and
+     without this it fell back to a bare width cap and drifted off the grid.
+
+     The explicit font-size matters more than it looks. Tailwind's preflight
+     resets every heading to `font-size: inherit`, so a heading only gets a size
+     from an explicit rule. Until now that came from `.prose h2`, which meant a
+     `.split` without `.prose` rendered its heading at body size. The spine
+     carries its own scale instead of depending on a sibling class. */
+  .split > :is(h2, h3) {
     grid-column: 1;
     grid-row: 1 / -1;
     margin-block: 0;
   }
 
-  .split > :not(h2) {
+  .split > h2 {
+    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+  }
+
+  .split > h3 {
+    font-size: var(--text-xl);
+  }
+
+  .split > :not(h2, h3) {
     grid-column: 2;
     max-inline-size: var(--width-text);
   }
@@ -146,12 +162,12 @@
       row-gap: var(--space-s);
     }
 
-    .split > h2 {
+    .split > :is(h2, h3) {
       grid-column: 1;
       grid-row: auto;
     }
 
-    .split > :not(h2) {
+    .split > :not(h2, h3) {
       grid-column: 1;
     }
   }
