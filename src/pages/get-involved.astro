@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import givingPhoto from '../assets/community-giving.jpg';
+import lectureHall from '../assets/lecture-hall.jpg';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
 import Placeholder from '../components/Placeholder.astro';
@@ -133,15 +133,16 @@ const donorFaqs = [
     </div>
   </section>
 
-  <!-- Deliberately not captioned as one of our events, because it is not one.
-       It is a stock photograph of people giving, standing in until there is a
-       photograph of this fund's own first fundraiser to replace it. The alt
-       text describes what is in the frame and claims nothing else. -->
+  <!-- No people in frame, on purpose. The previous photograph showed a queue
+       of strangers at someone else's fundraiser, which put faces on a page
+       asking for money toward an event that has not happened yet. An empty
+       numbered lecture hall says the same thing without borrowing anyone: a
+       seat, and the money it takes to sit in it. -->
   <figure class="giving-band reveal">
     <div class="giving-media">
       <Image
-        src={givingPhoto}
-        alt="People waiting in line at an indoor event beside a table holding two woven collection baskets, one person reaching in to place something inside."
+        src={lectureHall}
+        alt="An empty university lecture hall, rows of numbered wooden fold-down seats rising toward an arched window."
         widths={[768, 1280, 1600]}
         sizes="100vw"
         loading="lazy"
@@ -534,10 +535,8 @@ const donorFaqs = [
     }
   }
 
-  /* A tall source in a wide band, so the crop is severe by design: it holds the
-     baskets and the hands at the table and drops most of the room. Taking the
-     upper-middle slice keeps the queue in frame without turning it into a row
-     of portraits, which is the read this page should not have. */
+  /* A wide slice through the middle of the room, which keeps the arched window
+     and the far rows in frame and drops the empty ceiling. */
   .giving-band {
     margin: 0;
   }
@@ -553,14 +552,13 @@ const donorFaqs = [
     inline-size: 100%;
     block-size: 100%;
     object-fit: cover;
-    /* Tuned by rendering the band at four positions and looking. At 50%/62%
-       the frame filled with torsos and one face, which is the row-of-portraits
-       read this page should not have. This lands on the baskets, the table and
-       the reaching hand, and pushes every face above the top edge. */
-    object-position: 38% 74%;
-    /* The source runs cool and blue, which fights a warm apricot and deep teal
-       palette. Pulled back before the multiply layer lands on it. */
-    filter: saturate(0.55);
+    /* High in the frame. The near rows are in shadow and the light is all at
+       the back, so sitting lower filled the band with dark seat backs. */
+    object-position: 50% 34%;
+    /* Barely pulled back. The previous source ran cold and blue and needed
+       heavy correction; this one is warm wood and already sits in the
+       palette. */
+    filter: saturate(0.85);
   }
 
   .giving-media::before {
@@ -570,18 +568,17 @@ const donorFaqs = [
     z-index: 2;
     background-color: var(--color-deep);
     mix-blend-mode: multiply;
-    opacity: 0.3;
+    opacity: 0.16;
   }
 
-  /* Weighted to the bottom edge, which is doing a second job besides grounding
-     the band: a bin and a table leg sit in the lower left of this crop, and the
-     falloff buries them. */
+  /* Weighted to the bottom edge to ground the band against the panel section
+     below it. */
   .giving-media::after {
     content: '';
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(to bottom, rgb(31 78 74 / 0.24), rgb(31 78 74 / 0.06) 45%, rgb(31 78 74 / 0.62));
+    background: linear-gradient(to bottom, rgb(31 78 74 / 0.14), rgb(31 78 74 / 0.04) 50%, rgb(31 78 74 / 0.28));
   }
 
   @media (max-width: 48rem) {
