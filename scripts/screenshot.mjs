@@ -23,7 +23,7 @@ const url = process.argv[2] ?? 'http://localhost:4321';
 const label = process.argv[3] ?? '';
 
 if (url.startsWith('file://')) {
-  console.error('Refusing to screenshot a file:// URL — serve on localhost first (npm run dev).');
+  console.error('Refusing to screenshot a file:// URL. Serve on localhost first (npm run dev).');
   process.exit(1);
 }
 
@@ -47,7 +47,7 @@ try {
     try {
       await page.goto(url, { waitUntil: 'networkidle2', timeout: 60_000 });
     } catch {
-      console.error(`Could not load ${url} — is the dev server running? (npm run dev)`);
+      console.error(`Could not load ${url}. Is the dev server running? (npm run dev)`);
       process.exitCode = 1;
       break;
     }

@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import eastHigh from '../assets/wc-east-high-school.jpg';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
 import CtaBand from '../components/CtaBand.astro';
@@ -62,6 +64,26 @@ const faqs = [
       </p>
     </div>
   </PageHero>
+
+  <!-- The first eligibility line is "you go to a WCASD high school", so the
+       page shows one. A real building, not a stand-in: the photograph is of
+       East, from Wikimedia Commons, and the credit under it is a licence
+       condition rather than a courtesy. -->
+  <figure class="school-band reveal">
+    <div class="school-media">
+      <Image
+        src={eastHigh}
+        alt="West Chester East High School, its name spelled in metal letters across the entrance canopy, seen from the parking lot on a clear day."
+        widths={[768, 1280, 1920]}
+        sizes="100vw"
+        loading="lazy"
+      />
+    </div>
+    <figcaption class="school-credit">
+      West Chester East High School. Photo by RowEpict,
+      <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="license noopener noreferrer" target="_blank">CC BY-SA 3.0</a>.
+    </figcaption>
+  </figure>
 
   <section class="section surface-panel">
     <div class="wrap">
@@ -284,4 +306,68 @@ const faqs = [
     letter-spacing: var(--tracking-h2);
   }
 
+
+  /* Full-bleed band. The source is a 4:3 snapshot with a light pole rising
+     through the middle and a parking lot across the bottom third, so the crop
+     takes a wide slice from the upper half: the facade and the lettering
+     survive, the asphalt does not. */
+  .school-band {
+    margin: 0;
+  }
+
+  .school-media {
+    position: relative;
+    isolation: isolate;
+    aspect-ratio: 21 / 9;
+    overflow: hidden;
+  }
+
+  .school-media :global(img) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    object-position: 50% 38%;
+  }
+
+  /* Colour treatment, per the house rules: a multiply layer in the brand hue
+     so the photograph belongs to this palette rather than sitting in its own,
+     plus a gradient that grounds the bottom edge against the panel below. */
+  .school-media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(to bottom, rgb(31 78 74 / 0.18), rgb(31 78 74 / 0.05) 45%, rgb(31 78 74 / 0.3));
+  }
+
+  .school-media::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background-color: var(--color-deep);
+    mix-blend-mode: multiply;
+    opacity: 0.14;
+  }
+
+  .school-credit {
+    inline-size: min(100% - (var(--gutter) * 2), var(--width-page));
+    margin-inline: auto;
+    padding-block: var(--space-2xs);
+    font-size: var(--text-xs);
+    color: var(--fg-quiet);
+  }
+
+  .school-credit a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  @media (max-width: 48rem) {
+    .school-media {
+      aspect-ratio: 16 / 10;
+    }
+  }
 </style>

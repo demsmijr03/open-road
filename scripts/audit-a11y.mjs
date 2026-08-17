@@ -1,5 +1,5 @@
 /**
- * Accessibility audit — WCAG 2.2 A/AA across every page, at mobile and desktop.
+ * Accessibility audit: WCAG 2.2 A/AA across every page, at mobile and desktop.
  *
  *   npm run dev
  *   node scripts/audit-a11y.mjs
@@ -7,7 +7,7 @@
  * Drives axe-core through Puppeteer rather than @axe-core/cli, which needs a
  * separate chromedriver; Puppeteer is already here for screenshots.
  *
- * Both widths are checked because several rules are layout-dependent — target
+ * Both widths are checked because several rules are layout-dependent: target
  * size and reflow can pass at 1440 and fail at 390.
  *
  * Exits 1 on any violation.
@@ -37,7 +37,7 @@ try {
       try {
         await page.goto(`${BASE}${route}`, { waitUntil: 'networkidle2', timeout: 60_000 });
       } catch {
-        console.error(`  could not load ${route} — is the dev server running?`);
+        console.error(`  could not load ${route}. Is the dev server running?`);
         process.exitCode = 1;
         await page.close();
         continue;
@@ -86,7 +86,7 @@ try {
       } else {
         console.log(`FAIL  ${label}`);
         for (const v of violations) {
-          console.log(`      [${v.impact}] ${v.id} — ${v.help}`);
+          console.log(`      [${v.impact}] ${v.id}: ${v.help}`);
           for (const node of v.nodes.slice(0, 3)) {
             console.log(`         ${node.target.join(' ')}`);
             const detail = node.failureSummary?.split('\n').filter(Boolean).slice(1, 3) ?? [];

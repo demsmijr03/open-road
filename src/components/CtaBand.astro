@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import campusDusk from '../assets/campus-dusk.jpg';
 
 /**
  * The closing band. Every page ends on one, always on the deep surface, so the site has
@@ -13,6 +15,14 @@ const { heading } = Astro.props;
 ---
 
 <section class="cta surface-deep">
+  <!-- Decorative, hence the empty alt: the band's argument is made in the
+       heading, and a screen reader gains nothing from a description of a
+       building at dusk. It is a college somewhere else, which is the whole
+       point of the fund, and deliberately not a road. -->
+  <div class="cta-media" aria-hidden="true">
+    <Image src={campusDusk} alt="" widths={[768, 1280, 1920]} sizes="100vw" loading="lazy" />
+  </div>
+
   <div class="cta-inner">
     <h2 class="cta-heading">{heading}</h2>
     <div class="cta-body"><slot name="body" /></div>
@@ -22,7 +32,54 @@ const { heading } = Astro.props;
 
 <style>
   .cta {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     padding-block: var(--pad-major);
+  }
+
+  /* The scrim is heavy on purpose. This band carries white body copy and a
+     white-on-apricot button, and both have to hold their measured contrast over
+     whatever part of the photograph they land on, at every viewport. Treating
+     the image as texture under a near-solid deep ground is what makes that
+     true by construction rather than by luck. */
+  .cta-media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .cta-media :global(img) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    object-position: 50% 42%;
+    filter: saturate(0.6);
+  }
+
+  .cta-media::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* Positive z-index inside a negative-z parent: the parent forms a stacking
+       context, and a negative-z child there paints before the parent's in-flow
+       content, which would put the scrim underneath the photograph. */
+    z-index: 1;
+    background-color: var(--color-deep);
+    mix-blend-mode: multiply;
+  }
+
+  .cta-media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(
+      to right,
+      rgb(31 78 74 / 0.94),
+      rgb(31 78 74 / 0.88) 55%,
+      rgb(31 78 74 / 0.78)
+    );
   }
 
   .cta-inner {

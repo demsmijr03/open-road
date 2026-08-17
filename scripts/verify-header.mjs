@@ -1,0 +1,185 @@
+/**
+ * Scroll-condensing header guarantees.
+ *
+ *   npm run dev
+ *   node scripts/verify-header.mjs
+ *
+ * The header carries transition:persist and its script binds a scroll listener
+ * at module scope, which is the arrangement most likely to rot silently. These
+ * are the four ways it can break without anyone noticing:
+ *
+ *   1. JS off leaves the bar unusable. It must render expanded and complete.
+ *   2. The bar unpins and scrolls away, which makes condensing pointless.
+ *   3. A client-side navigation arrives at the top still carrying is-condensed,
+ *      because the persisted element kept the previous page's class.
+ *   4. Anchor targets land underneath the pinned bar.
+ *
+ * Exits 1 on any failure.
+ */
+import puppeteer from 'puppeteer';
+
+const BASE = process.argv[2] ?? 'http://localhost:4321';
+const DESKTOP = { width: 1440, height: 900 };
+
+let failures = 0;
+const check = (ok, label, detail = '') => {
+  console.log(`${ok ? 'PASS' : 'FAIL'}  ${label}${detail ? `  (${detail})` : ''}`);
+  if (!ok) failures++;
+};
+
+const browser = await puppeteer.launch({ headless: true });
+
+try {
+  // --- 1. JS disabled: the bar is whole ------------------------------------
+  {
+    const page = await browser.newPage();
+    await page.setJavaScriptEnabled(false);
+    await page.setViewport(DESKTOP);
+    await page.goto(`${BASE}/award/`, { waitUntil: 'load', timeout: 60_000 });
+
+    const state = await page.evaluate(() => {
+      const header = document.querySelector('.header');
+      const links = [...document.querySelectorAll('.header-nav a')];
+      const visible = links.filter((a) => {
+        const r = a.getBoundingClientRect();
+        return r.width > 0 && r.height > 0 && getComputedStyle(a).visibility !== 'hidden';
+      });
+      return {
+        condensed: header?.classList.contains('is-condensed') ?? null,
+        total: links.length,
+        visible: visible.length,
+        headerH: Math.round(header?.getBoundingClientRect().height ?? 0),
+      };
+    });
+
+    check(state.condensed === false, 'JS off  header renders expanded', `is-condensed=${state.condensed}`);
+    check(
+      state.total > 0 && state.visible === state.total,
+      'JS off  every nav link is visible',
+      `${state.visible} of ${state.total}`
+    );
+    check(state.headerH > 40, 'JS off  header has real height', `${state.headerH}px`);
+    await page.close();
+  }
+
+  // --- 2. Condenses on scroll and stays pinned -----------------------------
+  for (const route of ['/', '/award/']) {
+    const page = await browser.newPage();
+    await page.setViewport(DESKTOP);
+    await page.goto(`${BASE}${route}`, { waitUntil: 'networkidle2', timeout: 60_000 });
+
+    const atRest = await page.evaluate(() => {
+      const h = document.querySelector('.header');
+      return { condensed: h.classList.contains('is-condensed'), h: Math.round(h.getBoundingClientRect().height) };
+    });
+
+    await page.evaluate(() => window.scrollTo(0, 1200));
+    await page.waitForFunction(() => document.querySelector('.header').classList.contains('is-condensed'), {
+      timeout: 4000,
+      polling: 100,
+    }).catch(() => {});
+
+    const scrolled = await page.evaluate(() => {
+      const h = document.querySelector('.header');
+      const r = h.getBoundingClientRect();
+      const cs = getComputedStyle(h);
+      return {
+        condensed: h.classList.contains('is-condensed'),
+        top: Math.round(r.top),
+        h: Math.round(r.height),
+        bg: cs.backgroundColor,
+      };
+    });
+
+    check(!atRest.condensed, `${route} not condensed at rest`);
+    check(scrolled.condensed, `${route} condenses after scrolling`);
+    check(Math.abs(scrolled.top) <= 1, `${route} stays pinned to the top`, `top=${scrolled.top}px`);
+    check(
+      scrolled.h < atRest.h,
+      `${route} is shorter once condensed`,
+      `${atRest.h}px to ${scrolled.h}px`
+    );
+    // A transparent bar over content would leave white labels on whatever
+    // scrolls beneath it.
+    const opaque = !/rgba\(0,\s*0,\s*0,\s*0\)|transparent/.test(scrolled.bg);
+    check(opaque, `${route} condensed bar has a background`, scrolled.bg);
+    await page.close();
+  }
+
+  // --- 3. Resyncs across a client-side navigation --------------------------
+  {
+    const page = await browser.newPage();
+    await page.setViewport(DESKTOP);
+    await page.goto(`${BASE}/`, { waitUntil: 'networkidle2', timeout: 60_000 });
+
+    // Scroll, condense, then navigate. The header element itself survives.
+    await page.evaluate(() => window.scrollTo(0, 1500));
+    await page.waitForFunction(() => document.querySelector('.header').classList.contains('is-condensed'), {
+      timeout: 4000,
+      polling: 100,
+    });
+
+    await page.evaluate(() => {
+      const link = [...document.querySelectorAll('.header-nav a')].find((a) =>
+        a.getAttribute('href')?.startsWith('/about')
+      );
+      link.click();
+    });
+    await page.waitForFunction(() => location.pathname.startsWith('/about'), {
+      timeout: 15_000,
+      polling: 100,
+    });
+    await new Promise((r) => setTimeout(r, 400));
+
+    const after = await page.evaluate(() => ({
+      condensed: document.querySelector('.header').classList.contains('is-condensed'),
+      y: Math.round(window.scrollY),
+    }));
+    check(
+      !after.condensed || after.y > 24,
+      'soft nav  condensed state resyncs on arrival',
+      `is-condensed=${after.condensed} at scrollY=${after.y}`
+    );
+
+    // Scroll again on the new page: the module-scope listener must still work
+    // and must not have been stacked into a broken state.
+    await page.evaluate(() => window.scrollTo(0, 1200));
+    await page.waitForFunction(() => document.querySelector('.header').classList.contains('is-condensed'), {
+      timeout: 4000,
+      polling: 100,
+    }).catch(() => {});
+    const stillWorks = await page.evaluate(() =>
+      document.querySelector('.header').classList.contains('is-condensed')
+    );
+    check(stillWorks, 'soft nav  still condenses on the page navigated to');
+    await page.close();
+  }
+
+  // --- 4. Anchor targets clear the pinned bar ------------------------------
+  {
+    const page = await browser.newPage();
+    await page.setViewport(DESKTOP);
+    await page.goto(`${BASE}/get-involved/#partner`, { waitUntil: 'networkidle2', timeout: 60_000 });
+    await new Promise((r) => setTimeout(r, 600));
+
+    const clearance = await page.evaluate(() => {
+      const target = document.querySelector('#partner');
+      const header = document.querySelector('.header');
+      const hb = header.getBoundingClientRect();
+      const tb = target.getBoundingClientRect();
+      const pinned = getComputedStyle(header).position;
+      return { gap: Math.round(tb.top - hb.bottom), pinned };
+    });
+    check(
+      clearance.gap >= 0,
+      'anchor target is not hidden behind the bar',
+      `gap=${clearance.gap}px, header ${clearance.pinned}`
+    );
+    await page.close();
+  }
+} finally {
+  await browser.close();
+}
+
+console.log(failures === 0 ? '\nHeader guarantees hold.' : `\n${failures} failure(s).`);
+if (failures > 0) process.exit(1);

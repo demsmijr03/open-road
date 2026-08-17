@@ -60,6 +60,18 @@
     inline-size: 100%;
     border-collapse: collapse;
   }
+
+  /* The header sticks at the top from 62rem up, so anything an in-page link
+     jumps to has to clear it or the heading lands underneath the bar. Applied
+     to every id rather than to the handful of anchors that exist today, so a
+     new one cannot be added without it. Also covers keyboard focus: a focused
+     element scrolled into view would otherwise sit behind the header, which is
+     WCAG 2.4.11. */
+  @media (min-width: 62rem) {
+    [id] {
+      scroll-margin-block-start: 6rem;
+    }
+  }
 }
 
 @layer components {

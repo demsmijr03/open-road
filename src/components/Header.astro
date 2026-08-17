@@ -62,6 +62,7 @@ const isCurrent = (href: string) =>
      one: see index.astro. */
   .header--overlay {
     position: absolute;
+    transition: background-color var(--duration) var(--ease-spring);
     /* Flush to the page edge, matching the full-bleed hero beneath it. The
        .header-inner already carries the gutter, so the bar's contents still
        line up with the hero copy. */
@@ -88,6 +89,53 @@ const isCurrent = (href: string) =>
 
   .header {
     border-block-end: var(--border-hairline) solid var(--rule);
+  }
+
+  /* ---------------------------------------------------------------------
+     STICKY AND CONDENSED
+
+     Only from 62rem up, and that limit is the whole reason this is safe. Below
+     it the bar wraps to two rows and stands about 110px tall; pinning that to
+     the top of an 844px phone would spend an eighth of the viewport on
+     navigation for the entire length of the page. On one row it costs a
+     fraction of that.
+
+     What animates is background-color and border-color, both paint-only. The
+     padding change is deliberately NOT transitioned: padding is a layout
+     property, and animating it would relayout the bar every frame against the
+     house rule that only transform and opacity are animated. The step is small
+     enough that it reads as the bar settling under the colour fade rather than
+     as a jump.
+     --------------------------------------------------------------------- */
+  @media (min-width: 62rem) {
+    .header:not(.header--overlay) {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 10;
+      transition:
+        background-color var(--duration) var(--ease-spring),
+        border-color var(--duration) var(--ease-spring);
+    }
+
+    /* Fixed rather than absolute, so it stays put once the hero scrolls away.
+       At rest it is still transparent over the photograph, so the page looks
+       exactly as it did. */
+    .header--overlay {
+      position: fixed;
+    }
+
+    .header.is-condensed .header-inner,
+    .header--overlay.is-condensed .header-inner {
+      padding-block: var(--space-2xs);
+    }
+
+    /* The overlay bar has no ground of its own. Once it is off the hero it
+       needs one, or white labels sit on whatever content happens to pass
+       underneath. */
+    .header--overlay.is-condensed {
+      background-color: var(--color-deep);
+      border-block-end-color: var(--rule);
+    }
   }
 
   .header-inner {
