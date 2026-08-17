@@ -48,7 +48,7 @@ const board = [
   {
     slug: 'niko-levin',
     name: 'Niko Levin',
-    role: 'VP, Community Outreach',
+    role: 'VP, Outreach',
     bio: 'Miami by way of West Chester East. Now an analyst at Accenture in Philadelphia, the closest of the five to home.',
   },
   {
@@ -241,7 +241,6 @@ const board = [
                       src={photo}
                       alt={`${person.name}, ${person.role}`}
                       width={480}
-                      height={480}
                       widths={[240, 480]}
                       sizes="(max-width: 60rem) 45vw, 15rem"
                     />
@@ -433,11 +432,20 @@ const board = [
      its content, which leaves the image's block-size: 100% resolving against an
      indefinite height, collapsing it to zero and rendering an empty square.
      Centring belongs to the empty state only, below. */
+  /* The square frame is cut here, not at build time. <Image> above
+     deliberately sets no `height`: forcing 480x480 made sharp centre-crop any
+     non-square source before the browser ever saw it, which took the top of
+     Jackson's head off and left this rule with no slack to work in. Four of
+     the five sources are already square, so this only bites on his.
+
+     15% rather than centre: it holds the whole head with air above it and
+     spends the difference on chest, which is the half of a headshot nobody
+     needs to see. */
   .board-portrait :global(img) {
     inline-size: 100%;
     block-size: 100%;
     object-fit: cover;
-    object-position: 50% 25%;
+    object-position: 50% 15%;
   }
 
   /* Only the empty state carries the dashed outline. Once a real photograph
