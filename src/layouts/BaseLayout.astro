@@ -55,11 +55,15 @@ const orgSchema = {
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    <!-- Icons are generated from public/favicon.svg by scripts/make-assets.mjs,
-         so they cannot drift from the mark. -->
+    <!-- Supplied by design as finished files, no longer rasterised from the SVG
+         at build time. favicon.svg is kept and matches them exactly, so a
+         browser preferring the vector does not show a different mark from one
+         falling back to a PNG. -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180.png" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="The Open Road Foundation" />

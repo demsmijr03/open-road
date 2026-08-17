@@ -1,19 +1,25 @@
 ---
 /**
- * The Open Road Foundation mark: Prism.
+ * The Open Road Foundation mark: Sightline.
  *
- * One line goes in, three come out. A single student, and the wider range of
- * what they can see afterwards. That is the whole idea, and it is why this
- * replaced the previous drawing of a road running into a mortarboard: the name
- * already carries the road, every other Open Road organisation leans on it, and
- * the campus was never what the foundation is about.
+ * A disc cut by a slot that opens toward the right. Two filled paths and
+ * nothing else. It replaced the Prism mark, whose three diverging rays turned
+ * to mud below about 24px and needed a separate hand-reduced favicon to survive
+ * at all.
  *
- * The bar is the one apricot element. Apricot is graphic-only everywhere on the
- * site (2.34:1 on white, 3.99:1 on the deep band), which is exactly what a
- * stroke in a mark is.
+ * Three rules from the design handoff, none of which bend:
+ *
+ *   - No ids, masks or clipPaths. An earlier version used ids and they collided
+ *     when two copies of the mark rendered on one page.
+ *   - The path data is never edited. The slot is deliberately not level and
+ *     opens to the right; levelling or reversing it is not a simplification.
+ *   - Both halves are tokens, never hex. The upper half is always apricot. The
+ *     lower half is currentColor, which resolves through the surface tokens to
+ *     white inside a deep band and to deep teal on a light one, which is
+ *     exactly the two treatments the handoff specifies for the two grounds.
  *
  * Variants:
- *   mark: the prism alone. Survives 16px once the outer rays drop away.
+ *   mark: the disc alone.
  *   full: mark plus the wordmark lockup.
  */
 interface Props {
@@ -32,14 +38,15 @@ const a11y = decorative
 {
   variant === 'full' ? (
     <span class={`logo-lockup ${className}`}>
-      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <path d="M5 24 L16.4 24" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" />
-        <path d="M18.5 11 L18.5 37" stroke="var(--color-accent)" stroke-width="3.6" stroke-linecap="round" />
-        <g stroke="currentColor" stroke-linecap="round" stroke-width="2.5">
-          <path d="M21 24 L43 13.5" opacity="0.42" />
-          <path d="M21 24 L44 24" opacity="0.72" />
-          <path d="M21 24 L43 34.5" opacity="0.42" />
-        </g>
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <path
+          d="M5.1850 21.3552 L42.4975 19.6592 A19 19 0 0 0 5.1850 21.3552 Z"
+          fill="var(--color-accent)"
+        />
+        <path
+          d="M5.1850 26.6448 L42.4975 28.3408 A19 19 0 0 1 5.1850 26.6448 Z"
+          fill="currentColor"
+        />
       </svg>
       <span class="logo-words">
         <span class="logo-name">Open Road</span>
@@ -47,18 +54,15 @@ const a11y = decorative
       </span>
     </span>
   ) : (
-    <svg class={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" {...a11y}>
-      {/* The line going in */}
-      <path d="M5 24 L16.4 24" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" />
-      {/* The prism itself */}
-      <path d="M18.5 11 L18.5 37" stroke="var(--color-accent)" stroke-width="3.6" stroke-linecap="round" />
-      {/* Three coming out. The outer two carry less weight so the mark reads as
-          one thing rather than as a starburst. */}
-      <g stroke="currentColor" stroke-linecap="round" stroke-width="2.5">
-        <path d="M21 24 L43 13.5" opacity="0.42" />
-        <path d="M21 24 L44 24" opacity="0.72" />
-        <path d="M21 24 L43 34.5" opacity="0.42" />
-      </g>
+    <svg class={className} viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" {...a11y}>
+      <path
+        d="M5.1850 21.3552 L42.4975 19.6592 A19 19 0 0 0 5.1850 21.3552 Z"
+        fill="var(--color-accent)"
+      />
+      <path
+        d="M5.1850 26.6448 L42.4975 28.3408 A19 19 0 0 1 5.1850 26.6448 Z"
+        fill="currentColor"
+      />
     </svg>
   )
 }

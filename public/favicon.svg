@@ -1,16 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
   <!--
-    Favicon: a hard reduction of the prism.
+    Sightline, monochrome. Matches the supplied favicon-16/32 and
+    apple-touch-icon-180 exactly: both halves deep teal on a transparent ground,
+    rather than the amber-over-white the header uses on its dark band. A browser
+    that prefers the SVG icon must not show a different mark from one that falls
+    back to the PNGs.
 
-    Three diverging rays turn to mud at 16px, so only the widest survives
-    alongside the entry line and the bar. What remains still says one in, more
-    out, which is the whole point of the mark.
+    The path data is the same as src/components/Logo.astro and is never edited.
   -->
-  <rect width="48" height="48" rx="11" fill="#1f4e4a" />
-  <path d="M7 24 L17 24" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" />
-  <path d="M20 12 L20 36" stroke="#e09b4a" stroke-width="4.6" stroke-linecap="round" />
-  <g stroke="#ffffff" stroke-linecap="round" stroke-width="3.2">
-    <path d="M23 24 L41 15" opacity="0.55" />
-    <path d="M23 24 L41 33" opacity="0.55" />
-  </g>
+  <path d="M5.1850 21.3552 L42.4975 19.6592 A19 19 0 0 0 5.1850 21.3552 Z" fill="#1f4e4a" />
+  <path d="M5.1850 26.6448 L42.4975 28.3408 A19 19 0 0 1 5.1850 26.6448 Z" fill="#1f4e4a" />
 </svg>

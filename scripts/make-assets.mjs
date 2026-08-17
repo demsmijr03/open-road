@@ -7,13 +7,11 @@
  *
  * Writes:
  *   public/og-default.png       1200x630 link-preview card, from /og-card
- *   public/apple-touch-icon.png 180x180, from public/favicon.svg
- *   public/favicon-32.png       32x32 fallback for browsers without SVG icons
  *
- * Re-run after any change to the palette, wordmark or mark.
+ * Re-run after any change to the palette, wordmark or mark. The favicons are
+ * supplied by design and are not generated here.
  */
 import puppeteer from 'puppeteer';
-import { readFile, writeFile } from 'node:fs/promises';
 
 const BASE = process.argv[2] ?? 'http://localhost:4321';
 const browser = await puppeteer.launch({ headless: true });
@@ -29,23 +27,11 @@ try {
   console.log('✔ public/og-default.png        1200x630');
   await og.close();
 
-  // --- Icons, rasterised from the same SVG the site serves -------------
-  const svg = await readFile('public/favicon.svg', 'utf8');
-  const svgUrl = `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
-
-  for (const [file, size] of [
-    ['public/apple-touch-icon.png', 180],
-    ['public/favicon-32.png', 32],
-  ]) {
-    const page = await browser.newPage();
-    await page.setViewport({ width: size, height: size });
-    await page.setContent(
-      `<body style="margin:0"><img src="${svgUrl}" width="${size}" height="${size}"></body>`
-    );
-    await page.screenshot({ path: file, omitBackground: true });
-    console.log(`✔ ${file.padEnd(29)} ${size}x${size}`);
-    await page.close();
-  }
+  // Icons are NOT generated here any more. favicon.ico, favicon-16.png,
+  // favicon-32.png and apple-touch-icon-180.png are finished files supplied by
+  // design and committed as-is. This script used to rasterise apple-touch-icon
+  // and favicon-32 from public/favicon.svg, which would now quietly overwrite
+  // two of them with a re-render every time it ran.
 } finally {
   await browser.close();
 }
