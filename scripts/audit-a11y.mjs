@@ -19,7 +19,7 @@ const require = createRequire(import.meta.url);
 const axePath = require.resolve('axe-core/axe.min.js');
 
 const BASE = process.argv[2] ?? 'http://localhost:4321';
-const PAGES = ['/', '/award/', '/about/', '/get-involved/', '/privacy/', '/404', '/explore/'];
+const PAGES = ['/', '/award/', '/about/', '/get-involved/', '/privacy/', '/404', '/explore/', '/review/'];
 const VIEWPORTS = [
   { name: 'mobile', width: 390, height: 844 },
   { name: 'desktop', width: 1440, height: 900 },
@@ -57,6 +57,13 @@ try {
           animation-delay: 0s !important;
           transition-duration: 0s !important;
           transition-delay: 0s !important;
+        }
+        /* Zeroing the duration does not retarget a transition already in
+           flight, so an element could still be measured at opacity 0.97 and
+           report a blended colour. Pin the end state outright. */
+        .reveal, .rise, .stagger > * {
+          opacity: 1 !important;
+          transform: none !important;
         }`,
       });
       await page.evaluate(() => {

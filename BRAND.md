@@ -52,7 +52,10 @@ and white on an apricot button is 2.34:1 as well.
 This is the second palette where the loud colour could not carry text, so this
 time all three safe variants ship with it rather than being discovered later:
 
-- `--color-accent-strong` `#a9631c`, 4.68:1 on white, for links and accented text
+- `--color-accent-strong` `#8f5312`, 6.15:1 on white and 5.50:1 on panel, for links
+  and accented text. The earlier `#a9631c` cleared white by 0.18 and failed the
+  panel surface outright at 4.18:1, which nothing caught because the cards that
+  used it happened to sit on white.
 - `--color-accent-soft` `#f0b978`, 5.30:1 on deep, for accented text in a dark band
 - `--color-on-accent` `#12302e`, 6.02:1, for labels sitting on an apricot fill
 

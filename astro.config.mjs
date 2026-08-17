@@ -12,7 +12,10 @@ export default defineConfig({
   // /og-card is an asset source for scripts/make-assets.mjs and /explore is a
   // temporary design comparison. Neither is a page of the site.
   integrations: [
-    sitemap({ filter: (page) => !page.includes('/og-card') && !page.includes('/explore') }),
+    sitemap({
+      filter: (page) =>
+        !page.includes('/og-card') && !page.includes('/explore') && !page.includes('/review'),
+    }),
   ],
 
   vite: {

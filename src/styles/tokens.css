@@ -38,7 +38,7 @@
      is the same trap the previous amber fell into, so all three safe variants
      are declared here rather than improvised per component:
 
-       --color-accent-strong  4.68:1 on white   (links, accented text on light)
+       --color-accent-strong  6.15:1 on white, 5.50:1 on panel  (links, accented text)
        --color-accent-soft    5.30:1 on deep    (accented text in a dark band)
        --color-on-accent      6.02:1 on apricot (labels sitting on the fill)
      --------------------------------------------------------------------- */
@@ -49,7 +49,7 @@
   --color-surface: #ffffff; /* primary page surface */
   --color-panel: #eff3f1; /* second surface: alternating bands, cards */
   --color-accent: #e09b4a; /* apricot: the one loud colour */
-  --color-accent-strong: #a9631c; /* apricot that can carry text on white */
+  --color-accent-strong: #8f5312; /* apricot that can carry text (6.2:1 white, 5.5:1 panel) */
   --color-accent-soft: #f0b978; /* apricot that can carry text on deep */
   --color-on-accent: #12302e; /* label sitting on an apricot fill */
 
