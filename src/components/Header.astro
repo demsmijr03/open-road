@@ -129,6 +129,20 @@ const isCurrent = (href: string) =>
       padding-block: var(--space-2xs);
     }
 
+    /* The sticky bar sits IN FLOW, so shrinking it shortened the document and
+       yanked every following element up by exactly the padding it gave up. On
+       the first small scroll the whole page jumped 16px, which is what this
+       reads as in Chrome. The overlay bar on home is fixed, out of flow, and
+       never had the problem, which is why only the interior pages glitched.
+
+       Giving the difference back as bottom margin keeps the space the header
+       occupies constant while letting the visible bar shrink. Derived from the
+       two padding tokens rather than typed as 16px, so it cannot drift if
+       either one is retuned. */
+    .header:not(.header--overlay).is-condensed {
+      margin-block-end: calc((var(--space-s) - var(--space-2xs)) * 2);
+    }
+
     /* The overlay bar has no ground of its own. Once it is off the hero it
        needs one, or white labels sit on whatever content happens to pass
        underneath. */

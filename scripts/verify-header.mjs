@@ -155,6 +155,49 @@ try {
     await page.close();
   }
 
+  // --- 3b. Condensing must not move the page under the reader --------------
+  // The sticky bar is in flow, so shrinking it once shortened the document and
+  // pulled everything below up by the padding it gave up: a 16px jump on the
+  // first wheel notch. Driven with real wheel deltas because scrollTo sets an
+  // absolute position each call and hides the shift entirely.
+  for (const route of ['/', '/award/', '/about/', '/get-involved/']) {
+    const page = await browser.newPage();
+    await page.setViewport(DESKTOP);
+    await page.goto(`${BASE}${route}`, { waitUntil: 'networkidle2', timeout: 60_000 });
+    await page.evaluate(() => {
+      window.__log = [];
+      const h = document.querySelector('.header');
+      const probe = document.querySelector('main');
+      const tick = () => {
+        window.__log.push({
+          y: Math.round(window.scrollY),
+          top: Math.round(probe.getBoundingClientRect().top),
+          hh: Math.round(h.getBoundingClientRect().height),
+        });
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+    await page.mouse.move(700, 500);
+    for (let i = 0; i < 8; i++) {
+      await page.mouse.wheel({ deltaY: 12 });
+      await new Promise((r) => setTimeout(r, 90));
+    }
+    await new Promise((r) => setTimeout(r, 250));
+    const log = await page.evaluate(() => window.__log);
+
+    let worst = 0;
+    for (let i = 1; i < log.length; i++) {
+      // content should move up exactly as far as the page scrolls, no more
+      const unexplained = log[i].top - log[i - 1].top + (log[i].y - log[i - 1].y);
+      if (Math.abs(unexplained) > Math.abs(worst)) worst = unexplained;
+    }
+    const shrank = new Set(log.map((l) => l.hh)).size > 1;
+    check(Math.abs(worst) <= 2, `${route} content does not jump while condensing`, `worst=${worst}px`);
+    check(shrank, `${route} bar still changes height`, [...new Set(log.map((l) => l.hh))].join(' to '));
+    await page.close();
+  }
+
   // --- 4. Anchor targets clear the pinned bar ------------------------------
   {
     const page = await browser.newPage();
