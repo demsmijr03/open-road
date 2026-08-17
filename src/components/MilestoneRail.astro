@@ -54,6 +54,13 @@ const { items } = Astro.props;
     grid-template-columns: auto minmax(0, 1fr);
     gap: var(--space-m);
     padding-block: var(--space-m);
+
+    /*
+      Distance from an item's top edge to the centre of its dot: the item's own
+      top padding, the marker's margin, then half the marker. Everything about
+      where the connecting line begins and ends is measured from this.
+    */
+    --dot-centre: calc(var(--space-m) + 0.45rem + 6px);
   }
 
   /* A hairline connecting the markers. */
@@ -61,17 +68,27 @@ const { items } = Astro.props;
     content: '';
     position: absolute;
     inset-block: 0;
-    inset-inline-start: 5px;
+    /* Centred on the 12px marker rather than sitting half a pixel left of it. */
+    inset-inline-start: 5.5px;
     inline-size: 1px;
     background-color: var(--rule-strong);
   }
 
+  /*
+    The line runs dot to dot, with no tail past either end.
+
+    These were both 50%, which is half the *item's* height. The dot sits near an
+    item's top, not its middle, so on a tall row 50% landed well below the last
+    dot and left a stub hanging off the bottom of the rail. Measuring from
+    --dot-centre instead holds at any row height, including when a row grows on
+    hover to show its description.
+  */
   .rail-item:first-child::before {
-    inset-block-start: 50%;
+    inset-block-start: var(--dot-centre);
   }
 
   .rail-item:last-child::before {
-    inset-block-end: 50%;
+    inset-block-end: calc(100% - var(--dot-centre));
   }
 
   .rail-marker {
