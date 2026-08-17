@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import lectureHall from '../assets/lecture-hall.jpg';
+import lectureHall from '../assets/lecture-hall.png';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
 import Placeholder from '../components/Placeholder.astro';
@@ -133,16 +133,16 @@ const donorFaqs = [
     </div>
   </section>
 
-  <!-- No people in frame, on purpose. The previous photograph showed a queue
-       of strangers at someone else's fundraiser, which put faces on a page
-       asking for money toward an event that has not happened yet. An empty
-       numbered lecture hall says the same thing without borrowing anyone: a
-       seat, and the money it takes to sit in it. -->
+  <!-- No people in frame, on purpose. An earlier version showed a queue of
+       strangers at someone else's fundraiser, which put faces on a page asking
+       for money toward an event that has not happened yet. An empty room says
+       the same thing without borrowing anyone: a seat, and the money it takes
+       to sit in it. -->
   <figure class="giving-band reveal">
     <div class="giving-media">
       <Image
         src={lectureHall}
-        alt="An empty university lecture hall, rows of numbered wooden fold-down seats rising toward an arched window."
+        alt="An empty modern lecture hall with curved timber desks and upholstered seats rising in tiers, lit by a full-height glass wall looking onto trees."
         widths={[768, 1280, 1600]}
         sizes="100vw"
         loading="lazy"
@@ -552,13 +552,10 @@ const donorFaqs = [
     inline-size: 100%;
     block-size: 100%;
     object-fit: cover;
-    /* High in the frame. The near rows are in shadow and the light is all at
-       the back, so sitting lower filled the band with dark seat backs. */
-    object-position: 50% 34%;
-    /* Barely pulled back. The previous source ran cold and blue and needed
-       heavy correction; this one is warm wood and already sits in the
-       palette. */
-    filter: saturate(0.85);
+    /* Centred. The source is 2.24:1 against a 21:9 band, so this is very
+       nearly a straight fit and there is no crop worth biasing. */
+    object-position: 50% 50%;
+    filter: saturate(0.9);
   }
 
   .giving-media::before {
@@ -568,7 +565,7 @@ const donorFaqs = [
     z-index: 2;
     background-color: var(--color-deep);
     mix-blend-mode: multiply;
-    opacity: 0.16;
+    opacity: 0.1;
   }
 
   /* Weighted to the bottom edge to ground the band against the panel section
@@ -578,7 +575,7 @@ const donorFaqs = [
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(to bottom, rgb(31 78 74 / 0.14), rgb(31 78 74 / 0.04) 50%, rgb(31 78 74 / 0.28));
+    background: linear-gradient(to bottom, rgb(31 78 74 / 0.1), rgb(31 78 74 / 0.03) 50%, rgb(31 78 74 / 0.22));
   }
 
   @media (max-width: 48rem) {
