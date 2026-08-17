@@ -13,7 +13,9 @@
     "shot": "node scripts/screenshot.mjs",
     "audit:holes": "node scripts/audit-holes.mjs",
     "assets": "node scripts/make-assets.mjs",
-    "audit:a11y": "node scripts/audit-a11y.mjs"
+    "audit:a11y": "node scripts/audit-a11y.mjs",
+    "verify:motion": "node scripts/verify-motion.mjs",
+    "verify:transitions": "node scripts/verify-transitions.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

@@ -103,7 +103,7 @@ const board = [
   <section class="section surface-base">
     <div class="wrap">
       <div class="split prose">
-        <h2>Why we started this</h2>
+        <h2 class="reveal">Why we started this</h2>
         <p>
           The five of us grew up here, and we all left for school. Not because we didn't love where
           we came from, but because there are small things you take for granted that you only recognize
@@ -132,7 +132,7 @@ const board = [
     <div class="wrap question-grid">
       <div class="question-copy">
         <span class="eyebrow">The question we get most</span>
-        <h2>Why fund a student to leave, when they might not come back?</h2>
+        <h2 class="reveal">Why fund a student to leave, when they might not come back?</h2>
         <div class="prose question-prose">
           <p>
             It's the first thing people ask. Here's our answer: they come back with more than they
@@ -156,7 +156,7 @@ const board = [
   <section class="section surface-panel">
     <div class="wrap">
       <div class="measure-wide">
-        <h2 class="mission-title">Our mission</h2>
+        <h2 class="mission-title reveal">Our mission</h2>
         <blockquote class="mission">
           The Open Road Foundation exists to uplift Philadelphia Area students pursuing a college
           degree through financial support and mentorship, offering greater educational
@@ -175,7 +175,7 @@ const board = [
   <section class="section surface-base">
     <div class="wrap">
       <div class="split prose">
-        <h2>Who's accountable</h2>
+        <h2 class="reveal">Who's accountable</h2>
         <p>
           Five people, named, with our roles. If something on this site is wrong, one of us answers
           for it, and you can write to any of us directly.
@@ -184,10 +184,10 @@ const board = [
 
       <ul class="board">
         {
-          board.map((person) => {
+          board.map((person, i) => {
             const photo = photoFor(person.slug);
             return (
-              <li class="board-member">
+              <li class="board-member reveal" style={`--reveal-delay:${i * 60}ms`}>
                 <div class="board-portrait">
                   {photo ? (
                     <Image

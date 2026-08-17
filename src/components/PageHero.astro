@@ -18,16 +18,19 @@ const { heading, lede } = Astro.props;
 const hasAside = Astro.slots.has('aside');
 ---
 
+<!-- Load-in only, no scroll observer: this is the first thing on the page, so
+     it is already on screen the moment the page paints. Pure CSS, per
+     motion.css, so it runs with JavaScript off. -->
 <section class="page-hero surface-deep">
   <div class:list={['wrap', hasAside && 'page-hero-grid']}>
-    <div class="page-hero-copy">
+    <div class="page-hero-copy rise" style="--rise-delay:60ms">
       <h1>{heading}</h1>
       {lede && <p class="page-hero-lede">{lede}</p>}
     </div>
 
     {
       hasAside && (
-        <div class="page-hero-aside">
+        <div class="page-hero-aside rise" style="--rise-delay:200ms">
           <slot name="aside" />
         </div>
       )

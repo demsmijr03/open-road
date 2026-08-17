@@ -70,6 +70,26 @@ shown in full at `/explore/`.
 Self-hosted via `@fontsource-variable`, not the Google CDN. The privacy page
 makes claims about who sees visitor data; a font CDN request would undercut them.
 
+## The home hero: naming what the foundation gives
+
+The headline used to be a description of the mechanism ("we fund tuition").
+`AnimatedHeadline.astro` names the thing itself instead: **"We fund one student
+a year to go find [perspective / opportunity / a wider view / their
+footing]"**, one word rotating in CSS.
+
+The tagline this replaced, *"Some roads are worth leaving home for,"* was not
+cut. It moved to the oversize statement lower on the page, which also removed
+a near-duplicate of the same line on the About page.
+
+The hero itself is a rounded, inset photograph with the header floating on it
+in white, styled after a reference the client supplied. That reference was
+React, framer-motion and shadcn; **none of it was adopted**, because this site
+ships zero JavaScript beyond Astro's own router. Every effect (the rotating
+word, the load-in, the scroll reveals) is native CSS plus a ~1KB observer. See
+`CLAUDE.md`'s Motion section for the operating rules, in particular the
+`astro:page-load` requirement that keeps reveals working after a client-side
+navigation, not just on first load.
+
 ## There is no motif, on purpose
 
 The dashed lane marking was retired with the old logo and **nothing replaced

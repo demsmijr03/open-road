@@ -2,6 +2,16 @@
 import Logo from './Logo.astro';
 import Button from './Button.astro';
 
+interface Props {
+  /**
+   * Floats the header on top of the hero photograph instead of sitting above
+   * it in a bar of its own. Home page only: interior pages have no full-bleed
+   * image to float on.
+   */
+  overlay?: boolean;
+}
+
+const { overlay = false } = Astro.props;
 const { pathname } = Astro.url;
 
 const links = [
@@ -15,7 +25,7 @@ const isCurrent = (href: string) =>
   href === '/' ? pathname === '/' : pathname.startsWith(href);
 ---
 
-<header class="header surface-base">
+<header class:list={['header', overlay ? 'header--overlay' : 'surface-base']}>
   <div class="header-inner">
     <a href="/" class="header-brand" aria-label="The Open Road Foundation, home">
       <Logo variant="full" />
@@ -40,12 +50,42 @@ const isCurrent = (href: string) =>
          style scope, so Header's scoped `order` never reached it and the CTA
          fell back to order 0 and jumped above the logo. -->
     <div class="header-cta">
+      <Button href="/get-involved/#interest" variant="secondary" class="header-ghost">Contact</Button>
       <Button href="/get-involved/#give">Support a student</Button>
     </div>
   </div>
 </header>
 
 <style>
+  /* Floating over the hero photograph. The scrim on that image is what makes
+     white text safe here, so this variant is only ever used on a page that has
+     one: see index.astro. */
+  .header--overlay {
+    position: absolute;
+    /* Flush to the page edge, matching the full-bleed hero beneath it. The
+       .header-inner already carries the gutter, so the bar's contents still
+       line up with the hero copy. */
+    inset-block-start: 0;
+    inset-inline: 0;
+    z-index: 10;
+    background: transparent;
+    color: var(--color-surface);
+    /* Every child reads these, so the whole bar flips with one declaration
+       rather than each element opting in. */
+    --fg: var(--color-surface);
+    --fg-quiet: color-mix(in srgb, var(--color-surface) 82%, transparent);
+    --rule: color-mix(in srgb, var(--color-surface) 26%, transparent);
+    --rule-strong: color-mix(in srgb, var(--color-surface) 58%, transparent);
+    --focus-ring: var(--color-surface);
+    --btn-fill: var(--color-surface);
+    --btn-label: var(--color-deep);
+    --btn-fill-hover: var(--color-panel);
+  }
+
+  .header--overlay .header-inner {
+    padding-block: var(--space-m);
+  }
+
   .header {
     border-block-end: var(--border-hairline) solid var(--rule);
   }
@@ -76,6 +116,20 @@ const isCurrent = (href: string) =>
 
   .header-cta {
     display: flex;
+    gap: var(--space-2xs);
+  }
+
+  /* Pills in the bar, per the reference. The rest of the site keeps the
+     squarer button, so this stays a header decision rather than a global one. */
+  .header-cta :global(.btn) {
+    border-radius: 999px;
+    padding-inline: 1.15rem;
+  }
+
+  @media (max-width: 30rem) {
+    .header-ghost {
+      display: none;
+    }
   }
 
   .header-nav ul {

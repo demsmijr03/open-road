@@ -1,0 +1,88 @@
+/* =============================================================================
+   MOTION
+
+   Two systems, both cheap:
+
+     .reveal   scroll-triggered, needs the observer in scripts/reveal.ts
+     .rise     load-triggered, pure CSS, for content already on screen
+
+   Rules that keep this from becoming a liability:
+
+     1. Content must never depend on JavaScript to become visible. If the script
+        does not run, .reveal elements are shown by the no-js guard below, and
+        the observer also reveals everything immediately when
+        IntersectionObserver is unavailable.
+     2. Only transform and opacity are animated.
+     3. Everything here is inert under prefers-reduced-motion.
+   ========================================================================== */
+
+/* Scroll reveals ------------------------------------------------------------
+
+   Opt-in via `js-reveal` on <html>, which reveal.ts sets the moment it runs.
+   Without it these rules never apply, so a failed script leaves the page fully
+   readable rather than blank. This is the safe direction for the default. */
+
+html.js-reveal .reveal {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+html.js-reveal .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 620ms var(--ease-spring),
+    transform 620ms var(--ease-spring);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* Load-in ------------------------------------------------------------------
+
+   For things above the fold, which are on screen before any observer could
+   fire. Pure CSS, so it runs even with JavaScript off. */
+
+.rise {
+  animation: rise 720ms var(--ease-spring) both;
+  animation-delay: var(--rise-delay, 0ms);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Stagger helper: children animate in sequence without hand-numbering each one. */
+.stagger > * {
+  animation: rise 720ms var(--ease-spring) both;
+}
+
+.stagger > :nth-child(1) { animation-delay: 60ms; }
+.stagger > :nth-child(2) { animation-delay: 140ms; }
+.stagger > :nth-child(3) { animation-delay: 220ms; }
+.stagger > :nth-child(4) { animation-delay: 300ms; }
+.stagger > :nth-child(5) { animation-delay: 380ms; }
+.stagger > :nth-child(6) { animation-delay: 460ms; }
+
+/* Reduced motion ------------------------------------------------------------
+
+   Not "faster": off. Everything lands in its final state immediately. */
+
+@media (prefers-reduced-motion: reduce) {
+  html.js-reveal .reveal,
+  html.js-reveal .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .rise,
+  .stagger > * {
+    animation: none;
+  }
+}

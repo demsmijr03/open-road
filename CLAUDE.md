@@ -35,9 +35,11 @@ plain `python` will work and these paths can be shortened.
 ## Checks
 
 ```bash
-npm run build          # must pass before any commit
-npm run audit:a11y     # WCAG 2.2 AA, every page, mobile + desktop. Must be zero.
-npm run audit:holes    # counts [PLACEHOLDER]. Non-zero until launch-ready.
+npm run build               # must pass before any commit
+npm run audit:a11y          # WCAG 2.2 AA, every page, mobile + desktop. Must be zero.
+npm run audit:holes         # counts [PLACEHOLDER]. Non-zero until launch-ready.
+npm run verify:motion       # JS-off visibility + prefers-reduced-motion. Run after touching motion.css or reveal.ts.
+npm run verify:transitions  # reveal system re-arms after a client-side page navigation.
 npm run shot -- http://localhost:4321/award/ award
 ```
 
@@ -74,6 +76,42 @@ Both of these must come back empty:
 grep -rnP "\x{2014}" src/     # em dash
 grep -rnP "\x{00B7}" src/     # middle dot
 ```
+
+## Motion
+
+Two systems, in `src/styles/motion.css`:
+
+- `.reveal` — scroll-triggered. Needs `src/scripts/reveal.ts`, which listens on
+  `astro:page-load`, **not** `DOMContentLoaded`. `<ClientRouter />` does
+  client-side navigation, so a `DOMContentLoaded` listener fires once, on the
+  first page only; every page navigated to afterwards would arrive with its
+  `.reveal` content stuck at `opacity: 0` forever. This is the failure mode
+  `verify:transitions` exists to catch.
+- `.rise` / `.stagger` — load-triggered, pure CSS, for content already on
+  screen (heroes, mastheads). No script involved, so it works with JS off.
+
+**Content must never depend on JavaScript to become visible.** The `.reveal`
+hidden state only applies once `js-reveal` is added to `<html>`, and only the
+reveal script adds that class. If the script never runs, nothing was ever
+hidden. `verify:motion` checks this directly, with JS disabled.
+
+Everything here is inert under `prefers-reduced-motion: reduce`. The animated
+headline (`AnimatedHeadline.astro`) additionally pins its first word visible
+under reduced motion rather than leaving a blank line, and its `<h1>` carries
+one complete sentence for assistive tech in a visually-hidden span, since a
+heading whose visible text mutates every few seconds is announced repeatedly by
+screen readers and reads as nonsense.
+
+**The screenshot harness fakes both systems rather than waiting on them**,
+because a `fullPage` capture never scrolls and an IntersectionObserver-driven
+reveal never fires for anything below the fold. `scripts/screenshot.mjs`
+force-adds `is-visible` to every `.reveal` element before capturing, **and
+disables the transition while doing it**: adding the class starts a 620ms
+transition with up to a few hundred ms of stagger on top, and a screenshot
+taken immediately after lands mid-fade rather than at either end of it. Caught
+this exact way once already: staggered stats and cards rendered as partially
+transparent in a capture, looking like broken content rather than an animation
+timing artifact.
 
 ## Screenshot Workflow
 

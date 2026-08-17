@@ -77,6 +77,25 @@ try {
       );
     });
 
+    // Same false-negative as the lazy-image fix above, for scroll reveals this
+    // time: a fullPage capture never scrolls, so anything below the fold never
+    // crosses the IntersectionObserver's threshold and the screenshot would
+    // show real content sitting at opacity 0. Reveal it directly instead.
+    //
+    // The transition itself is a second trap: adding .is-visible starts a
+    // 620ms transition with up to a few hundred ms of stagger delay on top, and
+    // a screenshot taken right after the class flips lands mid-fade rather than
+    // at either end of it. The staggered stats and cards look "half missing" in
+    // the capture, not simply invisible. Killing the transition for this pass
+    // makes the class change land instantly instead of adding a wait, which
+    // would have to guess at the slowest delay on the page.
+    await page.addStyleTag({
+      content: '.reveal, .reveal.is-visible { transition: none !important; }',
+    });
+    await page.evaluate(() => {
+      document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
+    });
+
     // Let webfonts settle so type is measured accurately, not in fallback.
     await page.evaluate(() => document.fonts?.ready);
 

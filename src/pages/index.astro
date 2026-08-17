@@ -4,14 +4,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
 import DistanceStat from '../components/DistanceStat.astro';
 import CtaBand from '../components/CtaBand.astro';
+import AnimatedHeadline from '../components/AnimatedHeadline.astro';
 import heroPhoto from '../assets/landingpage.png';
 ---
 
 <BaseLayout
+  heroOverlay
   title="Some roads are worth leaving home for | The Open Road Foundation"
   description="We help West Chester Area School District students afford the school that fits them best, wherever it takes them."
 >
-  <!-- Hero ------------------------------------------------------------- -->
+  <!-- Hero -------------------------------------------------------------
+       A full-bleed photograph with the header floating on it. The copy is
+       left-aligned over the darker left third of the image rather than centred,
+       which is what lets the scrim be lighter than it was and the car stay
+       visible. -->
   <section class="hero surface-deep">
     <div class="hero-media">
       <Image
@@ -24,29 +30,40 @@ import heroPhoto from '../assets/landingpage.png';
       />
     </div>
 
-    <div class="wrap hero-content">
-      <span class="eyebrow">West Chester, Pennsylvania</span>
-      <h1>Some roads are worth leaving home for.</h1>
-      <p class="hero-lede">
+    <div class="wrap">
+      <div class="hero-content">
+      <span class="eyebrow rise" style="--rise-delay:80ms">West Chester, Pennsylvania</span>
+
+      <div class="rise" style="--rise-delay:160ms">
+        <AnimatedHeadline
+          lead="We fund one student a year to go find"
+          words={['perspective', 'opportunity', 'a wider view', 'their footing']}
+        />
+      </div>
+
+      <p class="hero-lede rise" style="--rise-delay:280ms">
         The Open Road Foundation helps West Chester Area School District students afford the school
         that fits them best, wherever it takes them.
       </p>
-      <p class="hero-goal">This year we're raising $10,000 and making our first award.</p>
-      <div class="hero-actions">
+
+      <div class="hero-actions rise" style="--rise-delay:380ms">
         <Button href="/get-involved/#give">Support a student</Button>
         <Button href="/about/" variant="secondary">Read our story</Button>
       </div>
+      </div>
     </div>
+
   </section>
 
   <!-- Three numbers ----------------------------------------------------- -->
   <section class="section--major surface-base">
     <div class="wrap">
       <header class="numbers-head">
-        <h2>Here's the problem, from three distances.</h2>
+        <h2 class="reveal">Here's the problem, from three distances.</h2>
       </header>
 
       <div class="numbers">
+        <div class="reveal">
         <DistanceStat
           distance={1}
           scope="Nationally"
@@ -59,7 +76,9 @@ import heroPhoto from '../assets/landingpage.png';
             close to 90% of what they earn in a year.
           </p>
         </DistanceStat>
+        </div>
 
+        <div class="reveal" style="--reveal-delay:80ms">
         <DistanceStat
           distance={2}
           scope="In Pennsylvania"
@@ -72,7 +91,9 @@ import heroPhoto from '../assets/landingpage.png';
             assume it is.
           </p>
         </DistanceStat>
+        </div>
 
+        <div class="reveal" style="--reveal-delay:160ms">
         <DistanceStat
           distance={3}
           scope="Here, in this district"
@@ -85,6 +106,7 @@ import heroPhoto from '../assets/landingpage.png';
             students is economically disadvantaged.
           </p>
         </DistanceStat>
+        </div>
       </div>
     </div>
   </section>
@@ -94,10 +116,7 @@ import heroPhoto from '../assets/landingpage.png';
   <section class="section--major surface-panel">
     <div class="wrap">
       <div class="statement">
-        <h2 class="statement-h">
-          Money is the only thing standing between a student here and the school that fits them.
-          So we're removing it.
-        </h2>
+        <h2 class="statement-h reveal">Some roads are worth leaving home for.</h2>
         <p class="statement-p">
           We're a scholarship fund in West Chester. We raise money from people who live here and put
           it toward the cost of college for a student who has been accepted somewhere they can't
@@ -153,10 +172,12 @@ import heroPhoto from '../assets/landingpage.png';
     isolation: isolate;
     overflow: hidden;
     display: grid;
-    place-items: center;
-    min-block-size: min(86vh, 44rem);
-    padding-block: var(--pad-major);
-    text-align: center;
+    align-content: center;
+    min-block-size: min(88vh, 46rem);
+    /* Extra top padding clears the floating header. */
+    padding-block: calc(var(--pad-major) + 3rem) var(--pad-major);
+    /* Full bleed: the photograph runs to the top and both edges rather than
+       sitting inset as a panel. */
   }
 
   .hero-media {
@@ -197,23 +218,28 @@ import heroPhoto from '../assets/landingpage.png';
        photograph and made it look like no treatment was applied at all. */
     z-index: 1;
     background:
-      radial-gradient(
-        ellipse 100% 85% at 50% 50%,
-        rgb(31 78 74 / 0.55),
-        rgb(31 78 74 / 0.35)
+      linear-gradient(
+        to right,
+        rgb(31 78 74 / 0.92),
+        rgb(31 78 74 / 0.78) 42%,
+        rgb(31 78 74 / 0.42) 100%
       ),
       linear-gradient(
         to bottom,
-        rgb(31 78 74 / 0.7),
-        rgb(31 78 74 / 0.62) 45%,
-        rgb(31 78 74 / 0.85)
+        rgb(31 78 74 / 0.55),
+        rgb(31 78 74 / 0.35) 40%,
+        rgb(31 78 74 / 0.6)
       );
   }
 
+  /* Nested inside .wrap rather than being one. .wrap centres itself with
+     margin-inline: auto, so capping its width directly pushed the copy into
+     the middle of the photograph instead of holding it left. */
   .hero-content {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
+    max-inline-size: 40rem;
   }
 
   .hero h1 {
@@ -224,7 +250,7 @@ import heroPhoto from '../assets/landingpage.png';
 
   .hero-lede {
     margin: var(--space-m) 0 0;
-    max-inline-size: 34rem;
+    max-inline-size: 30rem;
     font-size: var(--text-lg);
     line-height: var(--leading-body);
     color: var(--fg-quiet);
@@ -240,10 +266,10 @@ import heroPhoto from '../assets/landingpage.png';
   .hero-actions {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     gap: var(--space-s);
     margin-block-start: var(--space-l);
   }
+
 
   .numbers-head {
     display: flex;

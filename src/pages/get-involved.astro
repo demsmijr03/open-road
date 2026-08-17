@@ -81,11 +81,11 @@ const donorFaqs = [
        out what they were being asked to do. Four blocks let them choose. -->
   <section class="section surface-base">
     <div class="wrap">
-      <h2 class="ways-title">Four ways to help</h2>
+      <h2 class="ways-title reveal">Four ways to help</h2>
       <ul class="ways">
         {
-          ways.map((w) => (
-            <li class="way">
+          ways.map((w, i) => (
+            <li class="way reveal" style={`--reveal-delay:${i * 70}ms`}>
               <a href={w.href}>
                 <span class="way-icon"><Icon name={w.icon} /></span>
                 <span class="way-name">{w.name}</span>
@@ -101,7 +101,7 @@ const donorFaqs = [
   <section class="section surface-panel" id="give">
     <div class="wrap">
       <div class="split prose">
-        <h2>Give</h2>
+        <h2 class="reveal">Give</h2>
         <p>
           One gift, one student, this year. There's no recurring giving at launch. When you give,
           it's once, and it goes toward the award.
@@ -121,7 +121,7 @@ const donorFaqs = [
   <section class="section surface-base" id="partner">
     <div class="wrap">
       <div class="split prose">
-        <h2>Partner with us</h2>
+        <h2 class="reveal">Partner with us</h2>
         <p>
           For businesses, community organizations, and anyone who wants to give at a level that
           carries their name alongside ours.
@@ -138,7 +138,10 @@ const donorFaqs = [
       <ul class="tiers">
         {
           tiers.map((tier, i) => (
-            <li class={`tier tier--${i + 1} ${i === tiers.length - 1 ? 'surface-deep' : ''}`}>
+            <li
+              class={`tier tier--${i + 1} reveal ${i === tiers.length - 1 ? 'surface-deep' : ''}`}
+              style={`--reveal-delay:${i * 70}ms`}
+            >
               <p class="tier-amount">{tier.amount}</p>
               <p class="tier-name">{tier.name}</p>
               <p class="tier-gets">{tier.gets}</p>
@@ -157,7 +160,7 @@ const donorFaqs = [
   <section class="section surface-panel">
     <div class="wrap">
       <div class="split prose">
-        <h2>Employer matching</h2>
+        <h2 class="reveal">Employer matching</h2>
         <p>
           Many employers match charitable gifts from their staff, which can double what you give at
           no extra cost to you. Ask your HR team for their matching gift form.
@@ -172,7 +175,7 @@ const donorFaqs = [
     <div class="wrap">
       <div class="plan-grid">
         <div>
-          <h2 class="plan-title">The plan for year one</h2>
+          <h2 class="plan-title reveal">The plan for year one</h2>
           <p class="plan-goal">
             <span class="plan-goal-label">Year-one goal</span>
             <span class="plan-goal-figure">$10,000</span>
@@ -186,7 +189,7 @@ const donorFaqs = [
   <section class="section surface-panel" id="money">
     <div class="wrap">
       <div class="split prose">
-        <h2>Where the money goes</h2>
+        <h2 class="reveal">Where the money goes</h2>
         <div class="split-money">
           <p class="money-fig">90<span>&cent;</span></p>
           <p class="money-note">
@@ -209,7 +212,7 @@ const donorFaqs = [
   <section class="section surface-base" id="newsletter">
     <div class="wrap">
       <div class="split prose">
-        <h2>Newsletter</h2>
+        <h2 class="reveal">Newsletter</h2>
         <p>
           One email when there's something real to report: the application opening, a student
           funded, the year's total. That's it, and we won't pass your address to anyone.
@@ -221,7 +224,7 @@ const donorFaqs = [
 
   <section class="section--major surface-panel" id="interest">
     <div class="wrap">
-      <h2 class="interest-title">Tell us you're interested</h2>
+      <h2 class="interest-title reveal">Tell us you're interested</h2>
       <InterestForm />
     </div>
   </section>
@@ -229,7 +232,7 @@ const donorFaqs = [
   <section class="section surface-base">
     <div class="wrap">
       <div class="measure-wide">
-        <h2 class="faq-title">Questions from donors</h2>
+        <h2 class="faq-title reveal">Questions from donors</h2>
         <Faq items={donorFaqs} />
       </div>
     </div>

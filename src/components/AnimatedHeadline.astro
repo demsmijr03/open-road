@@ -1,0 +1,133 @@
+---
+/**
+ * The home page headline, with one rotating word.
+ *
+ * Built in CSS rather than with framer-motion. The words stack absolutely in a
+ * fixed-height box and share one keyframe; each is offset by its index, so the
+ * whole thing costs no JavaScript on a site that ships none.
+ *
+ * Accessibility is the part this pattern usually gets wrong. A heading whose
+ * text mutates every couple of seconds is announced repeatedly and reads as
+ * nonsense, so the <h1> carries one complete sentence for assistive technology
+ * and the animated stack is hidden from it entirely.
+ *
+ * Under prefers-reduced-motion the rotation stops and the first word is pinned
+ * visible. A reduced-motion user must not be left staring at a blank line where
+ * the point of the sentence should be.
+ */
+interface Props {
+  lead: string;
+  words: string[];
+  /** Seconds each word holds before the next takes over. */
+  step?: number;
+}
+
+const { lead, words, step = 2.4 } = Astro.props;
+
+const spoken = `${lead} ${words.slice(0, -1).join(', ')}, and ${words.at(-1)}.`;
+const total = words.length * step;
+---
+
+<h1 class="ah">
+  {/* The only version assistive tech sees: one whole sentence, said once. */}
+  <span class="sr-only">{spoken}</span>
+
+  <span aria-hidden="true">
+    <span class="ah-lead">{lead}</span>
+    <span class="ah-slot" style={`--count:${words.length};--step:${step}s;--total:${total}s`}>
+      {/* Reserves the width of the longest word so the line never reflows. */}
+      <span class="ah-sizer">{words.reduce((a, b) => (a.length >= b.length ? a : b))}</span>
+      {
+        words.map((word, i) => (
+          <span class="ah-word" style={`--i:${i}`}>
+            {word}
+          </span>
+        ))
+      }
+    </span>
+  </span>
+</h1>
+
+<style>
+  .ah {
+    margin: 0;
+    font-size: clamp(2.25rem, 6.2vw, 4.25rem);
+    line-height: 1.04;
+    letter-spacing: var(--tracking-display);
+    text-wrap: balance;
+  }
+
+  .ah-lead {
+    display: block;
+  }
+
+  .ah-slot {
+    position: relative;
+    display: block;
+    /* Its own line, so a long word can never push the lead around. */
+    inline-size: max-content;
+    max-inline-size: 100%;
+    color: var(--accent-text);
+  }
+
+  /* Invisible, but it is what gives the slot its width and height. */
+  .ah-sizer {
+    visibility: hidden;
+    display: block;
+    white-space: nowrap;
+  }
+
+  .ah-word {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    white-space: nowrap;
+    opacity: 0;
+    animation: ah-cycle var(--total) infinite;
+    animation-delay: calc(var(--i) * var(--step));
+  }
+
+  /*
+    One cycle per word, offset by index, so exactly one is on screen at a time.
+
+    The fade-out runs PAST the 25% handoff on purpose. An earlier version faded
+    out by 25% and the next word faded in from 0% at that same instant, which
+    meant both sat at opacity 0 together and the line went blank for a few
+    hundred milliseconds between every word. Overlapping the tails turns that
+    gap into a crossfade.
+  */
+  @keyframes ah-cycle {
+    0% {
+      opacity: 0;
+      transform: translateY(0.45em);
+    }
+    3% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    25% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    28% {
+      opacity: 0;
+      transform: translateY(-0.45em);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-0.45em);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ah-word {
+      animation: none;
+    }
+
+    /* Pin the first word so the sentence still completes. */
+    .ah-word[style*='--i:0'] {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

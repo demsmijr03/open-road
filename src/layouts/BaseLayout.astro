@@ -1,6 +1,7 @@
 ---
 import '@fontsource-variable/source-serif-4';
 import '@fontsource-variable/figtree';
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -10,9 +11,17 @@ interface Props {
   description: string;
   ogImage?: string;
   noindex?: boolean;
+  /** Floats the header over a full-bleed hero. Home page only. */
+  heroOverlay?: boolean;
 }
 
-const { title, description, ogImage = '/og-default.png', noindex = false } = Astro.props;
+const {
+  title,
+  description,
+  ogImage = '/og-default.png',
+  noindex = false,
+  heroOverlay = false,
+} = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = new URL(ogImage, Astro.site);
@@ -61,14 +70,26 @@ const orgSchema = {
     <meta name="twitter:card" content="summary_large_image" />
 
     <script is:inline type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+
+    <!-- Cross-page transitions. Astro's own router, a few KB, rather than a
+         framework. Header and footer persist across swaps so they do not
+         flash. -->
+    <ClientRouter />
   </head>
 
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <Header />
+    <Header overlay={heroOverlay} transition:persist />
     <main id="main">
       <slot />
     </main>
-    <Footer />
+    <Footer transition:persist />
+
+    <!-- Scroll reveals. Listens on astro:page-load, not DOMContentLoaded: with
+         the router active the latter fires once and every page navigated to
+         afterwards would arrive with its content still invisible. -->
+    <script>
+      import '../scripts/reveal.ts';
+    </script>
   </body>
 </html>

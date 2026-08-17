@@ -61,7 +61,7 @@ const faqs = [
   <section class="section surface-base">
     <div class="wrap">
       <div class="split prose">
-        <h2>What we do</h2>
+        <h2 class="reveal">What we do</h2>
         <p>
           We raise money from people who live here and put it toward the cost of college for a
           student who has been accepted somewhere they can't quite afford.
@@ -76,14 +76,14 @@ const faqs = [
 
   <section class="section surface-panel">
     <div class="wrap">
-      <h2 class="qual-title">Who qualifies</h2>
+      <h2 class="qual-title reveal">Who qualifies</h2>
       <!-- Four criteria, each independently checkable. A student scanning "do I
            qualify" is served better by four cards than by a bullet list, because
            each one either applies to them or does not. -->
       <ul class="quals">
         {
           criteria.map((c, i) => (
-            <li class="qual">
+            <li class="qual reveal" style={`--reveal-delay:${i * 70}ms`}>
               <p class="qual-n">{String(i + 1).padStart(2, '0')}</p>
               <p class="qual-t">{c.title}</p>
               <p class="qual-d">{c.detail}</p>
@@ -97,7 +97,7 @@ const faqs = [
   <section class="section--major surface-base">
     <div class="wrap">
       <div class="split prose">
-        <h2>What the award covers</h2>
+        <h2 class="reveal">What the award covers</h2>
         <p>
           It's yours to put toward the real cost of going: tuition, books, a laptop, the travel to
           get there. Anything that supports your time at the school you chose.
@@ -126,7 +126,7 @@ const faqs = [
   <section class="section surface-panel">
     <div class="wrap">
       <div class="split prose">
-        <h2>How we choose, and when</h2>
+        <h2 class="reveal">How we choose, and when</h2>
         <p>
           Two groups read applications together: the West Chester Area School District's scholarship
           committee and the founders of Open Road. Neither picks alone.
@@ -146,7 +146,7 @@ const faqs = [
   <section class="section surface-base" id="questions">
     <div class="wrap">
       <div class="measure-wide">
-        <h2 class="faq-title">Questions</h2>
+        <h2 class="faq-title reveal">Questions</h2>
         <Faq items={faqs} />
       </div>
     </div>
