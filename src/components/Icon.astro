@@ -2,13 +2,19 @@
 /**
  * A tiny icon set, drawn rather than imported.
  *
- * Four strokes in the prism's language: 24 unit grid, 1.75 stroke, round caps,
- * no fills. An icon library would bring hundreds of glyphs drawn to someone
- * else's grid, and four is all this site needs.
+ * Three strokes on a 24 unit grid, 1.75 stroke, round caps, no fills. An icon
+ * library would bring hundreds of glyphs drawn to someone else's grid, and this
+ * many is all this site needs.
  *
  * Each is a geometric idea, not a picture: giving is a widening arc, partnering
- * is two overlapping frames, asking is a line meeting a point, telling is one
- * line becoming several. That last one is the mark itself, which is deliberate.
+ * is two overlapping frames, asking is a line meeting a point.
+ *
+ * `tell` is the exception and is not drawn here at all. It used to be the Prism
+ * mark redrawn at icon scale, which is why it survived the mark swap: the sweep
+ * for the old artwork searched for its 48 grid path data and this was a hand
+ * copy on the 24 grid. It is now the real Sightline mark, rendered from the
+ * same two paths as Logo.astro on its own 48 viewBox rather than rescaled onto
+ * this one, because that path data is never edited.
  */
 interface Props {
   name: 'give' | 'partner' | 'ask' | 'tell';
@@ -16,8 +22,32 @@ interface Props {
 }
 
 const { name, class: className = '' } = Astro.props;
+
+/* The mark is filled and lives on a 48 grid; the drawn icons are stroked on a
+   24 grid. Nothing sensible merges those two, so `tell` takes its own element
+   below rather than bending this one's attributes around it. */
+const isMark = name === 'tell';
 ---
 
+{
+  isMark ? (
+    <svg
+      class={className}
+      viewBox="0 0 48 48"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M5.1850 21.3552 L42.4975 19.6592 A19 19 0 0 0 5.1850 21.3552 Z"
+        fill="var(--color-accent)"
+      />
+      <path
+        d="M5.1850 26.6448 L42.4975 28.3408 A19 19 0 0 1 5.1850 26.6448 Z"
+        fill="currentColor"
+      />
+    </svg>
+  ) : (
 <svg
   class={className}
   viewBox="0 0 24 24"
@@ -58,20 +88,9 @@ const { name, class: className = '' } = Astro.props;
       </>
     )
   }
-
-  {
-    /* TELL. One line becoming several: the mark, at icon scale. */
-    name === 'tell' && (
-      <>
-        <path d="M3 12 H8.5" />
-        <path d="M10 5.5 V18.5" />
-        <path d="M11.8 12 L21 6.5" />
-        <path d="M11.8 12 H21" />
-        <path d="M11.8 12 L21 17.5" />
-      </>
-    )
-  }
 </svg>
+  )
+}
 
 <style>
   svg {
