@@ -1,0 +1,12 @@
+# The Open Road Foundation
+# https://open-road-foundation.vercel.app
+
+User-agent: *
+Allow: /
+
+# /og-card is the source the link-preview image is rendered from, not a page of
+# the site. It is already excluded from the sitemap; this keeps it out of search
+# results too.
+Disallow: /og-card/
+
+Sitemap: https://open-road-foundation.vercel.app/sitemap-index.xml
