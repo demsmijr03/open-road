@@ -241,7 +241,11 @@ const donorFaqs = [
           no extra cost to you. Ask your HR team for their matching gift form.
         </p>
         <p>You'll need:</p>
-        <Placeholder note="legal name and registered mailing address" />
+        <ul class="matching-facts">
+          <li><span>Legal name</span>The Open Road Foundation</li>
+          <li><span>EIN</span>42-3704788</li>
+          <li><span>Address</span>1427 Clover Lane, West Chester, PA 19380-5906</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -457,6 +461,37 @@ const donorFaqs = [
     font-size: var(--text-sm);
     line-height: 1.6;
     color: var(--fg-quiet);
+  }
+
+  .matching-facts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    margin: 0;
+    padding: var(--space-m);
+    list-style: none;
+    border: var(--border-hairline) solid var(--rule);
+    border-radius: var(--radius-panel);
+    background-color: var(--color-surface);
+  }
+
+  .matching-facts li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.15rem var(--space-2xs);
+    font-size: var(--text-sm);
+  }
+
+  /* The label sits on a fixed rail so the three values line up, and wraps to
+     its own line before that rail would squeeze the address. */
+  .matching-facts span {
+    flex: 0 0 5.5rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--fg-quiet);
+    padding-block-start: 0.2em;
   }
 
   .tiers-note {
