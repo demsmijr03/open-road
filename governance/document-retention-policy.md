@@ -3,9 +3,10 @@
 **The Open Road Foundation**
 EIN 42-3704788 · 1427 Clover Lane, West Chester, PA 19380-5906
 
-**Status:** Draft for board review
+**Status:** Approved. Awaiting formal adoption and minuting.
 **Prepared:** 25 August 2026
-**Adopted:** _______________
+**Approved:** 25 August 2026
+**Adopted at board meeting:** _______________
 **Next review:** one year after adoption
 
 ---
@@ -13,8 +14,12 @@ EIN 42-3704788 · 1427 Clover Lane, West Chester, PA 19380-5906
 ## 1. Why this exists
 
 Form 990 asks whether the organization has a written document retention and
-destruction policy. This is that document, and it should be adopted at a board
-meeting and minuted so the answer on the return is true.
+destruction policy. This is that document.
+
+Approving it is not the same as adopting it. The 990 answer turns on the board
+adopting this at a meeting and the adoption appearing in the minutes, so that
+step still has to happen before the first return is filed. The blank on the
+line above is what closes it.
 
 Beyond the form, it does two practical jobs. It stops records being thrown away
 that we later need, and it stops us holding personal information longer than we
@@ -140,7 +145,7 @@ Joe Clark, President
 
 ---
 
-*Prepared as a draft for board review. It reflects common nonprofit practice and
-the commitments already published on the foundation's website. It is not legal
+*Approved 25 August 2026. It reflects common nonprofit practice and the
+commitments already published on the foundation's website. It is not legal
 advice, and the financial retention periods in particular are worth confirming
 with whoever reviews the foundation's filings.*
