@@ -1,6 +1,6 @@
 ---
 import Logo from './Logo.astro';
-import Placeholder from './Placeholder.astro';
+import ComingSoon from './ComingSoon.astro';
 ---
 
 <footer class="footer surface-deep">
@@ -15,17 +15,25 @@ import Placeholder from './Placeholder.astro';
     <div class="footer-cols">
       <section class="footer-col">
         <h2>Contact</h2>
-        <Placeholder note="hello@ email address" />
+        <p>
+          <a href="mailto:openroadfdn.admin@gmail.com">openroadfdn.admin@gmail.com</a>
+        </p>
         <p class="footer-address">
           1427 Clover Lane<br />
           West Chester, PA 19380-5906
         </p>
       </section>
 
+      <!-- One note rather than two. Instagram and LinkedIn are blocked on the
+           same thing, so stacking a note under each made the column read as
+           twice as unfinished as it is.
+
+           `text` rather than the panel: "Follow" already labels the column, and
+           the panel made the one missing item heavier than the address and the
+           legal line beside it. -->
       <section class="footer-col">
         <h2>Follow</h2>
-        <Placeholder note="Instagram URL" />
-        <Placeholder note="LinkedIn URL" />
+        <ComingSoon as="text" note="Instagram and LinkedIn, coming soon." />
       </section>
 
       <section class="footer-col footer-col--wide">
@@ -108,6 +116,16 @@ import Placeholder from './Placeholder.astro';
 
   .footer-col p {
     margin: 0;
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--fg-quiet);
+  }
+
+  /* ComingSoon renders its own <p>, which lives in that component's style
+     scope, so the rule above never reaches it and the note would ship at body
+     size in full-strength text. Reaching across the boundary explicitly, per
+     CLAUDE.md, anchored to an element this component owns. */
+  .footer-col :global(.soon-text) {
     font-size: var(--text-sm);
     line-height: 1.6;
     color: var(--fg-quiet);

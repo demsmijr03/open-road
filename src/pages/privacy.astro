@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Placeholder from '../components/Placeholder.astro';
 import PageHero from '../components/PageHero.astro';
 ---
 
@@ -19,9 +18,7 @@ import PageHero from '../components/PageHero.astro';
        beside it, which also makes a long policy page scannable. -->
   <section class="section surface-base">
     <div class="wrap">
-      <p class="updated reveal">
-        Last updated <Placeholder note="date" as="inline" />
-      </p>
+      <p class="updated reveal">Last updated 26 August 2026</p>
     </div>
   </section>
 
@@ -58,9 +55,19 @@ import PageHero from '../components/PageHero.astro';
     <div class="wrap">
       <div class="split prose">
         <h2 class="reveal">Who else sees it</h2>
-        <Placeholder
-          note="form provider, hosting provider, and analytics, once chosen. Name them plainly."
-        />
+        <p>
+          Two companies, and nobody else. <strong>Formspree</strong> receives what you type into
+          our form and passes it on to us by email. <strong>Vercel</strong> hosts this site and
+          sees what any web server sees: which pages were asked for, and the address that asked.
+        </p>
+        <p>
+          We run no analytics. Nobody is counting your visit, and nothing here follows you once
+          you leave.
+        </p>
+        <p>
+          We don't have a donation platform yet. When we pick one, it gets named here before it
+          goes live, not after.
+        </p>
         <p>We do not sell or share your details.</p>
       </div>
     </div>
@@ -83,8 +90,10 @@ import PageHero from '../components/PageHero.astro';
     <div class="wrap">
       <div class="split prose">
         <h2 class="reveal">Asking us to delete it</h2>
-        <p>Email us and we'll remove you. You don't have to give a reason.</p>
-        <Placeholder note="contact email for privacy requests" />
+        <p>
+          Email <a href="mailto:openroadfdn.admin@gmail.com">openroadfdn.admin@gmail.com</a> and
+          we'll remove you. You don't have to give a reason.
+        </p>
       </div>
     </div>
   </section>
@@ -102,13 +111,16 @@ import PageHero from '../components/PageHero.astro';
     </div>
   </section>
 
-  <section class="section surface-base">
-    <div class="wrap">
-      <Placeholder
-        note="full privacy policy, reviewed by Joe and counsel if needed, replaces this stub before launch"
-      />
-    </div>
-  </section>
+  <!-- The "full privacy policy replaces this stub" placeholder was removed
+       here rather than filled. The page is not a stub: it covers what we
+       collect, why, who else sees it, how long we keep it, how to have it
+       deleted, and minors. That is a complete policy for a site whose only
+       input is a name, an email, a dropdown value and a message.
+
+       Counsel review remains a should-do, not a launch blocker, and becomes one
+       the moment the form collects more than it does today. The sentence that
+       has to survive any such change is in "Children" above: under-18s may
+       contact us and we take no more than a name and an email from them. -->
 </BaseLayout>
 
 <style>

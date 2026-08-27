@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import lectureHall from '../assets/lecture-hall.png';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
-import Placeholder from '../components/Placeholder.astro';
+import ComingSoon from '../components/ComingSoon.astro';
 import CtaBand from '../components/CtaBand.astro';
 import PageHero from '../components/PageHero.astro';
 import Faq from '../components/Faq.astro';
@@ -186,8 +186,15 @@ const donorFaqs = [
           organization, EIN 42-3704788, and you'll get a receipt for
           your records.
         </p>
+
+        <!-- A dead "coming soon" loses the donor. The note says plainly why
+             giving is not open, and the button under it captures the person who
+             was ready to give, so they can be emailed on the day it is. -->
+        <ComingSoon
+          note="We can't take gifts online yet. The bank account and the donation platform are being set up, and this is the first thing we'll open."
+        />
         <p>
-          <Button placeholder>Donate</Button>
+          <Button href="#interest">Tell us you want to give</Button>
         </p>
       </div>
     </div>
@@ -265,7 +272,11 @@ const donorFaqs = [
           One email when there's something real to report: the application opening, a student
           funded, the year's total. That's it, and we won't pass your address to anyone.
         </p>
-        <p><Button placeholder>Join the newsletter</Button></p>
+        <p>
+          Tick the news box on the form below and you're on it. There's no separate signup to
+          fill in.
+        </p>
+        <p><Button href="#interest">Join the newsletter</Button></p>
       </div>
     </div>
   </section>

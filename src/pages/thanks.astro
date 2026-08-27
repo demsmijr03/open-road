@@ -1,0 +1,126 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Logo from '../components/Logo.astro';
+
+/**
+ * Where the interest form lands after a successful submission.
+ *
+ * Formspree would otherwise show its own confirmation page, which drops someone
+ * onto a third party's branding halfway through a conversation with us. The
+ * form's `_next` field points here instead.
+ *
+ * noindex because it is a destination, not a page anyone should arrive at from
+ * a search result, where it would read as a confirmation of something they
+ * never sent.
+ *
+ * Built on `.rise` rather than `.reveal` for the same reason the 404 is: this
+ * is one screen, so there is nothing below the fold for a scroll observer to
+ * trigger on, and arriving here from an animated page with nothing moving read
+ * as the site breaking.
+ */
+---
+
+<BaseLayout
+  title="Thank you | The Open Road Foundation"
+  description="We have your message."
+  noindex
+>
+  <section class="thanks surface-deep">
+    <div class="wrap thanks-grid">
+      <div>
+        <span class="eyebrow rise" style="--rise-delay:80ms">Message sent</span>
+        <h1 class="rise" style="--rise-delay:160ms">Thank you.</h1>
+        <p class="thanks-body rise" style="--rise-delay:280ms">
+          We have it, and one of us will write back. There are five of us and none of us do this
+          full time, so give it a few days.
+        </p>
+        <p class="thanks-body rise" style="--rise-delay:360ms">
+          If you ticked the news box, we'll email you when the application opens and when the first
+          student is funded. Nothing else.
+        </p>
+        <ul class="thanks-links rise" style="--rise-delay:480ms">
+          <li><a href="/">Home</a></li>
+          <li><a href="/award/">For students</a></li>
+          <li><a href="/about/">About us</a></li>
+          <li><a href="/get-involved/">Get involved</a></li>
+        </ul>
+      </div>
+
+      <div class="thanks-mark rise" style="--rise-delay:600ms">
+        <Logo variant="mark" decorative />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .thanks {
+    padding-block: var(--pad-major);
+  }
+
+  .thanks-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  .thanks h1 {
+    margin: var(--space-s) 0 var(--space-m);
+    font-size: clamp(2.5rem, 7vw, 4rem);
+  }
+
+  .thanks-body {
+    margin: 0 0 var(--space-m);
+    max-inline-size: var(--width-text);
+    font-size: var(--text-lg);
+    line-height: var(--leading-body);
+    color: var(--fg-quiet);
+  }
+
+  .thanks-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-m);
+    margin: var(--space-l) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .thanks-links a {
+    display: inline-block;
+    padding-block: 0.6rem;
+    color: var(--fg);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    text-decoration-color: var(--rule-strong);
+  }
+
+  .thanks-links a:hover {
+    text-decoration-color: var(--fg);
+  }
+
+  .thanks-links a:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .thanks-mark {
+    inline-size: min(100%, 15rem);
+    margin-inline: auto;
+    color: var(--fg);
+  }
+
+  @media (max-width: 60rem) {
+    .thanks-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .thanks-mark {
+      inline-size: min(100%, 11rem);
+      margin-inline: 0;
+    }
+  }
+</style>

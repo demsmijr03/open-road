@@ -121,6 +121,38 @@ honest that nothing is wired up.
 
 Run `npm run audit:holes` for the current count.
 
+### Coming soon is a different thing, and the rule is not relaxed
+
+Added 26 August 2026, when the site went live with two things genuinely not open
+yet. A placeholder and a coming-soon note look similar and mean opposite things:
+
+|  | Says | Addressed to | Blocks launch |
+|---|---|---|---|
+| `<Placeholder />` | we have not finished building this | us | yes |
+| `<ComingSoon />` | this is real, it is not open yet | a visitor | no |
+
+Donations are the clear case. The button is not unbuilt; there is no bank
+account. Shipping a dashed box reading "donation platform not yet chosen" would
+put an internal note on a public page, which is a different failure from the one
+the placeholder rule exists to prevent.
+
+The visual difference carries the semantic one. Placeholder is **dashed**, which
+is what reads as unfinished. ComingSoon is a **solid filled panel with no
+border**, which reads as designed. A coloured edge was resisted here for the
+same reason Placeholder dropped one: it drew the eye but read as decoration.
+
+Three variants, and the third exists because of a real mistake. `block` for a
+note that must be noticed, `inline` for one inside a sentence, and `text` for
+somewhere already labelled. The footer got the panel first, and under a "Follow"
+heading it became the loudest element in a column of plain text, giving the one
+absent item more weight than the address and the legal line, with a second
+uppercase label stacked under the first saying much the same thing. Where a
+heading already names the thing, the note only has to say it is not open.
+
+`audit:holes` counts both, in separate columns, and exits 1 on placeholders
+only. Coming-soon items are still listed every run, because a temporary state
+nobody is tracking is just a placeholder wearing better clothes.
+
 ## What is deliberately not here
 
 - **No invented facts.** Legal name, EIN, addresses and application dates are holes.

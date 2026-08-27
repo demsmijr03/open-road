@@ -16,7 +16,15 @@ export default defineConfig({
   // /og-card is an asset source for scripts/make-assets.mjs, not a page of the
   // site. The /explore and /review temporary pages have been removed, so their
   // filters went with them.
-  integrations: [sitemap({ filter: (page) => !page.includes('/og-card') })],
+  //
+  // /thanks is a form destination, not a page anyone should reach from a search
+  // result: landing there cold reads as a confirmation of something you never
+  // sent. It is noindex in the page itself, and this keeps it out of the
+  // sitemap too, since submitting a URL for indexing and then asking not to
+  // index it is a contradiction crawlers report as an error.
+  integrations: [
+    sitemap({ filter: (page) => !page.includes('/og-card') && !page.includes('/thanks') }),
+  ],
 
   vite: {
     plugins: [tailwindcss()],

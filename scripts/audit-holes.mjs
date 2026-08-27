@@ -11,8 +11,18 @@
  *
  *   node scripts/audit-holes.mjs
  *
- * Exits 1 when anything is outstanding, so CI can gate a production deploy on
- * it later without further work.
+ * ## Two columns, and why only one of them fails the build
+ *
+ * The second column is not a bug and not a relaxed rule. <ComingSoon /> marks a
+ * real thing that is not open yet, addressed to a visitor, where <Placeholder />
+ * marks work we have not done, addressed to us. Donations are a coming-soon
+ * item because there is no bank account, not because nobody has got round to
+ * wiring the button.
+ *
+ * So placeholders exit 1 and coming-soon items do not. They are still listed,
+ * every time, because the whole point of counting them is that a temporary
+ * state stays visible until somebody ends it. A coming-soon note that nobody is
+ * tracking is just a placeholder wearing better clothes.
  */
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -40,28 +50,39 @@ try {
 }
 
 let placeholders = 0;
+let soon = 0;
 const rows = [];
 
 for (const file of files.sort()) {
   const html = await readFile(file, 'utf8');
   const count = countOf(html, 'data-placeholder');
-  if (count) rows.push({ file: path.relative(DIST, file), count });
+  const soonCount = countOf(html, 'data-coming-soon');
+  if (count || soonCount) rows.push({ file: path.relative(DIST, file), count, soonCount });
   placeholders += count;
+  soon += soonCount;
 }
 
 const pad = (s, n) => String(s).padEnd(n);
 console.log('\nOutstanding before launch\n');
-console.log(`${pad('Page', 34)}Placeholders`);
-console.log('-'.repeat(48));
+console.log(`${pad('Page', 34)}${pad('Placeholders', 16)}Coming soon`);
+console.log('-'.repeat(62));
 for (const row of rows) {
-  console.log(`${pad(row.file, 34)}${row.count}`);
+  console.log(`${pad(row.file, 34)}${pad(row.count, 16)}${row.soonCount}`);
 }
-console.log('-'.repeat(48));
-console.log(`${pad('Total', 34)}${placeholders}\n`);
+console.log('-'.repeat(62));
+console.log(`${pad('Total', 34)}${pad(placeholders, 16)}${soon}\n`);
 
 if (placeholders) {
-  console.log('Not ready to launch. Every row above is a decision someone still owes.\n');
+  console.log('Not ready to launch. Every placeholder above is a decision someone still owes.\n');
   process.exit(1);
 }
 
-console.log('No holes left.\n');
+if (soon) {
+  console.log(
+    `No placeholders left. ${soon} coming-soon ${soon === 1 ? 'note' : 'notes'} still render, which is\n` +
+      'allowed at launch but is a temporary state, not a finished one. Each one ends\n' +
+      'when the thing behind it exists.\n'
+  );
+} else {
+  console.log('No holes left.\n');
+}

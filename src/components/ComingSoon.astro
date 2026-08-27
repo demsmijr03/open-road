@@ -1,0 +1,114 @@
+---
+/**
+ * A real thing that is not open yet.
+ *
+ * Deliberately a separate component from `Placeholder.astro` rather than a
+ * variant of it, because the two say different things to different people:
+ *
+ *   Placeholder  "we have not finished building this"   addressed to us
+ *   ComingSoon   "this is real, it is not open yet"     addressed to a visitor
+ *
+ * A placeholder is a note that has leaked onto a public page, and every one is
+ * a launch blocker. A coming-soon note is finished copy that ships. That is why
+ * this carries `data-coming-soon` and never `data-placeholder`: audit-holes
+ * counts them in separate columns and only fails the build on the first.
+ *
+ * The visual difference carries the semantic one. Placeholder is a dashed
+ * outline, which is what reads as unfinished. This is a solid filled panel with
+ * no border at all, so it reads as designed. Resisting a coloured edge here for
+ * the same reason Placeholder did: it drew the eye but read as decoration.
+ */
+interface Props {
+  /** What is not open yet, and when it will be if that is known. */
+  note: string;
+  /**
+   * `block` for a standalone note that needs to be noticed, `inline` for one
+   * inside a sentence, `text` for somewhere already labelled.
+   *
+   * `text` exists because the panel was wrong in the footer. Under a "Follow"
+   * heading it became the loudest thing in a column of plain text, giving the
+   * one absent item more weight than the address and the legal line, and it
+   * stacked a second uppercase label under the first saying much the same
+   * thing. Where a heading already says what the thing is, the note only has to
+   * say it is not open yet. The wording carries that, so the chrome does not
+   * have to.
+   */
+  as?: 'block' | 'inline' | 'text';
+}
+
+const { note, as = 'block' } = Astro.props;
+---
+
+{
+  as === 'text' ? (
+    <p class="soon-text" data-coming-soon>
+      {note}
+    </p>
+  ) : as === 'inline' ? (
+    <span class="soon-inline" data-coming-soon>
+      <span class="soon-tag">Coming soon</span>
+      {note}
+    </span>
+  ) : (
+    <div class="soon-block" role="note" aria-label={`Coming soon: ${note}`} data-coming-soon>
+      <span class="soon-tag">Coming soon</span>
+      <p class="soon-note">{note}</p>
+    </div>
+  )
+}
+
+<style>
+  /* No border. A filled panel reads as a designed element; the dashed outline
+     on Placeholder is precisely what says "unfinished", so it cannot appear
+     here or the distinction collapses. */
+  .soon-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    padding: var(--space-s) var(--space-m);
+    border-radius: var(--radius-panel);
+    background-color: color-mix(in srgb, var(--fg) 5%, var(--bg));
+  }
+
+  .soon-tag {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--fg-quiet);
+  }
+
+  .soon-note {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: 1.55;
+    color: var(--fg);
+  }
+
+  /* No panel and no tag. Inherits its size and colour from wherever it sits, so
+     it matches the copy around it instead of competing with it. */
+  .soon-text {
+    margin: 0;
+  }
+
+  .soon-inline {
+    display: inline;
+    padding: 0.1em 0.45em;
+    border-radius: var(--radius-btn);
+    background-color: color-mix(in srgb, var(--fg) 7%, var(--bg));
+    color: var(--fg);
+    font-size: 0.9em;
+  }
+
+  .soon-inline .soon-tag {
+    margin-inline-end: 0.4em;
+  }
+
+  /* Inside a dark band the tint goes the other way so it stays legible, the
+     same correction Placeholder makes. */
+  :global(.surface-deep) .soon-block,
+  :global(.surface-deep) .soon-inline {
+    background-color: color-mix(in srgb, var(--fg) 9%, var(--bg));
+  }
+</style>
