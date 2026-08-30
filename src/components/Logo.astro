@@ -249,8 +249,13 @@ const a11y = decorative
     gap: 0.625rem;
   }
 
+  /* 2.75rem, not 2.25. This artwork carries around forty strokes inside a
+     circle, and a magnified ladder puts the point where the buildings separate
+     and the dome resolves at about 44px. At 36 it read as texture. It costs
+     nothing: the header bar is already 97px, set by the 44px Support button,
+     so the taller mark changes no layout. */
   .logo-lockup svg {
-    inline-size: 2.25rem;
+    inline-size: 2.75rem;
     flex: none;
   }
 
