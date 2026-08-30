@@ -169,7 +169,14 @@ const isCurrent = (href: string) =>
     padding-block: var(--space-s);
   }
 
+  /* flex, not block. The lockup inside is inline-flex, so a block <a> wraps it
+     in a line box and adds the line-height's descender leading underneath it.
+     The <a> then centres correctly in the header row while the logo sits 4.4px
+     above the nav and the buttons. flex produces no line box, so the link's box
+     is the lockup's box. */
   .header-brand {
+    display: flex;
+    align-items: center;
     color: var(--fg);
     text-decoration: none;
     border-radius: var(--radius-btn);

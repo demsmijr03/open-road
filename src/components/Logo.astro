@@ -236,6 +236,13 @@ const a11y = decorative
     block-size: auto;
   }
 
+  /* inline-flex, but the parent must not build a line box around it. An inline
+     element sits on a baseline, so the line-height's descender leading is added
+     underneath: in the header that was 8.9px below a 36px lockup, which centred
+     the <a> correctly and left the logo itself 4.4px above the nav and the
+     buttons beside it. Every wrapper of this component is therefore a flex or
+     grid container, which produces no line box. See .header-brand and
+     .footer-brand. */
   .logo-lockup {
     display: inline-flex;
     align-items: center;

@@ -77,6 +77,15 @@ import ComingSoon from './ComingSoon.astro';
     gap: var(--space-xl);
   }
 
+  /* Same reason as .header-brand: no line box around the lockup, so the phantom
+     descender space does not open a gap between the mark and the mission line
+     under it. */
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .footer-mission {
     margin: var(--space-s) 0 0;
     max-inline-size: 26rem;
