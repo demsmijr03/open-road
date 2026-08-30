@@ -6,8 +6,16 @@ deliberately rather than by drift.
 
 ## The idea: perspective
 
-The foundation funds students to go somewhere unfamiliar and come back seeing
-more than they did. That is the subject, and the identity encodes it.
+The foundation funds a student to get the education that fits them, and West
+Chester is why they could go after it. That is the subject, and the identity
+encodes it.
+
+**Reworded 30 August 2026.** This used to read "funds students to go somewhere
+unfamiliar and come back seeing more than they did", which put the value in the
+travelling. The people being asked to fund this mostly did not leave, so a
+premise that locates the value in leaving quietly tells the donor base they
+lack something. The value is the education. See "Why we started this" in
+`content.md`.
 
 The previous direction ("mile markers") is gone. It leaned on two things the
 brand should not lean on: **school**, through a mortarboard, and **road**, which
@@ -78,8 +86,14 @@ makes claims about who sees visitor data; a font CDN request would undercut them
 
 The headline used to be a description of the mechanism ("we fund tuition").
 `AnimatedHeadline.astro` names the thing itself instead: **"We fund one student
-a year to go find [perspective / opportunity / a wider view / their
-footing]"**, one word rotating in CSS.
+a year to discover [perspective / opportunity / a wider view / what fits]"**,
+one word rotating in CSS.
+
+"Their footing" was retired 30 August 2026, because you find your footing rather
+than discover it. "What fits" echoes "the school that fits them best", which is
+already the site's core phrase. Note that the component reserves the width of
+the longest word so the line never reflows, so a long replacement word widens
+the hero at every breakpoint.
 
 The tagline this replaced, *"Some roads are worth leaving home for,"* was not
 cut. It moved to the oversize statement lower on the page, which also removed
@@ -178,10 +192,22 @@ Three figures stacked near the top of the page were working against the ask, so
 the national and state context moved into the About page's narrative, where a
 reader who wants the wider case has gone looking for it.
 
-`1 in 8` earns its place because it is local and counterintuitive: a district
-with a $137,133 median household income where one in eight students is
-economically disadvantaged. That is the fact that makes a West Chester donor
-stop.
+It earns its place because it is local and counterintuitive: a district with a
+$137,133 median household income where roughly 1,500 students are economically
+disadvantaged. That is the fact that makes a West Chester donor stop.
+
+**It is a count, not a ratio, and that was a trade.** It read "1 in 8" until 30
+August 2026, when a reviewer pointed out the inversion: a donor can flip it to
+"so seven in eight are fine, why does my money matter." A count has no visible
+denominator to flip.
+
+The cost is that 1,500 is a bigger and more abstract number than 1 in 8, which
+is the direction the research immediately below says dampens giving. Two things
+pay for it. The mission statement now sits **above** the statistic rather than
+below, so a reader knows what the foundation is before meeting the number. And
+the paragraph closes on "we are funding one of them this year", so the last
+thing read is a person rather than a population. Neither is decoration; if
+either is removed the trade stops working.
 
 **When the first student is funded, their story leads the home page and this
 statistic becomes supporting.** That is the moment a number stops having to do

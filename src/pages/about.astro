@@ -6,7 +6,6 @@ import Button from '../components/Button.astro';
 import Placeholder from '../components/Placeholder.astro';
 import CtaBand from '../components/CtaBand.astro';
 import PageHero from '../components/PageHero.astro';
-import Logo from '../components/Logo.astro';
 import DistanceStat from '../components/DistanceStat.astro';
 import townPhoto from '../assets/westchester.jpg';
 
@@ -37,31 +36,31 @@ const board = [
     slug: 'joe-clark',
     name: 'Joe Clark',
     role: 'President',
-    bio: 'West Chester East, then Alabama for math, finance, and economics. Now an associate at BCG.',
+    bio: 'West Chester East, then the University of Alabama for math, finance, and economics. Now an associate at BCG.',
   },
   {
     slug: 'riley-boutin',
     name: 'Riley Boutin',
     role: 'Treasurer',
-    bio: 'Connecticut to West Chester to Auburn, for finance, picked because it was unfamiliar. Now in wealth management in Tampa.',
+    bio: 'Connecticut to West Chester to Auburn University, for finance, picked because it was unfamiliar. Now in wealth management in Tampa.',
   },
   {
     slug: 'niko-levin',
     name: 'Niko Levin',
     role: 'VP, Outreach',
-    bio: 'Miami by way of West Chester East. Now an analyst at Accenture in Philadelphia, the closest of the five to home.',
+    bio: 'The University of Miami by way of West Chester East. Now an analyst at Accenture in Philadelphia, the closest of the five to home.',
   },
   {
     slug: 'jackson-kulp',
     name: 'Jackson Kulp',
     role: 'VP, Development',
-    bio: 'Abilene Christian after West Chester East. Now a doctorate in physical therapy at Pittsburgh.',
+    bio: 'Abilene Christian University after West Chester East. Now a doctorate in physical therapy at the University of Pittsburgh.',
   },
   {
     slug: 'demetrius-smith',
     name: 'Demetrius Smith Jr.',
     role: 'VP, Marketing',
-    bio: 'Ohio State, chosen to see somewhere he had never been. Now an analyst at Accenture in New York.',
+    bio: 'The Ohio State University, chosen to see somewhere he had never been. Now an analyst at Accenture in New York.',
   },
 ];
 ---
@@ -101,27 +100,35 @@ const board = [
     </figure>
   </section>
 
-  <section class="section surface-base">
+  <section class="section surface-base" id="why">
     <div class="wrap">
       <div class="split prose">
         <h2 class="reveal">Why we started this</h2>
         <p>
-          The five of us grew up here, and we all left for school. Not because we didn't love where
-          we came from: there are small things you take for granted that you only recognize
-          from a distance.
+          The five of us grew up here. We went to different places for school, studied different
+          things and ended up in different cities, but the same thing happened to each of us: the
+          education we got changed what we thought was possible for ourselves.
         </p>
-        <!-- The thesis of the whole foundation, previously the first clause of a
-             five-line paragraph. It earns display size. -->
-        <p class="pull">What we found out there was perspective.</p>
+        <!-- Reframed August 2026. This used to read "what we found out there was
+             perspective", which put the value in the leaving. Most of the people
+             we are asking to fund this did not leave, and a line saying
+             perspective is what you get by going away tells them, quietly, that
+             they lack it. The value is in the education. West Chester is the
+             reason any of us could go after it. -->
+        <p class="pull">That is what we want to hand to somebody else.</p>
         <p>
-          Long stretches away, surrounded by people whose lives looked nothing like ours, learning
-          things you can't learn somewhere familiar. None of that was lost when we graduated. We
-          carried it with us: some of us back to Chester County, some of us elsewhere, all of us
-          still tied to the place that raised us.
+          None of it started with us. It started here, with the teachers, the coaches, the families
+          and the neighbors who made it normal to aim at something. Some of us came back to Chester
+          County and some of us did not. All five of us know where it came from.
         </p>
         <p>
-          There are students here right now who want that same experience and can't have it, for one
-          reason: money. That's the only thing standing between them and it. So we're removing it.
+          There are students here right now who want that same education and cannot have it, for one
+          reason: money. That is the only thing standing between them and it. So we are removing it.
+        </p>
+        <p>
+          Whether they come back is not the test. If West Chester is the kind of place that sends
+          its students after what they want, that is worth something to West Chester, wherever they
+          end up.
         </p>
       </div>
     </div>
@@ -170,37 +177,14 @@ const board = [
     </div>
   </section>
 
-  <!-- The question. The site's argument, so it gets the dark band and the mark
-       at a size where the prism resolves. -->
-  <section class="section--major surface-deep" id="the-question">
-    <div class="wrap question-grid">
-      <div class="question-copy">
-        <span class="eyebrow">The question we get most</span>
-        <h2 class="reveal">Why fund a student to leave, when they might not come back?</h2>
-        <div class="prose question-prose">
-          <p>
-            It's the first thing people ask. They come back with more than they
-            left with.
-          </p>
-          <p>
-            And when they don't come back, and some won't, what they build still traces to here. We're
-            not funding students to leave West Chester. We're funding them to go where the right
-            education is.
-          </p>
-        </div>
-        <p class="question-line">Open the road, and see what comes back.</p>
-      </div>
-
-      <div class="question-mark">
-        <Logo variant="mark" decorative />
-      </div>
-    </div>
-  </section>
-
   <!-- On the .split spine, like every other text section. This was a 34rem
        quote inside a 46rem column on a 72rem page: three nested width caps,
        which left most of the section empty. -->
-  <section class="section surface-panel">
+  <!-- The dark band. It moved here when the "why fund a student to leave"
+       section was removed, which otherwise left two panel surfaces adjacent and
+       the page with no deep band at all. The mission is the right thing to
+       carry it. -->
+  <section class="section--major surface-deep">
     <div class="wrap">
       <div class="split">
         <h2 class="mission-title reveal">Our mission</h2>
@@ -213,7 +197,7 @@ const board = [
         <p class="mission-note">
           One note on that, in plainer words: <strong
             >every award we make today goes to a West Chester Area School District student.</strong
-          > "Philadelphia Area" is where we're going, not where we are.
+          > "Philadelphia Area" is where we are going, not where we are.
         </p>
       </div>
     </div>
@@ -223,10 +207,7 @@ const board = [
     <div class="wrap">
       <div class="split prose">
         <h2 class="reveal">Who's accountable</h2>
-        <p>
-          Five people, named, with our roles. If something on this site is wrong, one of us answers
-          for it, and you can write to any of us directly.
-        </p>
+        <p>Five people, named, with our roles. You can write to any of us directly.</p>
       </div>
 
       <ul class="board">
@@ -296,37 +277,6 @@ const board = [
     letter-spacing: var(--tracking-display);
     color: var(--fg);
     text-wrap: balance;
-  }
-
-  .question-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
-    gap: var(--space-xl);
-    align-items: center;
-  }
-
-  .question-grid h2 {
-    margin: var(--space-s) 0 var(--space-m);
-    font-size: clamp(1.75rem, 4vw, 2.75rem);
-  }
-
-  .question-prose p {
-    color: var(--fg-quiet);
-  }
-
-  .question-line {
-    margin: var(--space-l) 0 0;
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    line-height: 1.2;
-    letter-spacing: var(--tracking-display);
-    color: var(--fg);
-  }
-
-  .question-mark {
-    inline-size: min(100%, 16rem);
-    margin-inline: auto;
-    color: var(--fg);
   }
 
   /* No top padding: the band butts against the masthead with no seam. */
@@ -478,14 +428,4 @@ const board = [
     color: var(--fg-quiet);
   }
 
-  @media (max-width: 60rem) {
-    .question-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .question-mark {
-      inline-size: min(100%, 12rem);
-      margin-inline: 0;
-    }
-  }
 </style>

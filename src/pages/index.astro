@@ -36,8 +36,8 @@ import heroPhoto from '../assets/landingpage.png';
 
       <div class="rise" style="--rise-delay:200ms">
         <AnimatedHeadline
-          lead="We fund one student a year to go find"
-          words={['perspective', 'opportunity', 'a wider view', 'their footing']}
+          lead="We fund one student a year to discover"
+          words={['perspective', 'opportunity', 'a wider view', 'what fits']}
         />
       </div>
 
@@ -55,6 +55,25 @@ import heroPhoto from '../assets/landingpage.png';
 
   </section>
 
+  <!-- One idea, at size. This was a flat prose block, which is the wrong
+       treatment for the single sentence the whole foundation rests on.
+
+       It sits above the statistic as of August 2026. A reader was meeting "the
+       need here is easy to miss" before being told what the foundation is, so
+       the page argued before it introduced itself. -->
+  <section class="section--major surface-panel">
+    <div class="wrap">
+      <div class="statement">
+        <h2 class="statement-h reveal">Some roads are worth leaving home for.</h2>
+        <p class="statement-p">
+          We are a West Chester nonprofit. We raise the money here, the founders pay the running
+          costs, and the school district picks the student with us.{' '}
+          <a href="/about/">Read the full mission</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- One fact, the local one --------------------------------------------
        This was three stats stacked. Statistics dampen giving relative to an
        identifiable person, and response can fall as numbers accumulate, so a
@@ -62,9 +81,15 @@ import heroPhoto from '../assets/landingpage.png';
        state context moved to About, where a reader who wants the wider case is
        already looking.
 
-       This is the one that stops a West Chester donor: an affluent district
-       where the need is real and invisible. When a student is funded, their
-       story leads here and this becomes supporting. -->
+       Stated as a count rather than as "1 in 8", which a donor could invert:
+       seven in eight are fine, so why does my money matter. A count has no
+       visible denominator to flip. The trade is that it is a bigger, more
+       abstract number, which is the direction compassion-fade research says
+       dampens giving, so it sits directly under the mission statement and ends
+       on one student rather than on a population. See BRAND.md.
+
+       When a student is funded, their story leads here and this becomes
+       supporting. -->
   <section class="section--major surface-base">
     <div class="wrap">
       <div class="split">
@@ -72,31 +97,16 @@ import heroPhoto from '../assets/landingpage.png';
         <div class="reveal" style="--reveal-delay:120ms">
           <DistanceStat
             scope="Here, in this district"
-            figure="1 in 8"
+            figure="1,500"
             source="U.S. Census ACS 2024; NCES Common Core of Data, 2024–25."
           >
             <p>
               Median household income in the West Chester Area School District is $137,133. That is
-              exactly why the need goes unseen. About one in eight of the district's 12,042 students
-              is economically disadvantaged.
+              exactly why the need goes unseen. About 1,500 students in this district are
+              economically disadvantaged. We are funding one of them this year.
             </p>
           </DistanceStat>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- One idea, at size. This was a flat prose block, which is the wrong
-       treatment for the single sentence the whole foundation rests on. -->
-  <section class="section--major surface-panel">
-    <div class="wrap">
-      <div class="statement">
-        <h2 class="statement-h reveal">Some roads are worth leaving home for.</h2>
-        <p class="statement-p">
-          We're a scholarship fund in West Chester. We raise money from people who live here and put
-          it toward the cost of college for a student who has been accepted somewhere they can't
-          quite afford. <a href="/about/">Read the full mission</a>
-        </p>
       </div>
     </div>
   </section>
