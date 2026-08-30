@@ -78,6 +78,14 @@ const isCurrent = (href: string) =>
     --rule: color-mix(in srgb, var(--color-surface) 26%, transparent);
     --rule-strong: color-mix(in srgb, var(--color-surface) 58%, transparent);
     --focus-ring: var(--color-surface);
+    /* The mark's reverse treatment, same four properties surface-deep sets.
+       Without these the bar carries a white wordmark next to a filled dark
+       green disc sitting on a photograph, which reads as two different logos
+       rather than one. */
+    --logo-ground: transparent;
+    --logo-ring: var(--color-surface);
+    --logo-accent: var(--color-surface);
+    --logo-line: var(--color-surface);
     --btn-fill: var(--color-surface);
     --btn-label: var(--color-deep);
     --btn-fill-hover: var(--color-panel);

@@ -1,4 +1,6 @@
 ---
+import Logo from './Logo.astro';
+
 /**
  * A tiny icon set, drawn rather than imported.
  *
@@ -9,12 +11,12 @@
  * Each is a geometric idea, not a picture: giving is a widening arc, partnering
  * is two overlapping frames, asking is a line meeting a point.
  *
- * `tell` is the exception and is not drawn here at all. It used to be the Prism
- * mark redrawn at icon scale, which is why it survived the mark swap: the sweep
- * for the old artwork searched for its 48 grid path data and this was a hand
- * copy on the 24 grid. It is now the real Sightline mark, rendered from the
- * same two paths as Logo.astro on its own 48 viewBox rather than rescaled onto
- * this one, because that path data is never edited.
+ * `tell` is the exception and is not drawn here at all. It renders the real
+ * mark by delegating to Logo.astro rather than carrying a copy of the path
+ * data, which is what let a retired mark survive two logo changes: the sweep
+ * for old artwork searched for path data, and a hand copy on a different grid
+ * did not match it. Delegating means the next mark change reaches this icon
+ * for free.
  */
 interface Props {
   name: 'give' | 'partner' | 'ask' | 'tell';
@@ -23,30 +25,17 @@ interface Props {
 
 const { name, class: className = '' } = Astro.props;
 
-/* The mark is filled and lives on a 48 grid; the drawn icons are stroked on a
-   24 grid. Nothing sensible merges those two, so `tell` takes its own element
-   below rather than bending this one's attributes around it. */
+/* The mark carries its own viewBox and its own fills; the drawn icons are
+   stroked on a 24 grid. Nothing sensible merges those two, so `tell` takes its
+   own element below rather than bending this one's attributes around it. */
 const isMark = name === 'tell';
 ---
 
 {
   isMark ? (
-    <svg
-      class={className}
-      viewBox="0 0 48 48"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <path
-        d="M5.1850 21.3552 L42.4975 19.6592 A19 19 0 0 0 5.1850 21.3552 Z"
-        fill="var(--color-accent)"
-      />
-      <path
-        d="M5.1850 26.6448 L42.4975 28.3408 A19 19 0 0 1 5.1850 26.6448 Z"
-        fill="currentColor"
-      />
-    </svg>
+    <span class={`icon-mark ${className}`}>
+      <Logo variant="mark" decorative />
+    </span>
   ) : (
 <svg
   class={className}
@@ -93,6 +82,22 @@ const isMark = name === 'tell';
 }
 
 <style>
+  /* The mark brings its own viewBox and it is not square: 1070x1080, from the
+     supplied artwork. Letting block-size run free made this icon 28x37 in a row
+     of 28x28 ones, which pushed its card's text down. aspect-ratio pins it to
+     the square the drawn icons occupy. */
+  .icon-mark {
+    display: block;
+    aspect-ratio: 1;
+    inline-size: 100%;
+  }
+
+  .icon-mark :global(svg) {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
   svg {
     display: block;
     inline-size: 100%;

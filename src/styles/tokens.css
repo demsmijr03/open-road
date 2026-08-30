@@ -202,6 +202,16 @@
   --btn-fill: var(--color-accent);
   --btn-label: var(--color-on-accent);
   --btn-fill-hover: #eaad67;
+  /* The mark's official reverse treatment, 03_reverse_white.svg, expressed in
+     the four custom properties Logo.astro reads. The disc drops to a stroked
+     ring and everything goes white, which is what the supplied artwork does.
+     Needed even now the disc is the same #1f4e4a as this band: a filled disc
+     on a band of its own colour disappears, leaving the artwork floating with
+     no edge. */
+  --logo-ground: transparent;
+  --logo-ring: var(--color-surface);
+  --logo-accent: var(--color-surface);
+  --logo-line: var(--color-surface);
   background-color: var(--bg);
   color: var(--fg);
 }
