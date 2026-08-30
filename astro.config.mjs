@@ -5,13 +5,16 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  // The Vercel deployment URL. This is the live production domain until a
-  // custom one is bought, and it has to be a real address rather than a
-  // placeholder: it is what every canonical tag, every og:url and the whole
-  // sitemap are built from, so a wrong value here points search engines at a
-  // domain that does not exist. Change it again the day a custom domain is
-  // pointed at this project, and redeploy.
-  site: 'https://open-road-foundation.vercel.app',
+  // The production domain, live since 30 August 2026. It has to be a real
+  // address rather than a placeholder: every canonical tag, every og:url and
+  // the whole sitemap are built from it, so a wrong value here points search
+  // engines at a domain that does not exist.
+  //
+  // The apex is primary and www redirects to it, set in the Vercel project.
+  // The old open-road-foundation.vercel.app still resolves and still serves,
+  // which is why the canonical tags matter: they are what tells a crawler
+  // which of the two is authoritative.
+  site: 'https://theopenroadfoundation.org',
 
   // /og-card is an asset source for scripts/make-assets.mjs, not a page of the
   // site. The /explore and /review temporary pages have been removed, so their

@@ -1,5 +1,5 @@
 # The Open Road Foundation
-# https://open-road-foundation.vercel.app
+# https://theopenroadfoundation.org
 
 User-agent: *
 Allow: /
@@ -9,4 +9,4 @@ Allow: /
 # results too.
 Disallow: /og-card/
 
-Sitemap: https://open-road-foundation.vercel.app/sitemap-index.xml
+Sitemap: https://theopenroadfoundation.org/sitemap-index.xml
