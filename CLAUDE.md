@@ -1,7 +1,9 @@
 # Open Road, Project Rules
 
 Nonprofit website. Astro + Tailwind, Git-based CMS, deployed on Vercel.
-Ported from `frontend.md`, with mechanics corrected for this stack and machine.
+This file is the whole spec. It began as a port of an earlier `frontend.md`,
+which has since been deleted along with the old `open-road-foundation` repo, so
+nothing here defers to an outside document.
 
 ## Always Do First
 
@@ -48,8 +50,10 @@ until it passes at both 390px and 1440px.
 
 ## Content rules
 
-`content_intake/content.md` is the single source of truth for every word.
-Do not use the old `Documents/open-road-foundation` repo for anything.
+`content_intake/content.md` is the single source of truth for every word. The
+old `open-road-foundation` repo it was once cross-checked against was deleted on
+1 September 2026, local folder and all, so there is no second place to look. If
+a word is not in `content.md`, it does not go on the page.
 
 - Copy is written to the page **verbatim**. The voice is set in that file:
   plain, first person plural, sentence case, active voice. No "empower", no
