@@ -1,4 +1,5 @@
 ---
+import { DONATE_URL } from '../consts';
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -6,7 +7,6 @@ import Button from '../components/Button.astro';
 import Placeholder from '../components/Placeholder.astro';
 import CtaBand from '../components/CtaBand.astro';
 import PageHero from '../components/PageHero.astro';
-import DistanceStat from '../components/DistanceStat.astro';
 import townPhoto from '../assets/westchester.jpg';
 
 /**
@@ -62,6 +62,22 @@ const board = [
     role: 'VP, Marketing',
     bio: 'The Ohio State University, chosen to see somewhere he had never been. Now an analyst at Accenture in New York.',
   },
+];
+/* Where we stand. The facts are the FAQ's; each is set in the shape it has. */
+const checks = ['Registered 501(c)(3)', 'Approved in Pennsylvania', 'Articles of incorporation'];
+
+const commitments = [
+  'Sponsoring district-wide and school-specific events',
+  'Promoting our scholarship in its schools',
+  'Sharing input on the students who apply',
+  'Marketing Open Road as an official district-wide scholarship partner',
+];
+
+const milestones = [
+  { figure: '$10,000', label: "This year's goal" },
+  { figure: '$25,000', label: 'As partners join' },
+  { figure: '$50,000', label: 'With sponsors' },
+  { figure: 'Six figures', label: 'The long run' },
 ];
 ---
 
@@ -134,48 +150,6 @@ const board = [
     </div>
   </section>
 
-  <!-- The wider case, moved off the home page. Three statistics stacked at the
-       top of a donation funnel work against it; here, a reader who wants the
-       context has come looking for it. The home page keeps the local fact. -->
-  <section class="section surface-panel">
-    <div class="wrap">
-      <div class="split">
-        <h2 class="reveal">It isn't only here.</h2>
-
-        <div class="context-stats">
-          <div class="reveal">
-            <DistanceStat
-              scale="inline"
-              scope="Nationally"
-              figure="35%"
-              source="National College Attainment Network, September 2025."
-            >
-              <p>
-                Only about a third of public four-year colleges are affordable to a student from a
-                low-income family. For families in the lowest income quarter, the price after aid
-                eats close to 90% of what they earn in a year.
-              </p>
-            </DistanceStat>
-          </div>
-
-          <div class="reveal" style="--reveal-delay:120ms">
-            <DistanceStat
-              scale="inline"
-              scope="In Pennsylvania"
-              figure="29%"
-              source="Education Data Initiative, 2025–26."
-            >
-              <p>
-                Pennsylvania's in-state tuition at public four-year universities runs 29% above the
-                national average, at $17,909 a year. Staying close to home is not the discount
-                people assume it is.
-              </p>
-            </DistanceStat>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- On the .split spine, like every other text section. This was a 34rem
        quote inside a 46rem column on a 72rem page: three nested width caps,
@@ -203,11 +177,67 @@ const board = [
     </div>
   </section>
 
+  <!-- The FAQ's standing facts, each in the form it actually has.
+       Registration is a set of checks, so it reads as checks. The district's
+       commitments are four parallel things, so they sit as four equal cards,
+       the way the tiers do. The goals are a sequence, so they sit on a track
+       drawn in the timeline's language: a dot per milestone and a hairline
+       between them, the first filled because it is this year's. -->
+    <section class="section surface-panel" id="where-we-stand">
+    <div class="wrap">
+      <div class="split stand-split">
+        <h2 class="reveal">Where we stand</h2>
+
+        <div class="stand">
+          <ul class="checks">
+            {checks.map((c) => <li>{c}</li>)}
+          </ul>
+          <p class="stand-p">
+            We have completed every Pennsylvania requirement for a new nonprofit, and we are ready
+            to operate as a 501(c)(3) partner.
+          </p>
+        </div>
+
+        <div class="stand">
+          <h3 class="stand-h">Our partnership with WCASD</h3>
+          <p class="stand-p">The school district has agreed to partner with us on four fronts.</p>
+          <ul class="commits">
+            {commitments.map((c) => <li>{c}</li>)}
+          </ul>
+        </div>
+
+        <div class="stand">
+          <h3 class="stand-h">Where this is going</h3>
+          <ol class="track" aria-label="Milestones for the fund">
+            {
+              milestones.map((m, i) => (
+                <li class:list={['track-stop', i === 0 && 'track-stop--now']}>
+                  <span class="track-dot" aria-hidden="true" />
+                  <span class="track-figure">{m.figure}</span>
+                  <span class="track-label">{m.label}</span>
+                </li>
+              ))
+            }
+          </ol>
+                    <p class="stand-p">
+            Ultimately, we could see this becoming hundreds of thousands of dollars as a community
+            endowment, generating thousands a year for scholarships. We plan year by year and review
+            our goals annually. Over time, corporate sponsorships and partnerships will carry the
+            fund from one milestone to the next.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section surface-base">
     <div class="wrap">
       <div class="split prose">
         <h2 class="reveal">The five of us</h2>
-        <p>Five people, named, with our roles. You can write to any of us directly.</p>
+        <p>
+          Five people, named, with our roles. Write to any of us at our shared inbox,{' '}
+          <a href="mailto:openroadfdn.admin@gmail.com">openroadfdn.admin@gmail.com</a>.
+        </p>
       </div>
 
       <ul class="board">
@@ -240,31 +270,225 @@ const board = [
     </div>
   </section>
 
-  <CtaBand heading="One student, by the end of this school year.">
+  <CtaBand heading="Our first scholarship, this May.">
     <p slot="body">
-      We're raising the first award now. It goes to one WCASD student by the end of the school year.
+      We're building the fund now. Our first scholarship goes to a WCASD senior on May 1, and the fund keeps paying out every year after.
     </p>
-    <Button href="/get-involved/#give">Support a student</Button>
+    <Button href={DONATE_URL}>Support a student</Button>
   </CtaBand>
 </BaseLayout>
 
 <style>
-  /* Two facts side by side on a wide screen, stacked below. They sit in the
-     .split right column, which caps at --width-text, so the pair needs the cap
-     lifted to breathe. */
-  .split > .context-stats {
-    max-inline-size: none;
+  /* --- Where we stand --------------------------------------------------- */
+
+  .stand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
   }
 
-  .context-stats {
+  .stand + .stand {
+    padding-block-start: var(--space-l);
+    border-block-start: var(--border-hairline) solid var(--rule);
+  }
+
+  .stand-h {
+    margin: 0;
+    font-size: var(--text-xl);
+  }
+
+    /* One right edge for the whole column. The text used to stop at the
+     narrower text measure, 128px short of the cards and track beside it, so
+     the section read as unfinished. Now words, cards and track all end on the
+     same line. */
+  .stand-p {
+    margin: 0;
+    line-height: var(--leading-body);
+    color: var(--fg-quiet);
+    text-wrap: pretty;
+  }
+
+  /* Equal space above and below each divider: the grid's row gap matches the
+     padding under the rule. */
+  .stand-split {
+    row-gap: var(--space-l);
+  }
+
+  .stand ul,
+  .stand ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Registration, as checks. The tick is drawn in CSS, two borders of a
+     rotated box, so it needs no icon and no emoji. */
+  /* One row of three on a wide screen, so no check is left on a line of its
+     own; stacked below that. */
+  .checks {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-xl);
+    gap: var(--space-2xs) var(--space-m);
   }
 
-  @media (min-width: 52rem) {
-    .context-stats {
+    /* Spread edge to edge once the column can hold all three (about 700px), so
+     the row starts and ends where the cards below do. Narrower, they stack:
+     at 1024px the row was 37px wider than its column. */
+  @media (min-width: 80rem) {
+    .checks {
+      grid-template-columns: repeat(3, max-content);
+      justify-content: space-between;
+      gap: var(--space-2xs) var(--space-l);
+    }
+  }
+
+  .checks li {
+    position: relative;
+    padding-inline-start: 1.85rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--fg);
+  }
+
+  .checks li::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 50%;
+    inline-size: 1.3rem;
+    block-size: 1.3rem;
+    border-radius: 50%;
+    background-color: var(--color-deep);
+    transform: translateY(-50%);
+  }
+
+  .checks li::after {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0.47rem;
+    inset-block-start: 50%;
+    inline-size: 0.34rem;
+    block-size: 0.62rem;
+    border: solid var(--color-surface);
+    border-width: 0 2px 2px 0;
+    transform: translateY(-62%) rotate(45deg);
+  }
+
+  /* The four commitments: parallel, so equal cards, like the tiers. */
+  .commits {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-s);
+  }
+
+  @media (min-width: 40rem) {
+    .commits {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+    /* Balanced lines, so a two-line card splits evenly instead of breaking
+     "school-specific" at its hyphen, and text centred in the card's height, so
+     a one-line card sits as squarely as its two-line neighbours. */
+  .commits li {
+    display: flex;
+    align-items: center;
+    padding: var(--space-m);
+    border-radius: var(--radius-panel);
+    background-color: var(--color-surface);
+    border: var(--border-hairline) solid var(--rule);
+    line-height: 1.5;
+    color: var(--fg);
+    text-wrap: balance;
+  }
+
+  /* The milestones, on a track. Same dot and hairline as the year's timeline,
+     laid horizontally, so the page's sequences share one visual language. */
+  .track {
+    --dot: 0.85rem;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-s);
+    margin-block: var(--space-2xs) var(--space-2xs);
+  }
+
+  /* Each stop is a centred column: dot over the middle of its figure and
+     label. The hairline runs dot centre to dot centre, from this dot's right
+     edge to the next dot's left edge half a column and a gap along. */
+  .track-stop {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    text-align: center;
+  }
+
+  .track-stop:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    inset-block-start: calc(var(--dot) / 2 - 0.5px);
+    inset-inline: calc(50% + var(--dot) / 2) calc(-50% - var(--space-s) + var(--dot) / 2);
+    block-size: 1px;
+    background-color: var(--rule-strong);
+  }
+
+  .track-dot {
+    inline-size: var(--dot);
+    block-size: var(--dot);
+    margin-block-end: var(--space-2xs);
+    border-radius: 50%;
+    border: 1.5px solid var(--color-deep);
+    background-color: var(--color-surface);
+  }
+
+  .track-stop--now .track-dot {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+
+  .track-figure {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+  }
+
+  .track-label {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--fg-quiet);
+  }
+
+  /* On a phone the four stops stack, with the hairline running down. */
+  @media (max-width: 40rem) {
+    .track {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-m);
+    }
+
+    .track-stop {
+      align-items: flex-start;
+      padding-inline-start: calc(var(--dot) + var(--space-s));
+      text-align: start;
+    }
+
+    .track-dot {
+      position: absolute;
+      inset-inline-start: 0;
+      inset-block-start: 0.35rem;
+      margin: 0;
+    }
+
+    .track-stop:not(:last-child)::before {
+      inset-block: calc(0.35rem + var(--dot)) calc(var(--space-m) * -1 + 0.35rem);
+      inset-inline: calc(var(--dot) / 2 - 0.5px) auto;
+      inline-size: 1px;
+      block-size: auto;
     }
   }
 

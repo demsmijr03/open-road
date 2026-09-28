@@ -1,6 +1,6 @@
 ---
 import Logo from './Logo.astro';
-import ComingSoon from './ComingSoon.astro';
+import { INSTAGRAM_URL, LINKEDIN_URL } from '../consts';
 ---
 
 <footer class="footer surface-deep">
@@ -8,7 +8,8 @@ import ComingSoon from './ComingSoon.astro';
     <div class="footer-brand">
       <Logo variant="full" />
       <p class="footer-mission">
-        We fund West Chester Area School District students to attend the school that fits them best.
+        A community endowment that funds scholarships for West Chester Area School District
+        students, every year.
       </p>
     </div>
 
@@ -24,16 +25,10 @@ import ComingSoon from './ComingSoon.astro';
         </p>
       </section>
 
-      <!-- One note rather than two. Instagram and LinkedIn are blocked on the
-           same thing, so stacking a note under each made the column read as
-           twice as unfinished as it is.
-
-           `text` rather than the panel: "Follow" already labels the column, and
-           the panel made the one missing item heavier than the address and the
-           legal line beside it. -->
       <section class="footer-col">
         <h2>Follow</h2>
-        <ComingSoon as="text" note="Instagram and LinkedIn, coming soon." />
+        <p><a href={INSTAGRAM_URL}>Instagram</a></p>
+        <p><a href={LINKEDIN_URL}>LinkedIn</a></p>
       </section>
 
       <section class="footer-col footer-col--wide">
@@ -125,16 +120,6 @@ import ComingSoon from './ComingSoon.astro';
 
   .footer-col p {
     margin: 0;
-    font-size: var(--text-sm);
-    line-height: 1.6;
-    color: var(--fg-quiet);
-  }
-
-  /* ComingSoon renders its own <p>, which lives in that component's style
-     scope, so the rule above never reaches it and the note would ship at body
-     size in full-strength text. Reaching across the boundary explicitly, per
-     CLAUDE.md, anchored to an element this component owns. */
-  .footer-col :global(.soon-text) {
     font-size: var(--text-sm);
     line-height: 1.6;
     color: var(--fg-quiet);

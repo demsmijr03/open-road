@@ -7,61 +7,64 @@ import CtaBand from '../components/CtaBand.astro';
 import PageHero from '../components/PageHero.astro';
 import Faq from '../components/Faq.astro';
 
+/*
+ * Where you go to school, then the three factors we pick on: ambition, the
+ * personal statement, and need. Need is read from the statement rather than
+ * assessed as a separate gate, which is why it is a factor and not a filter.
+ */
 const criteria = [
-  { title: 'You go to a WCASD high school', detail: 'You are graduating from a West Chester Area School District high school.' },
-  { title: 'A 3.25 GPA or above', detail: "Measured on your school's standard scale." },
-  { title: 'You have financial need', detail: 'How this is assessed is confirmed before the application opens.' },
-  { title: 'You have an offer in hand', detail: 'Accepted somewhere, or holding offers. Any school, any program, anywhere.' },
+  { kind: 'Eligibility', title: 'You go to a WCASD high school', detail: 'You are a graduating senior at a West Chester Area School District high school.' },
+  { kind: 'Ambition', title: 'A 3.50 GPA or above', detail: 'We look at academic achievement and at what you have done outside the classroom.' },
+  { kind: 'Personal statement', title: 'Your story, in your words', detail: 'You apply through our winter essay contest: your story, and what a scholarship would do for your education.' },
+  { kind: 'Need', title: 'Your financial need', detail: 'Need is taken into account, as you describe it in your personal statement.' },
 ];
 
 const faqs = [
   {
     q: 'Who can apply?',
-    a: 'Any student graduating from a West Chester Area School District high school with a 3.25 GPA or above, financial need, and an offer or acceptance in hand. The application also includes an essay.',
+    a: 'Graduating seniors at a West Chester Area School District high school with a 3.50 GPA or above. You apply through our winter essay contest, with a personal statement.',
   },
   {
-    q: 'How much is the award, and what can I spend it on?',
-    a: "One award, once, to one student. We are raising $10,000 this year and every dollar of it goes into the fund. The share that reaches this year's student is confirmed before the application opens.",
+    q: 'How much is the award?',
+    a: "Scholarships come from the gifts we raise and what the fund earns on them. We confirm each year's amount before the essay contest opens.",
+  },
+  {
+    q: 'How is it paid?',
+    a: 'Directly to you, as a check. Put it toward tuition, books, a laptop, or the travel to get there.',
   },
   {
     q: 'Can I use it at an out-of-state school?',
-    a: 'Yes. In state, out of state, public, private, four-year, two-year, or a trade program. The award goes where you go.',
+    a: 'Yes. In state or out of state, public or private, a four-year or a two-year college. The award goes where you go.',
   },
   {
     q: 'When can I apply?',
-    a: "The dates are being set now. Leave your email and we'll tell you the moment they are.",
+    a: "The essay contest opens on January 15. The winner is announced on April 15 and receives the scholarship on May 1. Leave your email and we'll remind you the day it opens.",
   },
   {
     q: 'Who decides?',
-    a: "The district's scholarship committee and The Open Road Foundation's founders, reading together.",
+    a: 'We do: the five founders, named on the About us page.',
   },
 ];
 ---
 
 <BaseLayout
   title="For students | The Open Road Foundation"
-  description="Who can apply, what it covers, and how we choose. One award, for a West Chester Area School District student."
+  description="Who can apply, how we choose, and how the scholarship reaches you. For graduating seniors in the West Chester Area School District."
 >
-  <!-- The page opens on what the foundation does, not on the word "award".
-       The standalone "What we do" section this replaced is gone: its wording
-       is the masthead now.
-
-       The figure is the fund, not the award. Every dollar raised goes into it,
-       and the share that reaches this year's student is set before the
-       application opens. Stating a number now would mean revising it later. -->
+  <!-- The masthead aside carries the three dates a student plans around.
+       No award figure: the scholarship is the fund's return for the year, and
+       it is confirmed before the contest opens rather than stated and revised. -->
   <PageHero
-    heading="We raise money here for students headed to college."
-    lede="Money from people who live in West Chester, for a student who has been accepted somewhere they cannot quite afford. Here is who can apply, what it covers, and how we choose."
+    heading="Scholarships for West Chester seniors, every year."
+    lede="We are building a community endowment for graduating seniors in the West Chester Area School District. Here is who can apply, how we choose, and how the money reaches you."
   >
-    <div slot="aside" class="award-figure">
-      <p class="award-amount">$10,000</p>
-      <p class="award-caption">the year-one fund, every dollar of it.</p>
-      <p class="award-footnote">
-        <em>
-          Running the foundation is paid for by the founders, so all of it stays in the fund. The
-          share that goes to this year's student is confirmed before the application opens.
-        </em>
-      </p>
+    <div slot="aside" class="award-dates">
+      <p class="award-dates-label">This school year</p>
+      <dl>
+        <div><dt>January 15</dt><dd>The essay contest opens</dd></div>
+        <div><dt>April 15</dt><dd>The winner is announced</dd></div>
+        <div><dt>May 1</dt><dd>The scholarship is paid</dd></div>
+      </dl>
     </div>
   </PageHero>
 
@@ -86,15 +89,21 @@ const faqs = [
 
   <section class="section surface-panel">
     <div class="wrap">
-      <h2 class="qual-title reveal">Who qualifies</h2>
-      <!-- Four criteria, each independently checkable. A student scanning "do I
-           qualify" is served better by four cards than by a bullet list, because
-           each one either applies to them or does not. -->
+      <h2 class="qual-title reveal">What we look for</h2>
+      <p class="qual-lede reveal">
+        Open to every graduating senior in the district. We choose on three factors.
+      </p>
+      <!-- Labelled, not numbered. Numbers read as steps, and these are one
+           gate and three factors weighed together. The label is the FAQ's own
+           name for each, set like the scope labels on the site's statistics. -->
       <ul class="quals">
         {
           criteria.map((c, i) => (
             <li class="qual reveal" style={`--reveal-delay:${i * 110}ms`}>
-              <p class="qual-n">{String(i + 1).padStart(2, '0')}</p>
+              <p class="qual-kind">
+                <span>{c.kind}</span>
+                <span class="qual-rule" aria-hidden="true"></span>
+              </p>
               <p class="qual-t">{c.title}</p>
               <p class="qual-d">{c.detail}</p>
             </li>
@@ -113,8 +122,8 @@ const faqs = [
           get there. Anything that supports your time at the school you chose.
         </p>
         <p>
-          We'll confirm how the money reaches you, whether that's paid to your school or to you
-          directly, before the application opens.{' '}
+          It's paid directly to you, as a check. The money comes from the gifts we raise and what the
+          fund earns, and the fund stays invested for the students after you.{' '}
           <a href="/get-involved/#plan">See the plan for the year.</a>
         </p>
       </div>
@@ -122,8 +131,8 @@ const faqs = [
       <div class="split prose follows">
         <h3>It follows you wherever you go.</h3>
         <p>
-          In state or out of state. Public or private. A four-year school, a two-year school, or a
-          trade program. If it's the right place for you, the award goes with you.
+          In state or out of state. Public or private. A four-year college or a two-year one. If
+          it's the right place for you, the award goes with you.
         </p>
         <p>
           There are no strings on it. Once the award is made it is yours, and what you do next
@@ -139,21 +148,21 @@ const faqs = [
       <div class="split prose">
         <h2 class="reveal">How we choose, and when</h2>
         <p>
-          Two groups read applications together: the West Chester Area School District's scholarship
-          committee and The Open Road Foundation's founders. Neither picks alone.
+          We choose the winner: the five founders, named on the About us page. Your teachers and
+          district representatives share input on each student, as permitted, and the decision is
+          ours.
         </p>
         <p>
-          The application includes an essay, read alongside your grades, your financial
-          information and your offer. We will tell you what it asks the moment the dates are
-          set.
+          You apply through our winter essay contest, which opens on January 15. Your personal
+          statement is your application: your story, and what a scholarship would do for your
+          education.
         </p>
         <p>
           We're looking for students who work hard and who want something specific, and who would be
           held back from it by money alone.
         </p>
         <p>
-          Fundraising opens in September. The first award is made in April. We'll email you the
-          application dates the moment they're set.
+          The winner is announced on April 15 and receives the scholarship on May 1.
         </p>
       </div>
     </div>
@@ -168,7 +177,7 @@ const faqs = [
     </div>
   </section>
 
-  <CtaBand heading="The application opens this year.">
+  <CtaBand heading="The essay contest opens in January.">
     <p slot="body">Leave your name and we'll write to you the day it opens.</p>
     <Button href="/get-involved/#interest">Tell us you're interested</Button>
   </CtaBand>
@@ -218,14 +227,32 @@ const faqs = [
     border: var(--border-hairline) solid var(--rule);
   }
 
-  /* Numbered because eligibility is a checklist, not a ranking: the numerals
-     help a student keep their place across four cards. */
-  .qual-n {
-    margin: 0 0 var(--space-2xs);
-    font-family: var(--font-display);
-    font-size: var(--text-lg);
-    font-weight: 600;
+  .qual-lede {
+    margin: calc(var(--space-s) * -1) 0 var(--space-l);
+    max-inline-size: var(--width-text);
+    line-height: var(--leading-body);
     color: var(--fg-quiet);
+  }
+
+  /* The card's label, drawn like the statistics' scope labels: small caps,
+     then a hairline running to the card's edge. */
+  .qual-kind {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    margin: 0 0 var(--space-2xs);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--fg-quiet);
+    white-space: nowrap;
+  }
+
+  .qual-rule {
+    flex: 1;
+    block-size: var(--border-hairline);
+    background-color: var(--rule);
   }
 
   .qual-t {
@@ -272,32 +299,43 @@ const faqs = [
     background-color: var(--fg-quiet);
   }
 
-  /* The figure, now in the masthead. Sized a little under the old in-page
-     version so it sits beside the h1 rather than competing with it. */
-  .award-amount {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: clamp(3rem, 7vw, 4.5rem);
+  /* The three dates, in the masthead. A definition list, because each date
+     names what happens on it. */
+  .award-dates-label {
+    margin: 0 0 var(--space-s);
+    font-size: var(--text-xs);
     font-weight: 600;
-    line-height: 0.9;
-    letter-spacing: var(--tracking-display);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--fg-quiet);
   }
 
-
-  .award-caption {
+  .award-dates dl {
+    display: grid;
+    gap: var(--space-s);
     margin: 0;
-    font-size: var(--text-lg);
-    color: var(--fg-quiet);
   }
 
-  .award-footnote {
-    margin: var(--space-s) 0 0;
-    max-inline-size: 24rem;
-    font-size: var(--text-sm);
-    line-height: 1.55;
-    color: var(--fg-quiet);
+  .award-dates dl > div {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: var(--space-s);
+    align-items: baseline;
+    padding-block-start: var(--space-s);
+    border-block-start: var(--border-hairline) solid var(--rule);
   }
 
+  .award-dates dt {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .award-dates dd {
+    margin: 0;
+    color: var(--fg-quiet);
+  }
 
   .follows {
     margin-block-start: var(--pad-minor);

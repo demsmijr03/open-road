@@ -70,8 +70,15 @@ const ENDPOINT = 'https://formspree.io/f/xdeonzez';
     </p>
 
     <p class="field field--full field--check">
-      <input id="news" name="news" type="checkbox" />
-      <label for="news">Email me when there's news: the application opening, a student funded</label>
+      <input id="news" name="news" type="checkbox" aria-describedby="news-note" />
+      <span class="check-text">
+        <label for="news">Email me when there's news: the essay contest opening, our first scholarship awarded</label>
+        <!-- The newsletter is this checkbox, so what it promises sits beside it. -->
+        <span class="check-note" id="news-note">
+          This is our newsletter: one email when there's something real to report, and we won't pass
+          your address to anyone.
+        </span>
+      </span>
     </p>
   </div>
 
@@ -195,6 +202,18 @@ const ENDPOINT = 'https://formspree.io/f/xdeonzez';
     margin-block-start: 0.15rem;
     accent-color: var(--color-deep);
     flex: none;
+  }
+
+  .check-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .check-note {
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    color: var(--fg-quiet);
   }
 
   .field--check label {

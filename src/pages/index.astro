@@ -1,4 +1,5 @@
 ---
+import { DONATE_URL } from '../consts';
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
@@ -6,12 +7,27 @@ import DistanceStat from '../components/DistanceStat.astro';
 import CtaBand from '../components/CtaBand.astro';
 import AnimatedHeadline from '../components/AnimatedHeadline.astro';
 import heroPhoto from '../assets/landingpage.png';
+
+const steps = [
+  {
+    title: 'You give',
+    detail: 'Gifts, events and corporate match programs are the main way the fund grows.',
+  },
+  {
+    title: 'We invest it',
+    detail: 'In safe securities, such as government bonds, so every gift earns returns.',
+  },
+  {
+    title: 'We award scholarships',
+    detail: 'Together, gifts and returns fund scholarships for WCASD students each year.',
+  },
+];
 ---
 
 <BaseLayout
   heroOverlay
   title="Some roads are worth leaving home for | The Open Road Foundation"
-  description="We help West Chester Area School District students afford the school that fits them best, wherever it takes them."
+  description="We are building a community endowment for West Chester Area School District students. What we raise is invested to grow, and gifts and returns together fund scholarships every year."
 >
   <!-- Hero -------------------------------------------------------------
        A full-bleed photograph with the header floating on it. The copy is
@@ -36,18 +52,19 @@ import heroPhoto from '../assets/landingpage.png';
 
       <div class="rise" style="--rise-delay:200ms">
         <AnimatedHeadline
-          lead="We fund one student a year to discover"
+          lead="Every year, we fund students to discover"
           words={['perspective', 'opportunity', 'a wider view', 'what fits']}
         />
       </div>
 
       <p class="hero-lede rise" style="--rise-delay:330ms">
-        The Open Road Foundation helps West Chester Area School District students afford the school
-        that fits them best, wherever it takes them.
+        The Open Road Foundation is building a community endowment for West Chester Area School
+        District students. What we raise is invested to grow, and gifts and returns together fund
+        scholarships every year.
       </p>
 
       <div class="hero-actions rise" style="--rise-delay:440ms">
-        <Button href="/get-involved/#give">Support a student</Button>
+        <Button href={DONATE_URL}>Support a student</Button>
         <Button href="/about/" variant="secondary">Read our story</Button>
       </div>
       </div>
@@ -66,11 +83,12 @@ import heroPhoto from '../assets/landingpage.png';
       <div class="statement">
         <h2 class="statement-h reveal">Some roads are worth leaving home for.</h2>
         <p class="statement-p">
-          We are a West Chester nonprofit. We raise the money here, the founders pay the running
-          costs, and the school district picks the student with us.{' '}
+          We are a West Chester nonprofit, and the school district is our partner. The founders pay
+          the running costs, so every gift goes into the fund.{' '}
           <a href="/about/">Read the full mission</a>
         </p>
       </div>
+
     </div>
   </section>
 
@@ -78,8 +96,8 @@ import heroPhoto from '../assets/landingpage.png';
        This was three stats stacked. Statistics dampen giving relative to an
        identifiable person, and response can fall as numbers accumulate, so a
        wall of figures this early was working against the page. The national and
-       state context moved to About, where a reader who wants the wider case is
-       already looking.
+       state context moved to About, and was removed from there on 24 Sep 2026:
+       the endowment and the district partnership now carry the case.
 
        Stated as a count rather than as "1 in 8", which a donor could invert:
        seven in eight are fine, so why does my money matter. A count has no
@@ -103,7 +121,7 @@ import heroPhoto from '../assets/landingpage.png';
             <p>
               Median household income in the West Chester Area School District is $137,133. That is
               exactly why the need goes unseen. About 1,500 students in this district are
-              economically disadvantaged. We are funding one of them this year.
+              economically disadvantaged. Our first scholarship goes to one of them this spring.
             </p>
           </DistanceStat>
         </div>
@@ -111,10 +129,45 @@ import heroPhoto from '../assets/landingpage.png';
     </div>
   </section>
 
+  <!-- The endowment, as the three steps it actually is. Numbered because
+       the order is the mechanism: a gift goes in, it is invested and earns, and
+       gifts and returns together pay for scholarships.
+
+       Its own section, placed directly before the closing ask, so the page
+       runs who we are, why it matters, how your money works, then give.
+
+       Drawn in the timeline's language, a ring per step joined by a hairline.
+       On a wide screen each step is a centred column of one shared width, the
+       ring over the middle of its text. The last ring is filled: it is the step
+       the other two exist for. -->
+  <section class="section surface-panel">
+    <div class="wrap">
+      <h2 class="how-title reveal">How the fund works</h2>
+      <div class="how">
+        <ol class="steps">
+          {
+            steps.map((step, i) => (
+              <li
+                class:list={['step', 'reveal', i === steps.length - 1 && 'step--last']}
+                style={`--reveal-delay:${i * 110}ms`}
+              >
+                <span class="step-mark" aria-hidden="true">{i + 1}</span>
+                <div class="step-body">
+                  <p class="step-t">{step.title}</p>
+                  <p class="step-d">{step.detail}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </section>
+
   <CtaBand heading="Open the road, and see what comes back.">
-    <p slot="body">One student, this year. Ten thousand dollars gets us there.</p>
-    <Button href="/get-involved/#give">Support a student</Button>
-    <a href="/get-involved/#newsletter">Or just get the newsletter</a>
+    <p slot="body">A gift here grows with the fund, and helps pay for scholarships this year and every year after.</p>
+    <Button href={DONATE_URL}>Support a student</Button>
+    <a href="/get-involved/#interest">Or just get the newsletter</a>
   </CtaBand>
 </BaseLayout>
 
@@ -149,6 +202,140 @@ import heroPhoto from '../assets/landingpage.png';
 
   .statement-p a:hover {
     text-decoration-color: var(--fg);
+  }
+
+  /* How the fund works ---------------------------------------------------- */
+
+  .how-title {
+    margin: 0 0 var(--space-l);
+    font-size: var(--text-h2);
+    letter-spacing: var(--tracking-h2);
+  }
+
+  .how {
+    --mark: 2.75rem;
+    padding: var(--space-l) var(--space-m);
+    border-radius: var(--radius-panel);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-l);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .step {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--mark) minmax(0, 1fr);
+    gap: var(--space-s);
+    align-items: start;
+    /* The row stretches every step to the tallest one. Without this, a
+       shorter step spread the spare height across its own rows and its title
+       dropped below its neighbours'. */
+    align-content: start;
+  }
+
+  /* The ring. Sits above the connector, so the hairline appears to run into
+     it rather than through it. */
+  .step-mark {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    inline-size: var(--mark);
+    block-size: var(--mark);
+    border-radius: 50%;
+    border: 1.5px solid var(--color-accent);
+    background-color: var(--color-surface);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    line-height: 1;
+    color: var(--accent-text);
+  }
+
+  /* The outcome, filled. Apricot carries no text, so the numeral takes the
+     dark label colour made for the fill (6.02:1). */
+  .step--last .step-mark {
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+
+  /* Connector, vertical on a phone: from under this ring to the next one. */
+  .step:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: calc(var(--mark) / 2 - 0.5px);
+    inset-block: var(--mark) calc(var(--space-l) * -1);
+    inline-size: 1px;
+    background-color: var(--rule-strong);
+  }
+
+  .step-body p {
+    margin: 0;
+  }
+
+  .step-body .step-t {
+    padding-block-start: 0.55rem;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  .step-body .step-d {
+    margin-block-start: var(--space-2xs);
+    max-inline-size: 22rem;
+    line-height: var(--leading-body);
+    color: var(--fg-quiet);
+  }
+
+  /* Side by side: each step is a centred column. The text block is one shared
+     width in all three, and the ring sits over its middle. The connector runs
+     ring centre to ring centre: from this ring's right edge (50% plus half a
+     ring) to the next ring's left edge (the next column's middle, reached by
+     going past this column's right edge by the gap plus half a column). */
+  @media (min-width: 52rem) {
+    .how {
+      padding: var(--space-xl);
+    }
+
+    .steps {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-xl);
+    }
+
+    .step {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      gap: var(--space-m);
+      text-align: center;
+    }
+
+    .step-body {
+      inline-size: min(100%, 17rem);
+    }
+
+    .step:not(:last-child)::before {
+      inset-block: calc(var(--mark) / 2 - 0.5px) auto;
+      inset-inline: calc(50% + var(--mark) / 2) calc(-50% - var(--space-xl) + var(--mark) / 2);
+      inline-size: auto;
+      block-size: 1px;
+    }
+
+    .step-body .step-t {
+      padding-block-start: 0;
+    }
+
+    .step-body .step-d {
+      max-inline-size: none;
+    }
   }
 
   .hero {

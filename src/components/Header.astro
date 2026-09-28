@@ -1,4 +1,5 @@
 ---
+import { DONATE_URL } from '../consts';
 import Logo from './Logo.astro';
 import Button from './Button.astro';
 
@@ -51,7 +52,7 @@ const isCurrent = (href: string) =>
          fell back to order 0 and jumped above the logo. -->
     <div class="header-cta">
       <Button href="/get-involved/#interest" variant="secondary" class="header-ghost">Contact</Button>
-      <Button href="/get-involved/#give">Support a student</Button>
+      <Button href={DONATE_URL}>Support a student</Button>
     </div>
   </div>
 </header>
@@ -331,10 +332,16 @@ const isCurrent = (href: string) =>
      on a 780px-tall screen that 208px header ran straight into the hero
      eyebrow, overlapping it by 5px. Trimming the pill's side padding recovers
      18px, which is enough to keep two rows down to the narrowest phones in
-     use. The label is unchanged; only the air around it is tighter. */
+     use.
+
+     The mark was later resized to 156px, which put the pair 5px over again at
+     360px (156 + 8 + 161 against a 320px row). The label now steps down to the
+     small size as well, which recovers about 20px. Height is untouched: the
+     button's 2.75rem minimum keeps the tap target at 44px. */
   @media (max-width: 24rem) {
     .header-cta :global(.btn) {
       padding-inline: 0.6rem;
+      font-size: var(--text-sm);
     }
   }
 

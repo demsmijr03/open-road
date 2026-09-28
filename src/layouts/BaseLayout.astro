@@ -1,10 +1,14 @@
 ---
 import '@fontsource-variable/source-serif-4';
 import '@fontsource-variable/figtree';
+// The real italic, for source citations and the privacy date. Without it the
+// browser slants the upright face. Only fetched on pages that use it.
+import '@fontsource-variable/figtree/wght-italic.css';
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { INSTAGRAM_URL, LINKEDIN_URL } from '../consts';
 
 interface Props {
   title: string;
@@ -35,11 +39,12 @@ const orgSchema = {
   name: 'The Open Road Foundation',
   url: Astro.site?.toString(),
   description:
-    'We fund West Chester Area School District students to attend the school that fits them best.',
+    'A community endowment that funds scholarships for West Chester Area School District students, every year.',
   areaServed: {
     '@type': 'AdministrativeArea',
     name: 'West Chester Area School District, Pennsylvania',
   },
+  sameAs: [INSTAGRAM_URL, LINKEDIN_URL],
 };
 ---
 

@@ -1,9 +1,9 @@
 ---
+import { DONATE_URL } from '../consts';
 import { Image } from 'astro:assets';
 import lectureHall from '../assets/lecture-hall.png';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
-import ComingSoon from '../components/ComingSoon.astro';
 import CtaBand from '../components/CtaBand.astro';
 import PageHero from '../components/PageHero.astro';
 import Faq from '../components/Faq.astro';
@@ -11,89 +11,123 @@ import MilestoneRail from '../components/MilestoneRail.astro';
 import InterestForm from '../components/InterestForm.astro';
 import Icon from '../components/Icon.astro';
 
+/* A drafted email with the site's address in it. No script, so it works
+ * anywhere, and the note on the card says exactly what happens. */
+const SHARE_HREF =
+  'mailto:?subject=The%20Open%20Road%20Foundation&body=A%20community%20scholarship%20endowment%20for%20West%20Chester%20Area%20School%20District%20students%3A%20https%3A%2F%2Ftheopenroadfoundation.org%2F';
+
 const ways = [
-  { icon: 'give',    name: 'Give',                     note: 'One gift, once, straight to the award.', href: '#give' },
+  { icon: 'give',    name: 'Give',                     note: 'Invested, and paid out as scholarships every year.', href: '#give' },
   { icon: 'partner', name: 'Partner with us',          note: 'For businesses and community organizations.', href: '#partner' },
   { icon: 'ask',     name: "Tell us you're interested", note: 'Student, parent, counselor, mentor, donor.', href: '#interest' },
-  { icon: 'tell',    name: 'Spread the word',          note: 'Send this to someone in West Chester.', href: '#newsletter' },
+  { icon: 'tell',    name: 'Spread the word',          note: 'Send this to someone in West Chester.', href: SHARE_HREF },
 ] as const;
 
+/*
+ * The tiers are the sponsor sheet's, word for word. The sheet is the source of
+ * truth for sponsorship, and the two used to offer different things to the
+ * same businesses (Freeway was $1,500 here and $2,500 there).
+ */
 const tiers = [
   {
     name: 'Founding Supporter',
-    amount: 'Any amount up to $499',
-    gets: "Your name listed on this site as part of the founding year, and it stays there however big this gets. Only this year's supporters make that list.",
+    amount: 'Up to $499',
+    gets: [
+      'A personal letter of appreciation from the founders',
+      'Your name on the supporters page, in text, for the year',
+    ],
   },
   {
     name: 'Avenue Partner',
     amount: '$500',
-    gets: 'Everything above, plus your logo on event signage, a newsletter mention, and an invitation to the annual supporter gathering.',
+    prev: 'Founding Supporter, plus:',
+    gets: ['Your logo on event signage', 'A newsletter mention', 'An Instagram and Facebook story'],
   },
   {
     name: 'Boulevard Partner',
     amount: '$1,000',
-    gets: 'Everything above, plus featured logo placement and a dedicated social spotlight.',
+    prev: 'Avenue Partner, plus:',
+    gets: [
+      'A spotlight post on Instagram, Facebook and LinkedIn',
+      'Your name and logo on the site and in print',
+    ],
   },
   {
     name: 'Freeway Partner',
-    amount: '$1,500 and up',
-    gets: 'Everything above, plus the option to co-brand an event or initiative, and first invitation to corporate match conversations.',
+    amount: '$2,500+',
+    prev: 'Boulevard Partner, plus:',
+    gets: [
+      'Top logo placement on the site and in print',
+      'A social feature or reel, planned with you',
+      'Recognition at Open Road events',
+      'A yearly note on what your partnership paid for',
+      'The Open Road 2027 Scholarship, presented by you',
+    ],
   },
 ];
 
 /*
- * Details are inferred from the titles and are written to describe intent
- * rather than to commit anyone to specifics. The March line named Twin Valley
- * Coffee until nothing turned out to be confirmed with them: a title naming a
- * business states a joint event as fact, whatever the description underneath
- * is careful to avoid. It stays unnamed until there is an agreement to point
- * at. All five need founder sign-off before launch.
+ * The 2026-27 schedule from the FAQ, as of 15 September 2026. Days are given
+ * where the FAQ gives them. The March coffee shop day is gone: the FAQ has no
+ * programming in March.
  */
 const milestones = [
   {
-    when: 'September',
-    what: 'Fundraising begins',
-    detail:
-      'The fund opens for the year. From this point every gift goes toward the first award.',
+    when: 'September 1',
+    what: 'Fundraising kicks off',
+    detail: 'The fund opens for the year, through individual gifts, events and corporate match programs.',
+  },
+  {
+    when: 'November 21',
+    what: 'Percentage night with Chipotle West Chester',
+    detail: 'Come in for dinner, and part of the evening goes to the fund.',
   },
   {
     when: 'November',
-    what: 'High school reunions fundraiser',
-    detail:
-      'Reunion season brings people back to West Chester. We make the case in person, to the people who went to these schools themselves.',
+    what: 'WCASD class of 2021 reunions',
+    detail: 'West Chester East on November 28. Henderson and Rustin are finalizing their dates, and both have agreed to partner.',
   },
   {
     when: 'January',
-    what: 'WCASD essay contest',
-    detail:
-      'A writing prize across the district. It raises money and it puts the fund in front of the students who might apply to it.',
+    what: 'Charity Giving Program at Sedona Taphouse',
+    detail: "All month, through Sedona Taphouse's own giving program.",
   },
   {
-    when: 'March',
-    what: 'Fundraising day with a local coffee shop',
-    detail:
-      'A day at a local shop, with the community invited to come by and give. The last push before the award is decided.',
+    when: 'January 15',
+    what: 'The essay contest opens',
+    detail: 'Seniors apply with a personal statement.',
   },
   {
-    when: 'April',
-    what: 'First round of scholarships',
-    detail:
-      'The district committee and the founders read together, and the first award is made.',
+    when: 'April 15',
+    what: 'The winner is announced',
+  },
+  {
+    when: 'May 1',
+    what: 'Our first scholarship is paid',
+    detail: 'Directly to the student, as a check.',
   },
 ];
 
 const donorFaqs = [
+  {
+    q: 'Where does my money go?',
+    a: 'Into our community endowment fund: secure investments, such as government bonds, that grow passively. We award money from the fund each year while keeping enough in it to grow year over year. We can share our investment strategy on request.',
+  },
+  {
+    q: 'How much of it reaches students?',
+    a: 'Gifts go into the fund, and its investments add returns on top. Together they pay for scholarships each year, while enough stays invested for the fund to keep growing.',
+  },
   {
     q: 'Is my donation tax-deductible?',
     a: 'Yes. We are a registered 501(c)(3) nonprofit organization, and you will get a receipt for your records.',
   },
   {
     q: 'Can I give monthly?',
-    a: "A gift is a one-time thing for now. Recurring giving arrives when there's a reason for it.",
+    a: 'Yes. Choose Monthly when you give.',
   },
   {
     q: 'What if you raise more than $10,000?',
-    a: "It seeds next year's fund. Anything past the goal carries into the next cycle.",
+    a: 'It all goes into the endowment. A bigger fund earns more, so every scholarship after it grows too.',
   },
   {
     q: 'Who runs this?',
@@ -104,11 +138,11 @@ const donorFaqs = [
 
 <BaseLayout
   title="Get involved | The Open Road Foundation"
-  description="Give, partner, or tell us you are interested. We are raising $10,000 this year to fund a West Chester Area School District student."
+  description="Give, sponsor, or tell us you are interested. We are raising $10,000 this year to start a community scholarship endowment for West Chester Area School District students."
 >
   <PageHero
     heading="Get involved"
-    lede="We are raising $10,000 this year to fund our first student. Every way to help is below, and one of them takes only a minute and a form."
+    lede="We are raising $10,000 this year to start a community scholarship endowment for WCASD students. Every way to help is below, and one of them takes only a minute and a form."
   />
 
   <!-- Four ways in, before any of the detail. This page used to open on eight
@@ -162,10 +196,11 @@ const donorFaqs = [
             <span class="plan-goal-figure">$10,000</span>
           </p>
           <p class="plan-note">
-            Every dollar raised goes into the Open Road Fund. Running the foundation, the
-            fundraising, the marketing and the administrative work behind an award, is paid for by
-            the founders. Anything raised past the goal carries into next year's fund.
+            Every dollar raised goes into the community endowment, where it is invested in secure
+            holdings such as government bonds. Running the foundation, the fundraising, the
+            marketing and the administrative work behind an award, is paid for by the founders.
           </p>
+          <p class="plan-note">Our schedule for the 2026 to 2027 school year, as of September.</p>
         </div>
         <MilestoneRail items={milestones} />
       </div>
@@ -177,37 +212,44 @@ const donorFaqs = [
       <div class="split prose">
         <h2 class="reveal">Give</h2>
         <p>
-          One gift, one student, this year. When you give, it's once, and every dollar of it goes
-          toward the award.
+          A gift here goes into the community endowment, where it is invested to grow. Gifts and
+          the fund's returns together pay for scholarships every year, so what you give keeps
+          working.
         </p>
         <p>
           <strong>Your gift is tax-deductible.</strong> We are a registered 501(c)(3) nonprofit
-          organization, EIN 42-3704788, and you will get a receipt for
+          organization, <span class="nowrap">EIN 42-3704788</span>, and you will get a receipt for
           your records.
         </p>
 
-        <!-- A dead "coming soon" loses the donor. The note says plainly why
-             giving is not open, and the button under it captures the person who
-             was ready to give, so they can be emailed on the day it is. -->
-        <ComingSoon
-          note="Online giving opens soon, and it is the first thing we are turning on."
-        />
         <p>
-          <Button href="#interest">Tell us you want to give</Button>
+          Give once or monthly, and your receipt comes by email.
         </p>
+        <p>
+          <Button href={DONATE_URL}>Donate</Button>
+        </p>
+
+        <!-- Employer matching sits with the ask it doubles. -->
+        <div class="give-match">
+          <h3>Employer matching</h3>
+          <p>
+            Many employers match charitable gifts from their staff, which can double what you give at
+            no extra cost to you. Ask your HR team for their matching gift form.
+          </p>
+          <p>You'll need:</p>
+          <ul class="matching-facts">
+            <li><span>Legal name</span>The Open Road Foundation</li>
+            <li><span>EIN</span>42-3704788</li>
+            <li><span>Address</span>1427 Clover Lane, West Chester, PA 19380-5906</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="section surface-panel" id="partner">
     <div class="wrap">
-      <div class="split prose">
-        <h2 class="reveal">Partner with us</h2>
-        <p>
-          For businesses, community organizations, and anyone who wants to give at a level that
-          carries their name alongside ours.
-        </p>
-      </div>
+      <h2 class="ways-title partner-title reveal">Ways to partner</h2>
 
       <!-- Tiers are named after road types and ascend in scale, so the naming
            does real work: the reader can order them without reading amounts.
@@ -225,56 +267,40 @@ const donorFaqs = [
             >
               <p class="tier-amount">{tier.amount}</p>
               <p class="tier-name">{tier.name}</p>
-              <p class="tier-gets">{tier.gets}</p>
+              {tier.prev && <p class="tier-prev">{tier.prev}</p>}
+              <ul class="tier-gets">
+                {tier.gets.map((g) => <li>{g}</li>)}
+              </ul>
             </li>
           ))
         }
       </ul>
 
-      <p class="tiers-note">
-        Recognition on printed materials and at events depends on what we produce this year. We will
-        confirm exactly what you get before you commit.
-      </p>
-
-      <p class="tiers-note">
-        <strong>Giving in kind counts too.</strong> Goods, space, printing, food for an event,
-        professional time. Anything that lowers what the fund spends does the same work as a
-        gift. If none of the tiers above fit how you want to help, tell us what you had in mind
-        and we'll work it out with you.
-      </p>
-    </div>
-  </section>
-
-  <section class="section surface-base">
-    <div class="wrap">
-      <div class="split prose">
-        <h2 class="reveal">Employer matching</h2>
-        <p>
-          Many employers match charitable gifts from their staff, which can double what you give at
-          no extra cost to you. Ask your HR team for their matching gift form.
-        </p>
-        <p>You'll need:</p>
-        <ul class="matching-facts">
-          <li><span>Legal name</span>The Open Road Foundation</li>
-          <li><span>EIN</span>42-3704788</li>
-          <li><span>Address</span>1427 Clover Lane, West Chester, PA 19380-5906</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="section surface-panel" id="newsletter">
-    <div class="wrap">
-      <div class="split prose">
-        <h2 class="reveal">Newsletter</h2>
-        <p>
-          One email when there's something real to report: the application opening, a student
-          funded, the year's total. That's it, and we won't pass your address to anyone.
-        </p>
-        <p>
-          Tick the news box on the form below and you're on it.
-        </p>
-        <p><Button href="#interest">Join the newsletter</Button></p>
+            <!-- Two notes, each exactly two tier columns wide on a wide screen, so
+           their edges line up with the cards above. Same order and wording as
+           the sponsor sheet. Destination Partner ($5,000 and up) is no longer
+           listed: it is kept back as a ghost tier and offered in conversation,
+           which is what the second note invites. -->
+      <div class="tier-notes">
+        <div class="tier-note reveal">
+          <p class="tier-note-head">
+            <span class="tier-note-title">Giving in kind</span>
+            <span class="tier-note-tag">Any size</span>
+          </p>
+          <p class="tier-note-text">
+            Goods, space, printing, food or professional time all lower what the fund has to spend.
+          </p>
+        </div>
+        <div class="tier-note reveal" style="--reveal-delay:110ms">
+          <p class="tier-note-head">
+                        <span class="tier-note-title">Something else</span>
+            <span class="tier-note-tag">Let's talk</span>
+          </p>
+          <p class="tier-note-text">
+                        If none of these options are compatible with your interests, we'll discuss what's
+            best for you.
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -297,10 +323,9 @@ const donorFaqs = [
 
   <CtaBand heading="This is the year it starts.">
     <p slot="body">
-      We're raising the first award now, and giving it to one WCASD student by the end of the school
-      year.
+      We're building the fund now, and our first scholarship goes to a WCASD senior on May 1.
     </p>
-    <Button href="#give">Support a student</Button>
+    <Button href={DONATE_URL}>Support a student</Button>
   </CtaBand>
 </BaseLayout>
 
@@ -342,25 +367,49 @@ const donorFaqs = [
     }
   }
 
+  /* The whole card is the target, so it reads as one: larger type and a
+     larger icon. The hover is a lift and a shadow fading in on its own layer,
+     so only transform and opacity animate. No arrow: the lift, the shadow and
+     the pointer already say the card goes somewhere. */
   .way a {
+    position: relative;
+    isolation: isolate;
     display: flex;
     flex-direction: column;
     block-size: 100%;
     gap: var(--space-2xs);
-    padding: var(--space-m);
+    padding: var(--space-l);
     border-radius: var(--radius-panel);
     border: var(--border-hairline) solid var(--rule);
     background-color: var(--bg);
     text-decoration: none;
     color: inherit;
-    transition:
-      transform var(--duration) var(--ease-spring),
-      border-color var(--duration) var(--ease-spring);
+    transition: transform var(--duration) var(--ease-spring);
+  }
+
+  .way a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    box-shadow: var(--shadow-floating);
+    opacity: 0;
+    transition: opacity var(--duration) var(--ease-spring);
   }
 
   .way a:hover {
-    transform: translateY(-2px);
+    transform: translateY(-4px);
     border-color: var(--rule-strong);
+  }
+
+  .way a:hover::after,
+  .way a:focus-visible::after {
+    opacity: 1;
+  }
+
+  .way a:active {
+    transform: translateY(-1px);
   }
 
   .way a:focus-visible {
@@ -369,23 +418,29 @@ const donorFaqs = [
   }
 
   .way-icon {
-    inline-size: 1.75rem;
+    inline-size: 2.25rem;
     color: var(--fg);
-    margin-block-end: var(--space-2xs);
+    margin-block-end: var(--space-xs);
   }
 
   .way-name {
     font-family: var(--font-display);
-    font-size: var(--text-lg);
+    font-size: var(--text-xl);
     font-weight: 600;
+    line-height: 1.2;
   }
 
   .way-note {
-    font-size: var(--text-sm);
     line-height: 1.55;
     color: var(--fg-quiet);
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .way a,
+    .way a::after {
+      transition: none;
+    }
+  }
 
   /* There are exactly four tiers and they are a sequence, so they belong on one
      line. auto-fit was deciding the column count from a 15rem minimum, which
@@ -472,8 +527,110 @@ const donorFaqs = [
     color: var(--fg);
   }
 
-  .tier-gets {
+  /* Semibold, not italic: only upright Figtree is loaded, so an italic here
+     would be a slanted fake. Matches the sponsor sheet. */
+  .tier-prev {
     margin: 0;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--fg-quiet);
+  }
+
+  /* Hanging markers, so a wrapped line starts under the text rather than under
+     the dot. Same round marker as the checklist elsewhere on the site. */
+  .tier-gets {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-sm);
+    line-height: 1.55;
+    color: var(--fg-quiet);
+  }
+
+  .tier-gets li {
+    position: relative;
+    padding-inline-start: var(--space-s);
+  }
+
+  .tier-gets li::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0.1rem;
+    inset-block-start: 0.68em;
+    inline-size: 0.3rem;
+    block-size: 0.3rem;
+    border-radius: 50%;
+    background-color: currentColor;
+  }
+
+  .partner-title + .tiers {
+    margin-block-start: 0;
+  }
+
+  .tier-notes {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-m);
+    margin-block-start: var(--space-m);
+  }
+
+  /* Gaps match the tier grid at each width, which is what makes each note
+     exactly two tier columns wide. */
+  @media (min-width: 40rem) {
+    .tier-notes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .tier-notes {
+      gap: var(--space-s);
+      margin-block-start: var(--space-s);
+    }
+  }
+
+  .tier-note {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    padding: var(--space-m);
+    border-radius: var(--radius-panel);
+    border: var(--border-hairline) solid var(--rule-strong);
+  }
+
+  .tier-note p {
+    margin: 0;
+  }
+
+  .tier-note .tier-note-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3xs) var(--space-s);
+    padding-block-end: var(--space-2xs);
+    border-block-end: var(--border-hairline) solid var(--rule);
+  }
+
+  .tier-note-title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--fg);
+  }
+
+  .tier-note-tag {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--fg-quiet);
+  }
+
+  .tier-note .tier-note-text {
     font-size: var(--text-sm);
     line-height: 1.6;
     color: var(--fg-quiet);
@@ -508,13 +665,6 @@ const donorFaqs = [
     text-transform: uppercase;
     color: var(--fg-quiet);
     padding-block-start: 0.2em;
-  }
-
-  .tiers-note {
-    margin: var(--space-m) 0 0;
-    max-inline-size: var(--width-text);
-    font-size: var(--text-sm);
-    color: var(--fg-quiet);
   }
 
   .plan-grid {
@@ -559,6 +709,29 @@ const donorFaqs = [
     font-weight: 600;
     line-height: 1;
     letter-spacing: var(--tracking-display);
+  }
+
+  /* An EIN is one token; it must not break at its hyphen. */
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  .give-match {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    margin-block-start: var(--space-s);
+    padding-block-start: var(--space-l);
+    border-block-start: var(--border-hairline) solid var(--rule);
+  }
+
+  .give-match h3,
+  .give-match p {
+    margin: 0;
+  }
+
+  .give-match h3 {
+    font-size: var(--text-xl);
   }
 
   .interest-title,

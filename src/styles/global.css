@@ -229,6 +229,8 @@
   .prose li {
     line-height: var(--leading-body);
     color: var(--fg-quiet);
+    /* No single word stranded on a paragraph's last line. */
+    text-wrap: pretty;
   }
 
   .prose h2 {
