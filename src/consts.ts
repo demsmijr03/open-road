@@ -1,5 +1,5 @@
 /**
- * The Givebutter campaign every "Support a student" and "Give" button points
+ * The Givebutter campaign every "Give to the fund" and "Donate" button points
  * at. One place, so moving campaigns is a one-line change.
  */
 export const DONATE_URL = 'https://givebutter.com/fund-college-for-high-achieving-students';

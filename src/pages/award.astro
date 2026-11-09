@@ -8,15 +8,16 @@ import PageHero from '../components/PageHero.astro';
 import Faq from '../components/Faq.astro';
 
 /*
- * Where you go to school, then the three factors we pick on: ambition, the
- * personal statement, and need. Need is read from the statement rather than
- * assessed as a separate gate, which is why it is a factor and not a filter.
+ * Where you graduate from, then the three factors we pick on: need, the
+ * personal statement, and ambition. Need leads, and is read from the statement
+ * rather than assessed as a separate gate, which is why it is a factor and not
+ * a filter.
  */
 const criteria = [
-  { kind: 'Eligibility', title: 'You go to a WCASD high school', detail: 'You are a graduating senior at a West Chester Area School District high school.' },
-  { kind: 'Ambition', title: 'A 3.50 GPA or above', detail: 'We look at academic achievement and at what you have done outside the classroom.' },
+  { kind: 'Eligibility', title: 'You graduate from a district high school', detail: 'You are a graduating senior at a West Chester Area School District high school. Every graduate of the district counts.' },
+  { kind: 'Need', title: 'Your financial need', detail: 'Financial need is central to how we choose, as you describe it in your personal statement.' },
   { kind: 'Personal statement', title: 'Your story, in your words', detail: 'You apply through our winter essay contest: your story, and what a scholarship would do for your education.' },
-  { kind: 'Need', title: 'Your financial need', detail: 'Need is taken into account, as you describe it in your personal statement.' },
+  { kind: 'Ambition', title: 'A 3.50 GPA or above', detail: 'We look at academic achievement and at what you have done outside the classroom.' },
 ];
 
 const faqs = [
@@ -25,7 +26,7 @@ const faqs = [
     a: 'Graduating seniors at a West Chester Area School District high school with a 3.50 GPA or above. You apply through our winter essay contest, with a personal statement.',
   },
   {
-    q: 'How much is the award?',
+    q: 'How much is the scholarship?',
     a: "Scholarships come from the gifts we raise and what the fund earns on them. We confirm each year's amount before the essay contest opens.",
   },
   {
@@ -34,11 +35,11 @@ const faqs = [
   },
   {
     q: 'Can I use it at an out-of-state school?',
-    a: 'Yes. In state or out of state, public or private, a four-year or a two-year college. The award goes where you go.',
+    a: 'Yes. In state or out of state, public or private, at a four-year school, a two-year school or a trade. The scholarship goes where you go.',
   },
   {
     q: 'When can I apply?',
-    a: "The essay contest opens on January 15. The winner is announced on April 15 and receives the scholarship on May 1. Leave your email and we'll remind you the day it opens.",
+    a: "The essay contest opens in January. Scholarship recipients are announced in April, and the scholarship is paid in May. Leave your email and we'll remind you the day it opens.",
   },
   {
     q: 'Who decides?',
@@ -49,21 +50,22 @@ const faqs = [
 
 <BaseLayout
   title="For students | The Open Road Foundation"
-  description="Who can apply, how we choose, and how the scholarship reaches you. For graduating seniors in the West Chester Area School District."
+  description="Who can apply, how we choose, and how the scholarship reaches you. For West Chester area graduating seniors with financial need."
 >
-  <!-- The masthead aside carries the three dates a student plans around.
-       No award figure: the scholarship is the fund's return for the year, and
-       it is confirmed before the contest opens rather than stated and revised. -->
+  <!-- The masthead aside carries the three months a student plans around.
+       No scholarship figure: it comes from the year's gifts and the fund's
+       returns, and is confirmed before the contest opens rather than stated and
+       revised. -->
   <PageHero
     heading="Scholarships for West Chester seniors, every year."
-    lede="We are building a community endowment for graduating seniors in the West Chester Area School District. Here is who can apply, how we choose, and how the money reaches you."
+    lede="We are building a community scholarship fund for West Chester area graduating seniors with financial need. Here is who can apply, how we choose, and how the money reaches you."
   >
     <div slot="aside" class="award-dates">
       <p class="award-dates-label">This school year</p>
       <dl>
-        <div><dt>January 15</dt><dd>The essay contest opens</dd></div>
-        <div><dt>April 15</dt><dd>The winner is announced</dd></div>
-        <div><dt>May 1</dt><dd>The scholarship is paid</dd></div>
+        <div><dt>January</dt><dd>The essay contest opens</dd></div>
+        <div><dt>April</dt><dd>Recipients are announced</dd></div>
+        <div><dt>May</dt><dd>The scholarship is paid</dd></div>
       </dl>
     </div>
   </PageHero>
@@ -116,7 +118,7 @@ const faqs = [
   <section class="section--major surface-base">
     <div class="wrap">
       <div class="split prose">
-        <h2 class="reveal">What the award covers</h2>
+        <h2 class="reveal">What the scholarship covers</h2>
         <p>
           It's yours to put toward the real cost of going: tuition, books, a laptop, the travel to
           get there. Anything that supports your time at the school you chose.
@@ -131,12 +133,12 @@ const faqs = [
       <div class="split prose follows">
         <h3>It follows you wherever you go.</h3>
         <p>
-          In state or out of state. Public or private. A four-year college or a two-year one. If
-          it's the right place for you, the award goes with you.
+          In state or out of state. Public or private. A four-year school, a two-year school or a
+          trade. If it's the right place for you, the scholarship goes with you.
         </p>
         <p>
-          There are no strings on it. Once the award is made it is yours, and what you do next
-          is yours.{' '}
+          There are no strings on it. Once the scholarship is awarded it is yours, and what you do
+          next is yours.{' '}
           <a href="/about/#why">Why we do it this way.</a>
         </p>
       </div>
@@ -148,12 +150,12 @@ const faqs = [
       <div class="split prose">
         <h2 class="reveal">How we choose, and when</h2>
         <p>
-          We choose the winner: the five founders, named on the About us page. Your teachers and
-          district representatives share input on each student, as permitted, and the decision is
-          ours.
+          We choose who receives a scholarship: the five founders, named on the About us page. Your
+          teachers and district representatives share input on each student, as permitted, and the
+          decision is ours.
         </p>
         <p>
-          You apply through our winter essay contest, which opens on January 15. Your personal
+          You apply through our winter essay contest, which opens in January. Your personal
           statement is your application: your story, and what a scholarship would do for your
           education.
         </p>
@@ -162,7 +164,7 @@ const faqs = [
           held back from it by money alone.
         </p>
         <p>
-          The winner is announced on April 15 and receives the scholarship on May 1.
+          Recipients are announced in April, and the scholarship is paid in May.
         </p>
       </div>
     </div>

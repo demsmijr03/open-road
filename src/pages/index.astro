@@ -19,7 +19,7 @@ const steps = [
   },
   {
     title: 'We award scholarships',
-    detail: 'Together, gifts and returns fund scholarships for WCASD students each year.',
+    detail: 'Together, gifts and returns pay for scholarships for West Chester area students each year, at a four-year school, a two-year school or a trade.',
   },
 ];
 ---
@@ -27,7 +27,7 @@ const steps = [
 <BaseLayout
   heroOverlay
   title="Some roads are worth leaving home for | The Open Road Foundation"
-  description="We are building a community endowment for West Chester Area School District students. What we raise is invested to grow, and gifts and returns together fund scholarships every year."
+  description="A community scholarship fund for West Chester that doesn't run out. Every dollar goes into the fund, and gifts and returns together pay for scholarships every year for West Chester area students with financial need."
 >
   <!-- Hero -------------------------------------------------------------
        A full-bleed photograph with the header floating on it. The copy is
@@ -52,19 +52,19 @@ const steps = [
 
       <div class="rise" style="--rise-delay:200ms">
         <AnimatedHeadline
-          lead="Every year, we fund students to discover"
+          lead="Every year, scholarships help students discover"
           words={['perspective', 'opportunity', 'a wider view', 'what fits']}
         />
       </div>
 
       <p class="hero-lede rise" style="--rise-delay:330ms">
-        The Open Road Foundation is building a community endowment for West Chester Area School
-        District students. What we raise is invested to grow, and gifts and returns together fund
-        scholarships every year.
+        The Open Road Foundation is a community scholarship fund for West Chester that doesn't run
+        out. Every dollar goes into the fund. Gifts and its returns pay for scholarships every year
+        for West Chester area students with financial need.
       </p>
 
       <div class="hero-actions rise" style="--rise-delay:440ms">
-        <Button href={DONATE_URL}>Support a student</Button>
+        <Button href={DONATE_URL}>Give to the fund</Button>
         <Button href="/about/" variant="secondary">Read our story</Button>
       </div>
       </div>
@@ -83,8 +83,8 @@ const steps = [
       <div class="statement">
         <h2 class="statement-h reveal">Some roads are worth leaving home for.</h2>
         <p class="statement-p">
-          We are a West Chester nonprofit, and the school district is our partner. The founders pay
-          the running costs, so every gift goes into the fund.{' '}
+          We are a West Chester nonprofit, and we are backed and supported by the West Chester Area
+          School District. The founders pay the running costs, so every gift goes into the fund.{' '}
           <a href="/about/">Read the full mission</a>
         </p>
       </div>
@@ -97,14 +97,14 @@ const steps = [
        identifiable person, and response can fall as numbers accumulate, so a
        wall of figures this early was working against the page. The national and
        state context moved to About, and was removed from there on 24 Sep 2026:
-       the endowment and the district partnership now carry the case.
+       the fund and the district's backing now carry the case.
 
        Stated as a count rather than as "1 in 8", which a donor could invert:
        seven in eight are fine, so why does my money matter. A count has no
        visible denominator to flip. The trade is that it is a bigger, more
        abstract number, which is the direction compassion-fade research says
-       dampens giving, so it sits directly under the mission statement and ends
-       on one student rather than on a population. See BRAND.md.
+       dampens giving, so it sits directly under the mission statement. See
+       BRAND.md.
 
        When a student is funded, their story leads here and this becomes
        supporting. -->
@@ -119,9 +119,9 @@ const steps = [
             source="U.S. Census ACS 2024; NCES Common Core of Data, 2024–25."
           >
             <p>
-              Median household income in the West Chester Area School District is $137,133. That is
-              exactly why the need goes unseen. About 1,500 students in this district are
-              economically disadvantaged. Our first scholarship goes to one of them this spring.
+              Median household income in this district is $137,133. That is exactly why the need
+              goes unseen. About 1,500 students in this district are economically disadvantaged. Our
+              first scholarship is awarded this school year.
             </p>
           </DistanceStat>
         </div>
@@ -129,7 +129,7 @@ const steps = [
     </div>
   </section>
 
-  <!-- The endowment, as the three steps it actually is. Numbered because
+  <!-- The fund, as the three steps it actually is. Numbered because
        the order is the mechanism: a gift goes in, it is invested and earns, and
        gifts and returns together pay for scholarships.
 
@@ -165,8 +165,8 @@ const steps = [
   </section>
 
   <CtaBand heading="Open the road, and see what comes back.">
-    <p slot="body">A gift here grows with the fund, and helps pay for scholarships this year and every year after.</p>
-    <Button href={DONATE_URL}>Support a student</Button>
+    <p slot="body">We want this fund to be a cornerstone of West Chester, so more West Chester students can take the open road. A gift here goes into a fund that doesn't run out, and helps pay for scholarships this year and every year after.</p>
+    <Button href={DONATE_URL}>Give to the fund</Button>
     <a href="/get-involved/#interest">Or just get the newsletter</a>
   </CtaBand>
 </BaseLayout>

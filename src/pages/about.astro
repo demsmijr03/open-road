@@ -66,13 +66,6 @@ const board = [
 /* Where we stand. The facts are the FAQ's; each is set in the shape it has. */
 const checks = ['Registered 501(c)(3)', 'Approved in Pennsylvania', 'Articles of incorporation'];
 
-const commitments = [
-  'Sponsoring district-wide and school-specific events',
-  'Promoting our scholarship in its schools',
-  'Sharing input on the students who apply',
-  'Marketing Open Road as an official district-wide scholarship partner',
-];
-
 const milestones = [
   { figure: '$10,000', label: "This year's goal" },
   { figure: '$25,000', label: 'As partners join' },
@@ -163,15 +156,15 @@ const milestones = [
       <div class="split">
         <h2 class="mission-title reveal">Our mission</h2>
         <blockquote class="mission reveal">
-          The Open Road Foundation exists to uplift Philadelphia Area students pursuing a college
-          degree through financial support and mentorship, offering greater educational
-          opportunities and a chance to explore their passions in the settings that will help them
-          flourish.
+          The Open Road Foundation is a community scholarship fund that expands educational
+          opportunities for West Chester area students with financial need. Every dollar goes into
+          the fund. Gifts and its investment returns pay for scholarships every year, at a
+          four-year school, a two-year school or a trade, while enough stays invested for the fund
+          to keep growing.
         </blockquote>
         <p class="mission-note">
-          One note on that, in plainer words: <strong
-            >every award we make today goes to a West Chester Area School District student.</strong
-          > "Philadelphia Area" is where we are going, not where we are.
+          We want it to be a cornerstone of West Chester, so more West Chester students can take
+          the open road.
         </p>
       </div>
     </div>
@@ -199,11 +192,11 @@ const milestones = [
         </div>
 
         <div class="stand">
-          <h3 class="stand-h">Our partnership with WCASD</h3>
-          <p class="stand-p">The school district has agreed to partner with us on four fronts.</p>
-          <ul class="commits">
-            {commitments.map((c) => <li>{c}</li>)}
-          </ul>
+          <h3 class="stand-h">Our backing</h3>
+          <p class="stand-p">
+            Backed and supported by the West Chester Area School District. Teachers and district
+            representatives share input on the students who apply, as permitted.
+          </p>
         </div>
 
         <div class="stand">
@@ -219,11 +212,10 @@ const milestones = [
               ))
             }
           </ol>
-                    <p class="stand-p">
-            Ultimately, we could see this becoming hundreds of thousands of dollars as a community
-            endowment, generating thousands a year for scholarships. We plan year by year and review
-            our goals annually. Over time, corporate sponsorships and partnerships will carry the
-            fund from one milestone to the next.
+          <p class="stand-p">
+            We want this fund to grow with every year's gifts and reach further as it does. We plan
+            year by year and review our goals annually. Over time, corporate sponsorships and
+            partnerships will carry the fund from one milestone to the next.
           </p>
         </div>
       </div>
@@ -270,11 +262,11 @@ const milestones = [
     </div>
   </section>
 
-  <CtaBand heading="Our first scholarship, this May.">
+  <CtaBand heading="Our first scholarship, this school year.">
     <p slot="body">
-      We're building the fund now. Our first scholarship goes to a WCASD senior on May 1, and the fund keeps paying out every year after.
+      We're building the fund now. Our first scholarship is awarded this school year, and the fund keeps paying out every year after.
     </p>
-    <Button href={DONATE_URL}>Support a student</Button>
+    <Button href={DONATE_URL}>Give to the fund</Button>
   </CtaBand>
 </BaseLayout>
 

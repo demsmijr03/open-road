@@ -14,7 +14,7 @@ import Icon from '../components/Icon.astro';
 /* A drafted email with the site's address in it. No script, so it works
  * anywhere, and the note on the card says exactly what happens. */
 const SHARE_HREF =
-  'mailto:?subject=The%20Open%20Road%20Foundation&body=A%20community%20scholarship%20endowment%20for%20West%20Chester%20Area%20School%20District%20students%3A%20https%3A%2F%2Ftheopenroadfoundation.org%2F';
+  'mailto:?subject=The%20Open%20Road%20Foundation&body=A%20community%20scholarship%20fund%20for%20West%20Chester%20area%20students%3A%20https%3A%2F%2Ftheopenroadfoundation.org%2F';
 
 const ways = [
   { icon: 'give',    name: 'Give',                     note: 'Invested, and paid out as scholarships every year.', href: '#give' },
@@ -67,42 +67,42 @@ const tiers = [
 ];
 
 /*
- * The 2026-27 schedule from the FAQ, as of 15 September 2026. Days are given
- * where the FAQ gives them. The March coffee shop day is gone: the FAQ has no
- * programming in March.
+ * The 2026-27 schedule, in months only: the months are aims, and a printed
+ * day is a promise (decision of 30 Aug and 9 Nov 2026). The March coffee shop
+ * day is gone, and Sedona Taphouse moved from January to December.
  */
 const milestones = [
   {
-    when: 'September 1',
+    when: 'September',
     what: 'Fundraising kicks off',
     detail: 'The fund opens for the year, through individual gifts, events and corporate match programs.',
   },
   {
-    when: 'November 21',
+    when: 'November',
     what: 'Percentage night with Chipotle West Chester',
     detail: 'Come in for dinner, and part of the evening goes to the fund.',
   },
   {
     when: 'November',
-    what: 'WCASD class of 2021 reunions',
-    detail: 'West Chester East on November 28. Henderson and Rustin are finalizing their dates, and both have agreed to partner.',
+    what: 'Class of 2021 reunions',
+    detail: 'Starting at West Chester East.',
+  },
+  {
+    when: 'December',
+    what: 'Dinner at Sedona Taphouse',
+    detail: 'Every Monday in December, your dinner helps build the fund.',
   },
   {
     when: 'January',
-    what: 'Charity Giving Program at Sedona Taphouse',
-    detail: "All month, through Sedona Taphouse's own giving program.",
-  },
-  {
-    when: 'January 15',
     what: 'The essay contest opens',
     detail: 'Seniors apply with a personal statement.',
   },
   {
-    when: 'April 15',
-    what: 'The winner is announced',
+    when: 'April',
+    what: 'Recipients are announced',
   },
   {
-    when: 'May 1',
+    when: 'May',
     what: 'Our first scholarship is paid',
     detail: 'Directly to the student, as a check.',
   },
@@ -111,7 +111,7 @@ const milestones = [
 const donorFaqs = [
   {
     q: 'Where does my money go?',
-    a: 'Into our community endowment fund: secure investments, such as government bonds, that grow passively. We award money from the fund each year while keeping enough in it to grow year over year. We can share our investment strategy on request.',
+    a: 'Into our community scholarship fund: secure investments, such as government bonds. We pay out from the fund each year while keeping enough in it to grow year over year. We can share our investment strategy on request.',
   },
   {
     q: 'How much of it reaches students?',
@@ -127,7 +127,7 @@ const donorFaqs = [
   },
   {
     q: 'What if you raise more than $10,000?',
-    a: 'It all goes into the endowment. A bigger fund earns more, so every scholarship after it grows too.',
+    a: 'It all goes into the fund. A bigger fund earns more, so every scholarship after it grows too.',
   },
   {
     q: 'Who runs this?',
@@ -138,11 +138,11 @@ const donorFaqs = [
 
 <BaseLayout
   title="Get involved | The Open Road Foundation"
-  description="Give, sponsor, or tell us you are interested. We are raising $10,000 this year to start a community scholarship endowment for West Chester Area School District students."
+  description="Give, sponsor, or tell us you are interested. We are raising $10,000 this year to start a community scholarship fund for West Chester area students with financial need."
 >
   <PageHero
     heading="Get involved"
-    lede="We are raising $10,000 this year to start a community scholarship endowment for WCASD students. Every way to help is below, and one of them takes only a minute and a form."
+    lede="We are raising $10,000 this year to start a community scholarship fund for West Chester area students with financial need. Every way to help is below, and one of them takes only a minute and a form."
   />
 
   <!-- Four ways in, before any of the detail. This page used to open on eight
@@ -196,9 +196,10 @@ const donorFaqs = [
             <span class="plan-goal-figure">$10,000</span>
           </p>
           <p class="plan-note">
-            Every dollar raised goes into the community endowment, where it is invested in secure
-            holdings such as government bonds. Running the foundation, the fundraising, the
-            marketing and the administrative work behind an award, is paid for by the founders.
+            Every dollar raised goes into the community scholarship fund, where it is invested in
+            secure holdings such as government bonds. Running the foundation, the fundraising, the
+            marketing and the administrative work behind each scholarship, is paid for by the
+            founders.
           </p>
           <p class="plan-note">Our schedule for the 2026 to 2027 school year, as of September.</p>
         </div>
@@ -212,7 +213,7 @@ const donorFaqs = [
       <div class="split prose">
         <h2 class="reveal">Give</h2>
         <p>
-          A gift here goes into the community endowment, where it is invested to grow. Gifts and
+          A gift here goes into the community scholarship fund, where it is invested to grow. Gifts and
           the fund's returns together pay for scholarships every year, so what you give keeps
           working.
         </p>
@@ -324,9 +325,9 @@ const donorFaqs = [
 
   <CtaBand heading="This is the year it starts.">
     <p slot="body">
-      We're building the fund now, and our first scholarship goes to a WCASD senior on May 1.
+      We're building the fund now, and our first scholarship is awarded this school year.
     </p>
-    <Button href={DONATE_URL}>Support a student</Button>
+    <Button href={DONATE_URL}>Give to the fund</Button>
   </CtaBand>
 </BaseLayout>
 
